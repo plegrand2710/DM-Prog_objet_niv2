@@ -21,12 +21,22 @@ public class InventoryPanel extends JFrame {
 
     public void updateInventory(ArrayList<Item> items) {
         itemListModel.clear();
-        for (Item item : items) {
-            itemListModel.addElement(item.getName() + " - " + item.getDescription());
+        if (items.isEmpty()) {
+            itemListModel.addElement("Inventaire vide");
+        } else {
+            for (Item item : items) {
+                itemListModel.addElement(item.getName() + " - " + item.getDescription());
+            }
         }
     }
 
+
     public void showInventory() {
+        // Positionne la fenêtre en bas à droite de l'écran
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = screenSize.width - getWidth();
+        int y = screenSize.height - getHeight();
+        setLocation(x, y);
         setVisible(true);
     }
 }

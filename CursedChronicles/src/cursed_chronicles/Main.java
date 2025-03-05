@@ -13,6 +13,8 @@ public class Main {
             
             // Création des panneaux pour l'inventaire, le journal et les infos joueur
             InventoryPanel inventoryPanel = new InventoryPanel();
+            inventoryPanel.showInventory();
+
             JournalPanel journalPanel = new JournalPanel();
             PlayerPanel playerPanel = new PlayerPanel(player, inventoryPanel, journalPanel);
             playerPanel.setVisible(true);
@@ -78,20 +80,19 @@ public class Main {
             }
             gameFrame.add(new JScrollPane(itemsPanel), BorderLayout.SOUTH);
             
-            // Panel nord : contrôles pour modifier les caractéristiques du joueur
+            // Panel nord : contrôles pour modifier les caractéristiques et gérer l'inventaire
             JPanel controlPanel = new JPanel(new FlowLayout());
-            // Choix de la caractéristique
+            
+            // Contrôle pour modifier une caractéristique
             String[] characteristicOptions = {"Life", "Defense", "Speed"};
             JComboBox<String> charCombo = new JComboBox<>(characteristicOptions);
             controlPanel.add(new JLabel("Sélectionnez la caractéristique : "));
             controlPanel.add(charCombo);
             
-            // Saisie du delta (valeur à ajouter ou soustraire)
             JTextField deltaField = new JTextField(5);
             controlPanel.add(new JLabel("Delta : "));
             controlPanel.add(deltaField);
             
-            // Bouton pour appliquer la modification
             JButton modifyButton = new JButton("Modifier");
             modifyButton.addActionListener(new ActionListener() {
                 @Override
@@ -106,13 +107,11 @@ public class Main {
                     }
                     player.modifyCharacteristic(selectedChar, delta);
                     playerPanel.updateCharacteristics(player);
-                    // Redemande le focus sur la fenêtre pour la gestion des déplacements
                     gameFrame.requestFocusInWindow();
                 }
             });
             controlPanel.add(modifyButton);
             
-            // Bouton pour ajouter l'item "Damage"
             JButton addDamageButton = new JButton("Ajouter item Damage (+5)");
             addDamageButton.addActionListener(new ActionListener() {
                 @Override
@@ -124,7 +123,6 @@ public class Main {
             });
             controlPanel.add(addDamageButton);
             
-            // Bouton pour activer le speed booster
             JButton activateSpeedButton = new JButton("Activer Speed");
             activateSpeedButton.addActionListener(new ActionListener() {
                 @Override
@@ -136,6 +134,37 @@ public class Main {
             });
             controlPanel.add(activateSpeedButton);
             
+            // Contrôle pour choisir l'objet à ajouter dans l'inventaire
+            // On définit ici un tableau de noms et un tableau correspondant aux fichiers images
+            String[] invItemNames = {"Épée", "Bouclier", "Potion de vie", "Arc", "Pistolet"};
+            String[] invItemFiles = {"sword_sprite.png", "hammer_sprite.png", "life_booster.png", "bow_item.png", "pistol_sprite.png"};
+            JPanel inventoryControlPanel = new JPanel(new FlowLayout());
+            JComboBox<String> invItemCombo = new JComboBox<>(invItemNames);
+            inventoryControlPanel.add(new JLabel("Choisissez un objet : "));
+            inventoryControlPanel.add(invItemCombo);
+            JButton addInventoryButton = new JButton("Ajouter à l'inventaire");
+            addInventoryButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int index = invItemCombo.getSelectedIndex();
+                    if (index < 0) return;
+                    String itemName = invItemNames[index];
+                    String fileName = invItemFiles[index];
+                    Image itemImg = new ImageIcon(fileName).getImage();
+                    if (itemImg.getWidth(null) == -1) {
+                        System.out.println("Erreur de chargement de l'image pour " + itemName);
+                    } else {
+                        Item newItem = new Item(itemName, "Description de " + itemName, itemImg);
+                        player.getInventory().addItem(newItem);
+                        inventoryPanel.updateInventory(player.getInventory().getItems());
+                        inventoryPanel.showInventory();
+                    }
+                    gameFrame.requestFocusInWindow();
+                }
+            });
+            inventoryControlPanel.add(addInventoryButton);
+            controlPanel.add(inventoryControlPanel);
+            
             gameFrame.add(controlPanel, BorderLayout.NORTH);
             
             gameFrame.pack();
@@ -143,7 +172,6 @@ public class Main {
             gameFrame.setLocationRelativeTo(null);
             gameFrame.setVisible(true);
             
-            // Ajout du contrôleur pour les déplacements du joueur
             gameFrame.addKeyListener(new PlayerController(player, playerView));
             gameFrame.setFocusable(true);
             gameFrame.requestFocusInWindow();
