@@ -2,6 +2,7 @@ package cursed_chronicles.Player;
 
 import java.awt.Image;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 
 public class Item {
     private String name;
@@ -10,17 +11,25 @@ public class Item {
     private Image image;
     private int quantity; 
 
-    public Item(String name, String description, Image image) {
-        this.name = name;
-        this.description = description;
-        this.image = image;
+    public Item(String filePath) {
+        this.quantity = 1;
         this.characteristics = new ArrayList<>();
-        this.quantity = 1; 
         
-        String type = ItemCharacteristicsUtil.getCharacteristicType(name);
-        int bonus = ItemCharacteristicsUtil.getBonusFromFilename(name);
+        int lastSlash = filePath.lastIndexOf('/');
+        String fileName = (lastSlash >= 0) ? filePath.substring(lastSlash + 1) : filePath;
+        int dotIndex = fileName.lastIndexOf('.');
+        this.name = (dotIndex > 0) ? fileName.substring(0, dotIndex) : fileName;
+        
+        this.image = new ImageIcon(filePath).getImage();
+        
+        String type = ItemCharacteristicsUtil.getCharacteristicType(fileName);
+        int bonus = ItemCharacteristicsUtil.getBonusFromFilename(fileName);
+        
         if (!type.isEmpty()) {
+            this.description = type + " : " + bonus;
             addCharacteristic(new Characteristic(type, bonus));
+        } else {
+            this.description = this.name;
         }
     }
 
@@ -74,16 +83,17 @@ public class Item {
             sb.append(" x").append(quantity);
         }
         sb.append(" - ").append(description);
-        if (!characteristics.isEmpty()) {
+        /*if (!characteristics.isEmpty()) {
+            sb.append(" [");
             for (Characteristic c : characteristics) {
-                sb.append(c.toString()).append(" ; ");
+                sb.append(c.toString()).append(", ");
             }
-            int lastIndex = sb.lastIndexOf(" ; ");
-            if(lastIndex != -1) {
+            int lastIndex = sb.lastIndexOf(", ");
+            if (lastIndex != -1) {
                 sb.delete(lastIndex, sb.length());
             }
-        }
+            sb.append("]");
+        }*/
         return sb.toString();
     }
-
 }
