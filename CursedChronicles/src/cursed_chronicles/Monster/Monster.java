@@ -1,4 +1,4 @@
-package cursed_chronicles.Monster;
+/*package cursed_chronicles.Monster;
 
 import java.util.ArrayList;
 import cursed_chronicles.Player.Characteristic;
@@ -11,7 +11,7 @@ public class Monster {
     private int level;
     private int difficultyLevel;
     private ArrayList<Characteristic> characteristics;
-    private StrategieCombat strategieCombat;
+    //private StrategieCombat strategieCombat;
 
     public Monster(String name, int difficultyLevel, StrategieCombat strategieCombat) {
         this.name = name;
@@ -20,7 +20,7 @@ public class Monster {
         this.level = difficultyLevel;
         this.difficultyLevel = difficultyLevel;
         this.characteristics = new ArrayList<>();
-        this.strategieCombat = strategieCombat;
+        //this.strategieCombat = strategieCombat;
 
         initializeDefaultCharacteristics();
     }
@@ -79,4 +79,4 @@ public class Monster {
     public String toString() {
         return "Monstre: " + name + " (Niveau: " + level + ", Difficulté: " + difficultyLevel + ")";
     }
-}
+}*/

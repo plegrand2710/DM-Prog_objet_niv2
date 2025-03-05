@@ -7,10 +7,15 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class Main {
+    
     public static void main(String[] args) {
+
+        String playerPath = "assets/sprites/player/";
+        String boosterPath = "assets/sprites/booster/";
+        
         SwingUtilities.invokeLater(() -> {
             Player player = new Player("Hero");
-            
+
             InventoryPanel inventoryPanel = new InventoryPanel(player);
             inventoryPanel.showInventory();
             JournalPanel journalPanel = new JournalPanel();
@@ -26,39 +31,39 @@ public class Main {
             JPanel itemsPanel = new JPanel();
             itemsPanel.setLayout(new GridLayout(0, 4, 5, 5));
             String[] itemFileNames = {
-                "booster_damage.png",
-                "booster_general_1.png",
-                "booster_general_2.png",
-                "booster_general_3.png",
-                "booster_health_1.png",
-                "booster_health_2.png",
-                "booster_health_3.png",
-                "booster_speed1.png",
-                "booster_speed2.png",
-                "booster_speed3.png",
-                "epeActionDos.png",
-                "epeActionDroite.png",
-                "epeActionFace.png",
-                "epeActionGauche.png",
-                "epeActionViteDos.png",
-                "epeActionViteDroite.png",
-                "epeActionViteFace.png",
-                "epeActionViteGauche.png",
-                "epeSimpleDDroite.png",
-                "epeSimpleDFace.png",
-                "epeSimpleDFace1.png",
-                "epeSimpleDGauche.png",
-                "epeSimpleDos.png",
-                "epeSimpleDroite.png",
-                "epeSimpleFace.png",
-                "epeSimpleGauche.png",
-                "final_bow_sprite.png",
-                "hammer_sprite.png",
-                "life_booster.png",
-                "life_booster2.png",
-                "pistol_sprite.png",
-                "rifle_sprite.png",
-                "sword_sprite.png"
+                boosterPath+"booster_damage.png",
+                boosterPath+"booster_general_1.png",
+                boosterPath+"booster_general_2.png",
+                boosterPath+"booster_general_3.png",
+                boosterPath+"booster_health_1.png",
+                boosterPath+"booster_health_2.png",
+                boosterPath+"booster_health_3.png",
+                boosterPath+"booster_speed1.png",
+                boosterPath+"booster_speed2.png",
+                boosterPath+"booster_speed3.png",
+                playerPath+"epeActionDos.png",
+                playerPath+"epeActionDroite.png",
+                playerPath+"epeActionFace.png",
+                playerPath+"epeActionGauche.png",
+                playerPath+"epeActionViteDos.png",
+                playerPath+"epeActionViteDroite.png",
+                playerPath+"epeActionViteFace.png",
+                playerPath+"epeActionViteGauche.png",
+                playerPath+"epeSimpleDDroite.png",
+                playerPath+"epeSimpleDFace.png",
+                playerPath+"epeSimpleDFace1.png",
+                playerPath+"epeSimpleDGauche.png",
+                playerPath+"epeSimpleDos.png",
+                playerPath+"epeSimpleDroite.png",
+                playerPath+"epeSimpleFace.png",
+                playerPath+"epeSimpleGauche.png",
+                boosterPath+"final_bow_sprite.png",
+                boosterPath+"hammer_sprite.png",
+                boosterPath+"life_booster.png",
+                boosterPath+"life_booster2.png",
+                boosterPath+"pistol_sprite.png",
+                boosterPath+"rifle_sprite.png",
+                boosterPath+"sword_sprite.png"
             };
             int scaledWidth = 32;
             int scaledHeight = 32;

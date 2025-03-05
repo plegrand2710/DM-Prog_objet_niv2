@@ -8,6 +8,7 @@ public class PlayerView extends JPanel {
     private Player player;
     private HashMap<String, Image[]> sprites; 
     private int frameIndex = 0; 
+    private String path = "assets/sprites/player/";
 
     public PlayerView(Player player) {
         this.player = player;
@@ -18,41 +19,41 @@ public class PlayerView extends JPanel {
 
     private void loadSprites() {
         sprites.put("down", new Image[]{
-            loadImage("pasDFace1.png"),
-            loadImage("pasDFace2.png"),
-            loadImage("pasDFace3.png"),
-            loadImage("pasMFace.png"),
-            loadImage("pasGFace1.png"),
-            loadImage("pasGFace2.png"),
-            loadImage("pasGFace3.png")
+            loadImage(path+"pasDFace1.png"),
+            loadImage(path+"pasDFace2.png"),
+            loadImage(path+"pasDFace3.png"),
+            loadImage(path+"pasMFace.png"),
+            loadImage(path+"pasGFace1.png"),
+            loadImage(path+"pasGFace2.png"),
+            loadImage(path+"pasGFace3.png")
         });
         sprites.put("up", new Image[]{
-            loadImage("pasD1.png"),
-            loadImage("pasD2.png"),
-            loadImage("pasD3.png"),
-            loadImage("pasD4.png"),
-            loadImage("pasMDos.png"),
-            loadImage("pasGDos1.png"),
-            loadImage("pasGDos2.png"),
-            loadImage("pasGDos3.png")
+            loadImage(path+"pasD1.png"),
+            loadImage(path+"pasD2.png"),
+            loadImage(path+"pasD3.png"),
+            loadImage(path+"pasD4.png"),
+            loadImage(path+"pasMDos.png"),
+            loadImage(path+"pasGDos1.png"),
+            loadImage(path+"pasGDos2.png"),
+            loadImage(path+"pasGDos3.png")
         });
         sprites.put("right", new Image[]{
-            loadImage("pasDDroite1.png"),
-            loadImage("pasDDroite2.png"),
-            loadImage("pasDDroite3.png"),
-            loadImage("pasMDroite.png"),
-            loadImage("pasGDroite1.png"),
-            loadImage("pasGDroite2.png"),
-            loadImage("pasGDroite3.png")
+            loadImage(path+"pasDDroite1.png"),
+            loadImage(path+"pasDDroite2.png"),
+            loadImage(path+"pasDDroite3.png"),
+            loadImage(path+"pasMDroite.png"),
+            loadImage(path+"pasGDroite1.png"),
+            loadImage(path+"pasGDroite2.png"),
+            loadImage(path+"pasGDroite3.png")
         });
         sprites.put("left", new Image[]{
-            loadImage("pasDGauche1.png"),
-            loadImage("pasDGauche2.png"),
-            loadImage("pasDGauche3.png"),
-            loadImage("pasMGauche.png"),
-            loadImage("pasGGauche1.png"),
-            loadImage("pasGGauche2.png"),
-            loadImage("pasGGauche3.png")
+            loadImage(path+"pasDGauche1.png"),
+            loadImage(path+"pasDGauche2.png"),
+            loadImage(path+"pasDGauche3.png"),
+            loadImage(path+"pasMGauche.png"),
+            loadImage(path+"pasGGauche1.png"),
+            loadImage(path+"pasGGauche2.png"),
+            loadImage(path+"pasGGauche3.png")
         });
     }
 
