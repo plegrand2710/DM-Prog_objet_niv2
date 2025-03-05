@@ -120,17 +120,6 @@ public class Player {
 
     public void move(String direction, int dx, int dy) {
         setDirection(direction);
-        if (speedActive) {
-            int extra = 2; 
-            if (dx != 0 && dy == 0) {
-                dx += (dx > 0 ? extra : -extra);
-            } else if (dy != 0 && dx == 0) {
-                dy += (dy > 0 ? extra : -extra);
-            } else if (dx != 0 && dy != 0) {
-                dx += (dx > 0 ? extra : -extra);
-                dy += (dy > 0 ? extra : -extra);
-            }
-        }
         int oldX = positionX;
         int oldY = positionY;
         positionX += dx;
@@ -140,6 +129,7 @@ public class Player {
         pcs.firePropertyChange("positionX", oldX, positionX);
         pcs.firePropertyChange("positionY", oldY, positionY);
     }
+
 
     public void stopMoving() {
         setMoving(false);
@@ -268,4 +258,9 @@ public class Player {
             }
         }
     }
+    
+    public boolean isSpeedActive() {
+        return speedActive;
+    }
+
 }
