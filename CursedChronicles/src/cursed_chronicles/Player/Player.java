@@ -77,4 +77,62 @@ public class Player {
     public void stopMoving() {
         this.isMoving = false;
     }
+    
+    public void modifyCharacteristic(String charName, int delta) {
+        boolean found = false;
+        for (Characteristic c : characteristics) {
+            if (c.getName().equalsIgnoreCase(charName)) {
+                int currentValue = c.getValue();
+                if (charName.equalsIgnoreCase("life") && delta < 0) {
+                    int damage = -delta; 
+                    Characteristic defenseChar = null;
+                    for (Characteristic ch : characteristics) {
+                        if (ch.getName().equalsIgnoreCase("defense")) {
+                            defenseChar = ch;
+                            break;
+                        }
+                    }
+                    if (defenseChar != null && defenseChar.getValue() > 0) {
+                        int defenseValue = defenseChar.getValue();
+                        if (defenseValue >= damage) {
+                            defenseChar.setValue(defenseValue - damage);
+                            damage = 0;
+                        } else {
+                            damage -= defenseValue;
+                            defenseChar.setValue(0);
+                        }
+                        delta = -damage;
+                    }
+                    if (currentValue + delta < 0) {
+                        delta = -currentValue;
+                    }
+                }
+                else if ((charName.equalsIgnoreCase("speed") || charName.equalsIgnoreCase("damage")) && delta < 0) {
+                    if (currentValue + delta < 0) {
+                        delta = -currentValue;
+                    }
+                }
+                c.setValue(currentValue + delta);
+                found = true;
+                if (charName.equalsIgnoreCase("life") && c.getValue() == 0) {
+                    javax.swing.JOptionPane.showMessageDialog(null, "Game Over", "Game Over", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                }
+                break;
+            }
+        }
+        if (!found) {
+            if (delta > 0) {
+                characteristics.add(new Characteristic(charName, delta));
+            } else {
+                System.out.println("Caractéristique " + charName + " non trouvée et delta négatif. Aucune création.");
+            }
+        }
+    }
+
+
+
+
+    public void applyBooster(String characteristicName, int bonus) {
+        modifyCharacteristic(characteristicName, bonus);
+    }
 }
