@@ -71,19 +71,15 @@ public class PlayerView extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         
-        // Dessiner une grille en gris clair pour le repérage
-        int cellSize = 64; // taille de chaque cellule
+        int cellSize = 64;
         g.setColor(Color.LIGHT_GRAY);
-        // Lignes verticales
         for (int x = 0; x < getWidth(); x += cellSize) {
             g.drawLine(x, 0, x, getHeight());
         }
-        // Lignes horizontales
         for (int y = 0; y < getHeight(); y += cellSize) {
             g.drawLine(0, y, getWidth(), y);
         }
         
-        // Dessiner le sprite du joueur
         String direction = player.getDirection();
         Image[] frames = sprites.get(direction);
         if (frames != null && frames.length > 0) {

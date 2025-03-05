@@ -2,13 +2,18 @@ package cursed_chronicles.Player;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class InventoryPanel extends JFrame {
     private DefaultListModel<Item> itemListModel;
     private JList<Item> itemList;
+    private Player player;
 
-    public InventoryPanel() {
+    public InventoryPanel(Player player) {
+        this.player = player;
+
         setTitle("🎒 Inventory");
         setSize(300, 200);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -18,12 +23,26 @@ public class InventoryPanel extends JFrame {
         itemList = new JList<>(itemListModel);
         itemList.setCellRenderer(new ItemCellRenderer());
         add(new JScrollPane(itemList), BorderLayout.CENTER);
+        
+        itemList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    int index = itemList.locationToIndex(e.getPoint());
+                    if (index >= 0) {
+                        Item selectedItem = itemListModel.getElementAt(index);
+                        player.useItem(selectedItem);
+                        player.getInventory().removeItem(selectedItem);
+                        updateInventory(player.getInventory().getItems());
+                    }
+                }
+            }
+        });
     }
 
     public void updateInventory(ArrayList<Item> items) {
         itemListModel.clear();
         if (items.isEmpty()) {
-            // Afficher un élément indiquant que l'inventaire est vide
             itemListModel.addElement(null);
         } else {
             for (Item item : items) {
@@ -33,7 +52,6 @@ public class InventoryPanel extends JFrame {
     }
 
     public void showInventory() {
-        // Positionne la fenêtre en bas à droite de l'écran
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int x = screenSize.width - getWidth();
         int y = screenSize.height - getHeight();
@@ -42,9 +60,7 @@ public class InventoryPanel extends JFrame {
     }
 }
 
-// Renderer personnalisé pour afficher un Item avec son image et son texte
 class ItemCellRenderer extends JLabel implements ListCellRenderer<Item> {
-
     public ItemCellRenderer() {
         setOpaque(true);
         setVerticalAlignment(SwingConstants.CENTER);
@@ -57,7 +73,7 @@ class ItemCellRenderer extends JLabel implements ListCellRenderer<Item> {
             setText("Inventaire vide");
             setIcon(null);
         } else {
-            setText(item.getName() + " - " + item.getDescription());
+            setText(item.toString());
             setIcon(new ImageIcon(item.getImage()));
         }
         if (isSelected) {

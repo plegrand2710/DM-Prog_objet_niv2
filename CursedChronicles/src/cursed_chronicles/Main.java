@@ -9,26 +9,20 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            // Création du joueur avec ses caractéristiques initiales (Life, Defense, Speed)
             Player player = new Player("Hero");
             
-            // Création des panneaux pour l'inventaire, le journal et les infos joueur
-            InventoryPanel inventoryPanel = new InventoryPanel();
-            // Afficher l'inventaire dès le début, même vide
+            InventoryPanel inventoryPanel = new InventoryPanel(player);
             inventoryPanel.showInventory();
             JournalPanel journalPanel = new JournalPanel();
             PlayerPanel playerPanel = new PlayerPanel(player, inventoryPanel, journalPanel);
             playerPanel.setVisible(true);
             
-            // Fenêtre principale du jeu
             JFrame gameFrame = new JFrame("Game Window");
             gameFrame.setLayout(new BorderLayout());
             
-            // Affichage du joueur et de son animation dans le centre
             PlayerView playerView = new PlayerView(player);
             gameFrame.add(playerView, BorderLayout.CENTER);
             
-            // Panel sud : affichage des items disponibles dans le monde (images agrandies)
             JPanel itemsPanel = new JPanel();
             itemsPanel.setLayout(new GridLayout(0, 4, 5, 5));
             String[] itemFileNames = {
@@ -81,9 +75,7 @@ public class Main {
             }
             gameFrame.add(new JScrollPane(itemsPanel), BorderLayout.SOUTH);
             
-            // Panel nord : contrôles pour modifier les caractéristiques et gérer l'inventaire
             JPanel controlPanel = new JPanel(new FlowLayout());
-            // Contrôle pour modifier une caractéristique
             String[] characteristicOptions = {"Life", "Defense", "Speed"};
             JComboBox<String> charCombo = new JComboBox<>(characteristicOptions);
             controlPanel.add(new JLabel("Sélectionnez la caractéristique : "));

@@ -9,12 +9,28 @@ public class Inventory {
         this.items = new ArrayList<>();
     }
 
-    public void addItem(Item item) {
-        items.add(item);
+    public void addItem(Item newItem) {
+        for (Item item : items) {
+            if (item.getName().equalsIgnoreCase(newItem.getName())) {
+                item.incrementQuantity();
+                return;
+            }
+        }
+        items.add(newItem);
     }
 
-    public void removeItem(String itemName) {
-        items.removeIf(item -> item.getName().equalsIgnoreCase(itemName));
+    public void removeItem(Item itemToRemove) {
+        for (int i = 0; i < items.size(); i++) {
+            Item item = items.get(i);
+            if (item.getName().equalsIgnoreCase(itemToRemove.getName())) {
+                if (item.getQuantity() > 1) {
+                    item.decrementQuantity();
+                } else {
+                    items.remove(i);
+                }
+                break;
+            }
+        }
     }
 
     public boolean hasItem(String itemName) {

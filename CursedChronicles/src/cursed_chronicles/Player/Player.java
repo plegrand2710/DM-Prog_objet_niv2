@@ -251,4 +251,21 @@ public class Player {
             speedTimer.start();
         }
     }
+    
+    public void useItem(Item item) {
+        for (Characteristic booster : item.getCharacteristics()) {
+            String type = booster.getName().toLowerCase();
+            int bonus = booster.getValue();
+            if (type.equals("life")) {
+                int currentLife = getCharacteristicValue("life");
+                int maxLife = 100;
+                int bonusToApply = Math.min(bonus, maxLife - currentLife);
+                if (bonusToApply > 0) {
+                    modifyCharacteristic("life", bonusToApply);
+                }
+            } else {
+                modifyCharacteristic(type, bonus);
+            }
+        }
+    }
 }
