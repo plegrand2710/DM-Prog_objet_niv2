@@ -1,5 +1,11 @@
 package cursed_chronicles.Player;
 
+import javax.swing.JOptionPane;
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 public class Player {
@@ -14,6 +20,9 @@ public class Player {
 
     private String direction;  
     private boolean isMoving; 
+    private boolean speedActive = false;
+
+    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     public Player(String name) {
         this.name = name;
@@ -26,30 +35,65 @@ public class Player {
         this.journal = new Journal();
         this.direction = "down";
         this.isMoving = false;
-
         initializeDefaultCharacteristics();
     }
 
     private void initializeDefaultCharacteristics() {
         characteristics.add(new Characteristic("life", 100));
         characteristics.add(new Characteristic("Defense", 0));
-        characteristics.add(new Characteristic("speed", 10));
+        characteristics.add(new Characteristic("speed", 0));
     }
 
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
+    }
+
+    public int getCharacteristicValue(String charName) {
+        for (Characteristic c : characteristics) {
+            if (c.getName().equalsIgnoreCase(charName)) {
+                return c.getValue();
+            }
+        }
+        return 0;
+    }
+    
     public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public void setName(String name) { 
+        String oldName = this.name;
+        this.name = name; 
+        pcs.firePropertyChange("name", oldName, name);
+    }
 
     public int getPositionX() { return positionX; }
-    public void setPositionX(int positionX) { this.positionX = positionX; }
+    public void setPositionX(int positionX) { 
+        int oldX = this.positionX;
+        this.positionX = positionX; 
+        pcs.firePropertyChange("positionX", oldX, positionX);
+    }
 
     public int getPositionY() { return positionY; }
-    public void setPositionY(int positionY) { this.positionY = positionY; }
+    public void setPositionY(int positionY) { 
+        int oldY = this.positionY;
+        this.positionY = positionY; 
+        pcs.firePropertyChange("positionY", oldY, positionY);
+    }
 
     public int getLevel() { return level; }
-    public void setLevel(int level) { this.level = level; }
+    public void setLevel(int level) { 
+        int oldLevel = this.level;
+        this.level = level; 
+        pcs.firePropertyChange("level", oldLevel, level);
+    }
 
     public int getExperiencePoints() { return experiencePoints; }
-    public void setExperiencePoints(int experiencePoints) { this.experiencePoints = experiencePoints; }
+    public void setExperiencePoints(int experiencePoints) { 
+        int oldXP = this.experiencePoints;
+        this.experiencePoints = experiencePoints; 
+        pcs.firePropertyChange("experiencePoints", oldXP, experiencePoints);
+    }
 
     public Inventory getInventory() { return inventory; }
     public void setInventory(Inventory inventory) { this.inventory = inventory; }
@@ -61,21 +105,44 @@ public class Player {
     public void setJournal(Journal journal) { this.journal = journal; }
 
     public String getDirection() { return direction; }
-    public void setDirection(String direction) { this.direction = direction; }
+    public void setDirection(String direction) { 
+        String oldDirection = this.direction;
+        this.direction = direction; 
+        pcs.firePropertyChange("direction", oldDirection, direction);
+    }
 
     public boolean isMoving() { return isMoving; }
-    public void setMoving(boolean moving) { isMoving = moving; }
+    public void setMoving(boolean moving) { 
+        boolean oldMoving = this.isMoving;
+        this.isMoving = moving; 
+        pcs.firePropertyChange("isMoving", oldMoving, moving);
+    }
 
     public void move(String direction, int dx, int dy) {
-        this.direction = direction;
-        this.positionX += dx;
-        this.positionY += dy;
-        this.isMoving = true;
+        setDirection(direction);
+        if (speedActive) {
+            int extra = 2; 
+            if (dx != 0 && dy == 0) {
+                dx += (dx > 0 ? extra : -extra);
+            } else if (dy != 0 && dx == 0) {
+                dy += (dy > 0 ? extra : -extra);
+            } else if (dx != 0 && dy != 0) {
+                dx += (dx > 0 ? extra : -extra);
+                dy += (dy > 0 ? extra : -extra);
+            }
+        }
+        int oldX = positionX;
+        int oldY = positionY;
+        positionX += dx;
+        positionY += dy;
+        setMoving(true);
         journal.addEntry("Moved " + direction + " to (" + positionX + ", " + positionY + ").");
+        pcs.firePropertyChange("positionX", oldX, positionX);
+        pcs.firePropertyChange("positionY", oldY, positionY);
     }
 
     public void stopMoving() {
-        this.isMoving = false;
+        setMoving(false);
     }
     
     public void modifyCharacteristic(String charName, int delta) {
@@ -84,10 +151,10 @@ public class Player {
             if (c.getName().equalsIgnoreCase(charName)) {
                 int currentValue = c.getValue();
                 if (charName.equalsIgnoreCase("life") && delta < 0) {
-                    int damage = -delta; 
+                    int damage = -delta;
                     Characteristic defenseChar = null;
                     for (Characteristic ch : characteristics) {
-                        if (ch.getName().equalsIgnoreCase("defense")) {
+                        if (ch.getName().equalsIgnoreCase("Defense")) {
                             defenseChar = ch;
                             break;
                         }
@@ -96,43 +163,92 @@ public class Player {
                         int defenseValue = defenseChar.getValue();
                         if (defenseValue >= damage) {
                             defenseChar.setValue(defenseValue - damage);
+                            pcs.firePropertyChange("Defense", defenseValue, defenseChar.getValue());
                             damage = 0;
                         } else {
                             damage -= defenseValue;
                             defenseChar.setValue(0);
+                            pcs.firePropertyChange("Defense", defenseValue, 0);
                         }
                         delta = -damage;
                     }
                     if (currentValue + delta < 0) {
                         delta = -currentValue;
                     }
+                    int oldLife = currentValue;
+                    c.setValue(currentValue + delta);
+                    pcs.firePropertyChange("characteristic_life", oldLife, c.getValue());
+                    found = true;
+                    if (c.getValue() == 0) {
+                        JOptionPane.showMessageDialog(null, "Game Over", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    break;
+                }
+                else if (charName.equalsIgnoreCase("Defense") && delta < 0) {
+                    int extraDamage = 0;
+                    if (currentValue + delta < 0) {
+                        extraDamage = -(currentValue + delta);
+                        delta = -currentValue;
+                    }
+                    int oldDef = currentValue;
+                    c.setValue(currentValue + delta);
+                    pcs.firePropertyChange("characteristic_Defense", oldDef, c.getValue());
+                    found = true;
+                    if (extraDamage > 0) {
+                        modifyCharacteristic("life", -extraDamage);
+                    }
+                    break;
                 }
                 else if ((charName.equalsIgnoreCase("speed") || charName.equalsIgnoreCase("damage")) && delta < 0) {
                     if (currentValue + delta < 0) {
                         delta = -currentValue;
                     }
+                    int oldVal = currentValue;
+                    c.setValue(currentValue + delta);
+                    pcs.firePropertyChange("characteristic_" + charName, oldVal, c.getValue());
+                    found = true;
+                    break;
                 }
-                c.setValue(currentValue + delta);
-                found = true;
-                if (charName.equalsIgnoreCase("life") && c.getValue() == 0) {
-                    javax.swing.JOptionPane.showMessageDialog(null, "Game Over", "Game Over", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                else {
+                    int oldVal = currentValue;
+                    c.setValue(currentValue + delta);
+                    pcs.firePropertyChange("characteristic_" + charName, oldVal, c.getValue());
+                    found = true;
+                    break;
                 }
-                break;
             }
         }
         if (!found) {
             if (delta > 0) {
                 characteristics.add(new Characteristic(charName, delta));
+                pcs.firePropertyChange("characteristic_" + charName, 0, delta);
             } else {
                 System.out.println("Caractéristique " + charName + " non trouvée et delta négatif. Aucune création.");
             }
         }
     }
 
-
-
-
     public void applyBooster(String characteristicName, int bonus) {
         modifyCharacteristic(characteristicName, bonus);
+    }
+
+    public void activateSpeed() {
+        if (!speedActive && getCharacteristicValue("speed") > 0) {
+            speedActive = true;
+            int delay = 1000; 
+            Timer speedTimer = new Timer(delay, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int currentSpeed = getCharacteristicValue("speed");
+                    if (currentSpeed > 0) {
+                        modifyCharacteristic("speed", -1);
+                    } else {
+                        speedActive = false;
+                        ((Timer)e.getSource()).stop();
+                    }
+                }
+            });
+            speedTimer.start();
+        }
     }
 }

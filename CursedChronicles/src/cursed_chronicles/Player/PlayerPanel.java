@@ -33,6 +33,11 @@ public class PlayerPanel extends JFrame {
 
         inventoryPanel = inventory;
         journalPanel = journal;
+        
+
+        player.addPropertyChangeListener(evt -> {
+            updateCharacteristics(player);
+        });
     }
 
     public void updateCharacteristics(Player player) {

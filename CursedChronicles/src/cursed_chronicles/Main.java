@@ -8,7 +8,7 @@ import java.awt.event.*;
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            // Création du joueur avec ses caractéristiques initiales (Life, Experience, Speed)
+            // Création du joueur avec ses caractéristiques initiales (Life, Defense, Speed)
             Player player = new Player("Hero");
             
             // Création des panneaux pour l'inventaire, le journal et les infos joueur
@@ -105,8 +105,9 @@ public class Main {
                         return;
                     }
                     player.modifyCharacteristic(selectedChar, delta);
-                    // Mise à jour du panneau d'information du joueur
                     playerPanel.updateCharacteristics(player);
+                    // Redemande le focus sur la fenêtre pour la gestion des déplacements
+                    gameFrame.requestFocusInWindow();
                 }
             });
             controlPanel.add(modifyButton);
@@ -116,12 +117,24 @@ public class Main {
             addDamageButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    // Ajoute ou augmente la caractéristique "Damage" de 5
                     player.modifyCharacteristic("Damage", 5);
                     playerPanel.updateCharacteristics(player);
+                    gameFrame.requestFocusInWindow();
                 }
             });
             controlPanel.add(addDamageButton);
+            
+            // Bouton pour activer le speed booster
+            JButton activateSpeedButton = new JButton("Activer Speed");
+            activateSpeedButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    player.activateSpeed();
+                    playerPanel.updateCharacteristics(player);
+                    gameFrame.requestFocusInWindow();
+                }
+            });
+            controlPanel.add(activateSpeedButton);
             
             gameFrame.add(controlPanel, BorderLayout.NORTH);
             

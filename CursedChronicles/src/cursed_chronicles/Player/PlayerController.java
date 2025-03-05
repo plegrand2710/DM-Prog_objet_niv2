@@ -26,15 +26,16 @@ public class PlayerController implements KeyListener {
 
         if (dx != 0 || dy != 0) {
             player.move(direction, dx, dy);
-            playerView.updateView(); // Met à jour l'affichage
+            playerView.updateView(); 
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        player.stopMoving(); // Arrête l’animation quand la touche est relâchée
+        player.stopMoving(); 
     }
 
     @Override
     public void keyTyped(KeyEvent e) {}
+
 }
