@@ -6,41 +6,63 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class InventoryPanel extends JFrame {
-    private DefaultListModel<Item> itemListModel;
-    private JList<Item> itemList;
+    private DefaultListModel<Item> boosterListModel;
+    private JList<Item> boosterList;
+    private DefaultListModel<Item> weaponListModel;
+    private JList<Item> weaponList;
     private Player player;
     private JLabel itemDescriptionLabel;
 
     public InventoryPanel(Player player) {
         this.player = player;
         setTitle("🎒 Inventory");
-        setSize(300, 300); 
+        setSize(400, 300);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        itemListModel = new DefaultListModel<>();
-        itemList = new JList<>(itemListModel);
-        itemList.setCellRenderer(new ItemCellRenderer());
-        
-        itemList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-        itemList.setVisibleRowCount(-1);
-        itemList.setFixedCellWidth(64);
-        itemList.setFixedCellHeight(64);
+        // Création de la liste pour les boosters
+        boosterListModel = new DefaultListModel<>();
+        boosterList = new JList<>(boosterListModel);
+        boosterList.setCellRenderer(new ItemCellRenderer());
+        boosterList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+        boosterList.setVisibleRowCount(-1);
+        boosterList.setFixedCellWidth(64);
+        boosterList.setFixedCellHeight(64);
+        JScrollPane boosterScrollPane = new JScrollPane(boosterList);
+        boosterScrollPane.setBorder(BorderFactory.createTitledBorder("Boosters"));
 
-        JScrollPane scrollPane = new JScrollPane(itemList);
-        add(scrollPane, BorderLayout.CENTER);
+        // Création de la liste pour les armes
+        weaponListModel = new DefaultListModel<>();
+        weaponList = new JList<>(weaponListModel);
+        weaponList.setCellRenderer(new ItemCellRenderer());
+        weaponList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+        weaponList.setVisibleRowCount(-1);
+        weaponList.setFixedCellWidth(64);
+        weaponList.setFixedCellHeight(64);
+        JScrollPane weaponScrollPane = new JScrollPane(weaponList);
+        weaponScrollPane.setBorder(BorderFactory.createTitledBorder("Armes"));
 
+        // Panel central : affichage vertical des deux listes
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+        centerPanel.add(boosterScrollPane);
+        centerPanel.add(weaponScrollPane);
+        add(centerPanel, BorderLayout.CENTER);
+
+        // Panel bas : affichage de la description
         JPanel descriptionPanel = new JPanel(new BorderLayout());
         itemDescriptionLabel = new JLabel("");
         descriptionPanel.add(itemDescriptionLabel, BorderLayout.CENTER);
         add(descriptionPanel, BorderLayout.SOUTH);
 
-        itemList.addMouseListener(new MouseAdapter() {
+        // Listener de souris commun aux deux listes
+        MouseAdapter listMouseAdapter = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int index = itemList.locationToIndex(e.getPoint());
+                JList<Item> sourceList = (JList<Item>) e.getSource();
+                int index = sourceList.locationToIndex(e.getPoint());
                 if (index >= 0) {
-                    Item selectedItem = itemListModel.getElementAt(index);
+                    Item selectedItem = sourceList.getModel().getElementAt(index);
                     if (e.getClickCount() == 1) {
                         itemDescriptionLabel.setText(selectedItem.getDescription());
                     } else if (e.getClickCount() == 2) {
@@ -51,16 +73,24 @@ public class InventoryPanel extends JFrame {
                     }
                 }
             }
-        });
+        };
+        boosterList.addMouseListener(listMouseAdapter);
+        weaponList.addMouseListener(listMouseAdapter);
     }
 
     public void updateInventory(ArrayList<Item> items) {
-        itemListModel.clear();
+        boosterListModel.clear();
+        weaponListModel.clear();
         if (items.isEmpty()) {
-            itemListModel.addElement(null);
+            boosterListModel.addElement(null);
+            weaponListModel.addElement(null);
         } else {
             for (Item item : items) {
-                itemListModel.addElement(item);
+                if (isWeapon(item)) {
+                    weaponListModel.addElement(item);
+                } else {
+                    boosterListModel.addElement(item);
+                }
             }
         }
     }
@@ -71,6 +101,12 @@ public class InventoryPanel extends JFrame {
         int y = screenSize.height - getHeight();
         setLocation(x, y);
         setVisible(true);
+    }
+
+    private boolean isWeapon(Item item) {
+        String name = item.getName().toLowerCase();
+        return name.contains("sword") || name.contains("pistol") || name.contains("rifle")
+                || name.contains("bow") || name.contains("hammer") || name.contains("epe");
     }
 }
 
@@ -90,6 +126,7 @@ class ItemCellRenderer extends JLabel implements ListCellRenderer<Item> {
             setText("Inventaire vide");
             setIcon(null);
         } else {
+            // Pour tous les items, afficher uniquement l'image
             setText("");
             Image original = item.getImage();
             Image scaledImage = original.getScaledInstance(ICON_WIDTH, ICON_HEIGHT, Image.SCALE_SMOOTH);
@@ -109,8 +146,6 @@ class ItemCellRenderer extends JLabel implements ListCellRenderer<Item> {
         return this;
     }
 }
-
-
 
 class QuantityOverlayIcon implements Icon {
     private Icon baseIcon;
@@ -146,4 +181,3 @@ class QuantityOverlayIcon implements Icon {
         return baseIcon.getIconHeight();
     }
 }
-
