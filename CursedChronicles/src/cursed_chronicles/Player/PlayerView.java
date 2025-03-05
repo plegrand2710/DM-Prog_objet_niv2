@@ -6,8 +6,8 @@ import java.util.HashMap;
 
 public class PlayerView extends JPanel {
     private Player player;
-    private HashMap<String, Image[]> sprites;  // Stocke les différentes animations
-    private int frameIndex = 0;  // Pour animer le joueur
+    private HashMap<String, Image[]> sprites; 
+    private int frameIndex = 0; 
 
     public PlayerView(Player player) {
         this.player = player;
@@ -17,32 +17,48 @@ public class PlayerView extends JPanel {
     }
 
     private void loadSprites() {
-        // Charger et vérifier le chargement des images depuis le dossier "player"
         sprites.put("down", new Image[]{
-            loadImage("frame_1.png"),
-            loadImage("frame_2.png")
+            loadImage("pasDFace1.png"),
+            loadImage("pasDFace2.png"),
+            loadImage("pasDFace3.png"),
+            loadImage("pasMFace.png"),
+            loadImage("pasGFace1.png"),
+            loadImage("pasGFace2.png"),
+            loadImage("pasGFace3.png")
         });
-
         sprites.put("up", new Image[]{
-            loadImage("frame_3.png"),
-            loadImage("frame_4.png")
+            loadImage("pasD1.png"),
+            loadImage("pasD2.png"),
+            loadImage("pasD3.png"),
+            loadImage("pasD4.png"),
+            loadImage("pasMDos.png"),
+            loadImage("pasGDos1.png"),
+            loadImage("pasGDos2.png"),
+            loadImage("pasGDos3.png")
         });
-
-        sprites.put("left", new Image[]{
-            loadImage("frame_5.png"),
-            loadImage("frame_2.png")
-        });
-
         sprites.put("right", new Image[]{
-            loadImage("frame_3.png"),
-            loadImage("frame_4.png")
+            loadImage("pasDDroite1.png"),
+            loadImage("pasDDroite2.png"),
+            loadImage("pasDDroite3.png"),
+            loadImage("pasMDroite.png"),
+            loadImage("pasGDroite1.png"),
+            loadImage("pasGDroite2.png"),
+            loadImage("pasGDroite3.png")
+        });
+        sprites.put("left", new Image[]{
+            loadImage("pasDGauche1.png"),
+            loadImage("pasDGauche2.png"),
+            loadImage("pasDGauche3.png"),
+            loadImage("pasMGauche.png"),
+            loadImage("pasGGauche1.png"),
+            loadImage("pasGGauche2.png"),
+            loadImage("pasGGauche3.png")
         });
     }
 
     private Image loadImage(String path) {
         ImageIcon icon = new ImageIcon(path);
         Image image = icon.getImage();
-        // Vérifier si l'image est chargée (getWidth retourne -1 si l'image n'est pas chargée)
         if (image.getWidth(null) == -1) {
             System.out.println("Erreur de chargement de l'image : " + path);
         } else {
@@ -54,16 +70,17 @@ public class PlayerView extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Sélectionner la bonne animation en fonction du mouvement
         String direction = player.getDirection();
         Image[] frames = sprites.get(direction);
         Image currentFrame = frames[frameIndex];
-        // Dessiner le sprite du joueur
         g.drawImage(currentFrame, player.getPositionX() * 64, player.getPositionY() * 64, 64, 64, this);
     }
 
     public void updateView() {
-        frameIndex = (frameIndex + 1) % 2; // Alterner entre deux frames pour animer
+        Image[] currentAnimation = sprites.get(player.getDirection());
+        if (currentAnimation != null && currentAnimation.length > 0) {
+            frameIndex = (frameIndex + 1) % currentAnimation.length;
+        }
         repaint();
     }
 }
