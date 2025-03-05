@@ -12,9 +12,8 @@ public class Player {
     private ArrayList<Characteristic> characteristics;
     private Journal journal;
 
-    // 🎮 Gestion des déplacements et des images
-    private String direction;  // "up", "down", "left", "right"
-    private boolean isMoving;  // Indique si le joueur est en mouvement
+    private String direction;  
+    private boolean isMoving; 
 
     public Player(String name) {
         this.name = name;
@@ -25,21 +24,18 @@ public class Player {
         this.inventory = new Inventory();
         this.characteristics = new ArrayList<>();
         this.journal = new Journal();
-        this.direction = "down"; // Direction par défaut
+        this.direction = "down";
         this.isMoving = false;
 
-        // 🎯 Initialisation des caractéristiques de base
         initializeDefaultCharacteristics();
     }
 
     private void initializeDefaultCharacteristics() {
-        characteristics.add(new Characteristic("Strength", 5));
-        characteristics.add(new Characteristic("Defense", 5));
-        characteristics.add(new Characteristic("Agility", 5));
-        characteristics.add(new Characteristic("Intelligence", 5));
+        characteristics.add(new Characteristic("life", 100));
+        characteristics.add(new Characteristic("Defense", 0));
+        characteristics.add(new Characteristic("speed", 10));
     }
 
-    // ✅ Getters & Setters
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
@@ -70,7 +66,6 @@ public class Player {
     public boolean isMoving() { return isMoving; }
     public void setMoving(boolean moving) { isMoving = moving; }
 
-    // 🎮 Déplacement du joueur avec gestion des images
     public void move(String direction, int dx, int dy) {
         this.direction = direction;
         this.positionX += dx;
@@ -79,7 +74,6 @@ public class Player {
         journal.addEntry("Moved " + direction + " to (" + positionX + ", " + positionY + ").");
     }
 
-    // ⏹️ Arrêter le mouvement du joueur (arrêt de l'animation)
     public void stopMoving() {
         this.isMoving = false;
     }
