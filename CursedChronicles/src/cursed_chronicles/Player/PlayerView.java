@@ -17,43 +17,53 @@ public class PlayerView extends JPanel {
     }
 
     private void loadSprites() {
-        // Charger les images pour chaque direction
+        // Charger et vérifier le chargement des images depuis le dossier "player"
         sprites.put("down", new Image[]{
-            new ImageIcon("assets/frame_1.png").getImage(),
-            new ImageIcon("assets/frame_2.png").getImage()
+            loadImage("frame_1.png"),
+            loadImage("frame_2.png")
         });
 
         sprites.put("up", new Image[]{
-            new ImageIcon("assets/frame_3.png").getImage(),
-            new ImageIcon("assets/frame_4.png").getImage()
+            loadImage("frame_3.png"),
+            loadImage("frame_4.png")
         });
 
         sprites.put("left", new Image[]{
-            new ImageIcon("assets/frame_5.png").getImage(),
-            new ImageIcon("assets/frame_2.png").getImage()
+            loadImage("frame_5.png"),
+            loadImage("frame_2.png")
         });
 
         sprites.put("right", new Image[]{
-            new ImageIcon("assets/frame_3.png").getImage(),
-            new ImageIcon("assets/frame_4.png").getImage()
+            loadImage("frame_3.png"),
+            loadImage("frame_4.png")
         });
+    }
+
+    private Image loadImage(String path) {
+        ImageIcon icon = new ImageIcon(path);
+        Image image = icon.getImage();
+        // Vérifier si l'image est chargée (getWidth retourne -1 si l'image n'est pas chargée)
+        if (image.getWidth(null) == -1) {
+            System.out.println("Erreur de chargement de l'image : " + path);
+        } else {
+            System.out.println("Image chargée avec succès : " + path);
+        }
+        return image;
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         // Sélectionner la bonne animation en fonction du mouvement
         String direction = player.getDirection();
         Image[] frames = sprites.get(direction);
         Image currentFrame = frames[frameIndex];
-
-        // Dessiner le joueur
+        // Dessiner le sprite du joueur
         g.drawImage(currentFrame, player.getPositionX() * 64, player.getPositionY() * 64, 64, 64, this);
     }
 
     public void updateView() {
-        frameIndex = (frameIndex + 1) % 2; // Alterne entre deux frames pour animer
+        frameIndex = (frameIndex + 1) % 2; // Alterner entre deux frames pour animer
         repaint();
     }
 }
