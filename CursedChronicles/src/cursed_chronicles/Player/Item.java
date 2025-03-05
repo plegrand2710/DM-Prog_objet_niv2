@@ -1,15 +1,23 @@
 package cursed_chronicles.Player;
+
 import java.util.ArrayList;
+import java.awt.Image;
 
 public class Item {
     private String name;
     private String description;
     private ArrayList<Characteristic> characteristics;
+    private Image image; 
 
-    public Item(String name, String description) {
+    public Item(String name, String description, Image image) {
         this.name = name;
         this.description = description;
         this.characteristics = new ArrayList<>();
+        this.image = image;
+    }
+    
+    public Item(String name, String description) {
+        this(name, description, null);
     }
 
     public String getName() {
@@ -30,6 +38,14 @@ public class Item {
 
     public void removeCharacteristic(String characteristicName) {
         characteristics.removeIf(c -> c.getName().equalsIgnoreCase(characteristicName));
+    }
+    
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     @Override
