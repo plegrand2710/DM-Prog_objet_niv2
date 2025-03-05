@@ -4,6 +4,7 @@ import cursed_chronicles.Player.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,8 +14,8 @@ public class Main {
             
             // Création des panneaux pour l'inventaire, le journal et les infos joueur
             InventoryPanel inventoryPanel = new InventoryPanel();
+            // Afficher l'inventaire dès le début, même vide
             inventoryPanel.showInventory();
-
             JournalPanel journalPanel = new JournalPanel();
             PlayerPanel playerPanel = new PlayerPanel(player, inventoryPanel, journalPanel);
             playerPanel.setVisible(true);
@@ -23,11 +24,11 @@ public class Main {
             JFrame gameFrame = new JFrame("Game Window");
             gameFrame.setLayout(new BorderLayout());
             
-            // Affichage du joueur et de son animation
+            // Affichage du joueur et de son animation dans le centre
             PlayerView playerView = new PlayerView(player);
             gameFrame.add(playerView, BorderLayout.CENTER);
             
-            // Panel sud : affichage des items (objets dont l'image est agrandie)
+            // Panel sud : affichage des items disponibles dans le monde (images agrandies)
             JPanel itemsPanel = new JPanel();
             itemsPanel.setLayout(new GridLayout(0, 4, 5, 5));
             String[] itemFileNames = {
@@ -82,7 +83,6 @@ public class Main {
             
             // Panel nord : contrôles pour modifier les caractéristiques et gérer l'inventaire
             JPanel controlPanel = new JPanel(new FlowLayout());
-            
             // Contrôle pour modifier une caractéristique
             String[] characteristicOptions = {"Life", "Defense", "Speed"};
             JComboBox<String> charCombo = new JComboBox<>(characteristicOptions);
@@ -134,10 +134,21 @@ public class Main {
             });
             controlPanel.add(activateSpeedButton);
             
-            // Contrôle pour choisir l'objet à ajouter dans l'inventaire
-            // On définit ici un tableau de noms et un tableau correspondant aux fichiers images
-            String[] invItemNames = {"Épée", "Bouclier", "Potion de vie", "Arc", "Pistolet"};
-            String[] invItemFiles = {"sword_sprite.png", "hammer_sprite.png", "life_booster.png", "bow_item.png", "pistol_sprite.png"};
+            ArrayList<String> invItemFilesList = new ArrayList<>();
+            ArrayList<String> invItemNamesList = new ArrayList<>();
+            for (String fileName : itemFileNames) {
+                if (fileName.toLowerCase().contains("epe"))
+                    continue;
+                invItemFilesList.add(fileName);
+                String name = fileName;
+                if (name.toLowerCase().endsWith(".png")) {
+                    name = name.substring(0, name.length() - 4);
+                }
+                invItemNamesList.add(name);
+            }
+            String[] invItemNames = invItemNamesList.toArray(new String[0]);
+            String[] invItemFiles = invItemFilesList.toArray(new String[0]);
+            
             JPanel inventoryControlPanel = new JPanel(new FlowLayout());
             JComboBox<String> invItemCombo = new JComboBox<>(invItemNames);
             inventoryControlPanel.add(new JLabel("Choisissez un objet : "));
@@ -176,7 +187,6 @@ public class Main {
             gameFrame.setFocusable(true);
             gameFrame.requestFocusInWindow();
             
-            // Simulation d'actions : déplacement et mise à jour de l'animation
             player.move("right", 1, 0);
             player.move("down", 0, 1);
             playerView.updateView();
