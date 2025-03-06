@@ -2,6 +2,8 @@ package cursed_chronicles.Player;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 public class PlayerView extends JPanel {
@@ -112,30 +114,59 @@ public class PlayerView extends JPanel {
     
     public void updateWeaponSkin() {
         ItemWeapon weapon = player.getCurrentWeapon();
-        System.out.println("direction : " + player.getDirection());
-        System.out.println("equal : " + ("down".equals(player.getDirection())));
-        System.out.println("weapon : " + player.getCurrentWeapon());
-
         if (weapon != null) {
-            if ("right".equals(player.getDirection())) {
-                setPlayerImage(new ImageIcon(path+"epeActionDroite.png").getImage());
-                System.out.println("changement de skinn droit");
-
-            } else if ("left".equals(player.getDirection())) {
-                setPlayerImage(new ImageIcon(path+"epeActionGauche.png").getImage());
-                System.out.println("changement de skinn gauche");
-
-            } else if ("up".equals(player.getDirection())) {
-                setPlayerImage(new ImageIcon(path+"epeActionDos.png").getImage());
-                System.out.println("changement de skinn dos");
-
-            } else if ("down".equals(player.getDirection())) {
-                System.out.println("changement de skinn face");
-
-                setPlayerImage(new ImageIcon(path+"epeActionFace.png").getImage());
-
+            final String[] swingFrames;
+            String direction = player.getDirection();
+            if ("right".equals(direction)) {
+                swingFrames = new String[] {
+                    path + "epeActionDroite.png",
+                    path + "epeActionViteDroite.png",
+                    path + "epeActionDroite.png",
+                    path + "epeSimpleDroite.png"
+                };
+            } else if ("left".equals(direction)) {
+                swingFrames = new String[] {
+                    path + "epeActionGauche.png",
+                    path + "epeActionViteGauche.png",
+                    path + "epeActionGauche.png",
+                    path + "epeSimpleGauche.png"
+                };
+            } else if ("up".equals(direction)) {
+                swingFrames = new String[] {
+                    path + "epeActionDos.png",
+                    path + "epeActionViteDos.png",
+                    path + "epeActionDos.png",
+                    path + "epeSimpleDos.png"
+                };
+            } else if ("down".equals(direction)) {
+                swingFrames = new String[] {
+                    path + "epeActionFace.png",
+                    path + "epeActionViteFace.png",
+                    path + "epeActionFace.png",
+                    path + "epeSimpleFace.png"
+                };
+            } else {
+                swingFrames = new String[0]; 
             }
+            
+            Timer timer = new Timer(500, null);
+            timer.addActionListener(new ActionListener() {
+                int frame = 0;
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (frame < swingFrames.length) {
+                        setPlayerImage(new ImageIcon(swingFrames[frame]).getImage());
+                        frame++;
+                    } else {
+                        timer.stop();
+                        resetPlayerImage();
+                    }
+                    repaint();
+                }
+            });
+            timer.start();
         }
-        repaint();
     }
+
+
 }
