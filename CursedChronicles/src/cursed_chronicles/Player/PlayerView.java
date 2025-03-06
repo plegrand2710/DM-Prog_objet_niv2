@@ -119,31 +119,27 @@ public class PlayerView extends JPanel {
             
             if ("right".equals(direction)) {
                 swingFrames = new String[] {
+                    path + weaponName + "SimpleDroite.png",
                     path + weaponName + "ActionDroite.png",
-                    path + weaponName + "ActionViteDroite.png",
-                    path + weaponName + "ActionDroite.png",
-                    path + weaponName + "SimpleDroite.png"
+                    path + weaponName + "ActionViteDroite.png"
                 };
             } else if ("left".equals(direction)) {
                 swingFrames = new String[] {
+                    path + weaponName + "SimpleGauche.png",
                     path + weaponName + "ActionGauche.png",
-                    path + weaponName + "ActionViteGauche.png",
-                    path + weaponName + "ActionGauche.png",
-                    path + weaponName + "SimpleGauche.png"
+                    path + weaponName + "ActionViteGauche.png"
                 };
             } else if ("up".equals(direction)) {
                 swingFrames = new String[] {
+                    path + weaponName + "SimpleDos.png",
                     path + weaponName + "ActionDos.png",
-                    path + weaponName + "ActionViteDos.png",
-                    path + weaponName + "ActionDos.png",
-                    path + weaponName + "SimpleDos.png"
+                    path + weaponName + "ActionViteDos.png"
                 };
             } else if ("down".equals(direction)) {
                 swingFrames = new String[] {
+                    path + weaponName + "SimpleFace.png",
                     path + weaponName + "ActionFace.png",
-                    path + weaponName + "ActionViteFace.png",
-                    path + weaponName + "ActionFace.png",
-                    path + weaponName + "SimpleFace.png"
+                    path + weaponName + "ActionViteFace.png"
                 };
             } else {
                 swingFrames = new String[0]; 

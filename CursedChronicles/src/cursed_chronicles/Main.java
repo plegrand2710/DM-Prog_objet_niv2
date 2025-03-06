@@ -13,42 +13,9 @@ public class Main {
         String playerPath = "assets/sprites/player/";
         String boosterPath = "assets/sprites/booster/";
         
-        // Tableau des noms bruts
-        String[] rawNames = {
-            "booster_damage.png",
-            "booster_defense_1.png",
-            "booster_defense_2.png",
-            "booster_defense_3.png",
-            "booster_life_1.png",
-            "booster_life_2.png",
-            "booster_life_3.png",
-            "booster_speed1.png",
-            "booster_speed2.png",
-            "booster_speed3.png",
-            "epeActionDos.png",
-            "epeActionDroite.png",
-            "epeActionFace.png",
-            "epeActionGauche.png",
-            "epeActionViteDos.png",
-            "epeActionViteDroite.png",
-            "epeActionViteFace.png",
-            "epeActionViteGauche.png",
-            "epeSimpleDDroite.png",
-            "epeSimpleDFace.png",
-            "epeSimpleDFace1.png",
-            "epeSimpleDGauche.png",
-            "epeSimpleDos.png",
-            "epeSimpleDroite.png",
-            "epeSimpleFace.png",
-            "epeSimpleGauche.png",
-            "bow_sprite.png",
-            "hammer_sprite.png",
-            "pistol_sprite.png",
-            "rifle_sprite.png",
-            "sword_sprite.png"
-        };
+        FileLoader fileLoader = new FileLoader();
+        String[] rawNames = fileLoader.loadFileNames(playerPath, boosterPath);
         
-        // Construction du tableau complet de chemins
         String[] itemFileNames = new String[rawNames.length];
         for (int i = 0; i < rawNames.length; i++) {
             String fileName = rawNames[i];
@@ -74,27 +41,6 @@ public class Main {
             PlayerView playerView = new PlayerView(player);
             gameFrame.add(playerView, BorderLayout.CENTER);
             
-            JPanel itemsPanel = new JPanel();
-            itemsPanel.setLayout(new GridLayout(0, 4, 5, 5));
-            int scaledWidth = 32;
-            int scaledHeight = 32;
-            for (String fullPath : itemFileNames) {
-                Image img = new ImageIcon(fullPath).getImage();
-                if (img.getWidth(null) == -1) {
-                    System.out.println("Erreur de chargement de l'image : " + fullPath);
-                    continue;
-                }
-                Image scaledImg = img.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
-                Item item;
-                if (fullPath.toLowerCase().contains("booster")) {
-                    item = new ItemBooster(fullPath);
-                } else {
-                    item = new ItemWeapon(fullPath);
-                }
-                JLabel itemLabel = new JLabel(new ImageIcon(scaledImg));
-                itemsPanel.add(itemLabel);
-            }
-            gameFrame.add(new JScrollPane(itemsPanel), BorderLayout.SOUTH);
             
             JPanel controlPanel = new JPanel(new FlowLayout());
             String[] characteristicOptions = {"Life", "Defense", "Speed"};
