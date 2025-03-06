@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
-        // Chemins pour les assets
         String playerPath = "assets/sprites/player/";
         String boosterPath = "assets/sprites/booster/";
         

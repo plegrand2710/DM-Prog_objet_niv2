@@ -8,10 +8,11 @@ import java.util.HashMap;
 
 public class PlayerView extends JPanel {
     private Player player;
-    private HashMap<String, Image[]> sprites; 
-    private int frameIndex = 0; 
+    private HashMap<String, Image[]> sprites;
+    private int frameIndex = 0;
     private String path = "assets/sprites/player/";
     private Image weaponSkin;
+    private Timer movementTimer;
 
     public PlayerView(Player player) {
         this.player = player;
@@ -22,41 +23,41 @@ public class PlayerView extends JPanel {
 
     private void loadSprites() {
         sprites.put("down", new Image[]{
-            loadImage(path+"pasDFace1.png"),
-            loadImage(path+"pasDFace2.png"),
-            loadImage(path+"pasDFace3.png"),
-            loadImage(path+"pasMFace.png"),
-            loadImage(path+"pasGFace1.png"),
-            loadImage(path+"pasGFace2.png"),
-            loadImage(path+"pasGFace3.png")
+            loadImage(path + "pasDFace1.png"),
+            loadImage(path + "pasDFace2.png"),
+            loadImage(path + "pasDFace3.png"),
+            loadImage(path + "pasMFace.png"),
+            loadImage(path + "pasGFace1.png"),
+            loadImage(path + "pasGFace2.png"),
+            loadImage(path + "pasGFace3.png")
         });
         sprites.put("up", new Image[]{
-            loadImage(path+"pasD1.png"),
-            loadImage(path+"pasD2.png"),
-            loadImage(path+"pasD3.png"),
-            loadImage(path+"pasD4.png"),
-            loadImage(path+"pasMDos.png"),
-            loadImage(path+"pasGDos1.png"),
-            loadImage(path+"pasGDos2.png"),
-            loadImage(path+"pasGDos3.png")
+            loadImage(path + "pasD1.png"),
+            loadImage(path + "pasD2.png"),
+            loadImage(path + "pasD3.png"),
+            loadImage(path + "pasD4.png"),
+            loadImage(path + "pasMDos.png"),
+            loadImage(path + "pasGDos1.png"),
+            loadImage(path + "pasGDos2.png"),
+            loadImage(path + "pasGDos3.png")
         });
         sprites.put("right", new Image[]{
-            loadImage(path+"pasDDroite1.png"),
-            loadImage(path+"pasDDroite2.png"),
-            loadImage(path+"pasDDroite3.png"),
-            loadImage(path+"pasMDroite.png"),
-            loadImage(path+"pasGDroite1.png"),
-            loadImage(path+"pasGDroite2.png"),
-            loadImage(path+"pasGDroite3.png")
+            loadImage(path + "pasDDroite1.png"),
+            loadImage(path + "pasDDroite2.png"),
+            loadImage(path + "pasDDroite3.png"),
+            loadImage(path + "pasMDroite.png"),
+            loadImage(path + "pasGDroite1.png"),
+            loadImage(path + "pasGDroite2.png"),
+            loadImage(path + "pasGDroite3.png")
         });
         sprites.put("left", new Image[]{
-            loadImage(path+"pasDGauche1.png"),
-            loadImage(path+"pasDGauche2.png"),
-            loadImage(path+"pasDGauche3.png"),
-            loadImage(path+"pasMGauche.png"),
-            loadImage(path+"pasGGauche1.png"),
-            loadImage(path+"pasGGauche2.png"),
-            loadImage(path+"pasGGauche3.png")
+            loadImage(path + "pasDGauche1.png"),
+            loadImage(path + "pasDGauche2.png"),
+            loadImage(path + "pasDGauche3.png"),
+            loadImage(path + "pasMGauche.png"),
+            loadImage(path + "pasGGauche1.png"),
+            loadImage(path + "pasGGauche2.png"),
+            loadImage(path + "pasGGauche3.png")
         });
     }
 
@@ -95,25 +96,47 @@ public class PlayerView extends JPanel {
     }
 
     public void updateView() {
-        Image[] currentAnimation = sprites.get(player.getDirection());
-        if (currentAnimation != null && currentAnimation.length > 0) {
-            frameIndex = (frameIndex + 1) % currentAnimation.length;
-        }
-        repaint();
+        animateMovement();
     }
-    
+
+    private void animateMovement() {
+        if (movementTimer != null && movementTimer.isRunning()) {
+            return;
+        }
+
+        Image[] movementFrames = sprites.get(player.getDirection());
+        if (movementFrames == null || movementFrames.length == 0) {
+            return;
+        }
+
+        frameIndex = 0;
+        movementTimer = new Timer(100, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (frameIndex < movementFrames.length) {
+                    repaint();
+                    frameIndex++;
+                } else {
+                    movementTimer.stop();
+                    frameIndex = 0;
+                }
+            }
+        });
+        movementTimer.start();
+    }
+
     public void setPlayerImage(Image image) {
         this.weaponSkin = image;
     }
-    
+
     public void resetPlayerImage() {
         this.weaponSkin = null;
     }
-    
+
     public void updateWeaponSkin() {
         ItemWeapon weapon = player.getCurrentWeapon();
         if (weapon != null) {
-            String weaponName = extractWeaponName(weapon.getName()); 
+            String weaponName = extractWeaponName(weapon.getName());
             final String[] swingFrames;
             String direction = player.getDirection();
             
@@ -142,11 +165,10 @@ public class PlayerView extends JPanel {
                     path + weaponName + "ActionViteFace.png"
                 };
             } else {
-                swingFrames = new String[0]; 
+                swingFrames = new String[0];
             }
             
-            Timer timer = new Timer(200, null);
-            timer.addActionListener(new ActionListener() {
+            Timer timer = new Timer(200, new ActionListener() {
                 int frame = 0;
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -154,7 +176,7 @@ public class PlayerView extends JPanel {
                         setPlayerImage(new ImageIcon(swingFrames[frame]).getImage());
                         frame++;
                     } else {
-                        timer.stop();
+                        ((Timer) e.getSource()).stop();
                         resetPlayerImage();
                     }
                     repaint();
@@ -164,17 +186,10 @@ public class PlayerView extends JPanel {
         }
     }
 
-    /**
-     * Extrait le nom de l'arme depuis le filePath avant le premier '_'
-     */
     private String extractWeaponName(String filePath) {
         if (filePath == null || !filePath.contains("_")) {
-            return filePath; // Retourne le nom complet si pas de '_'
+            return filePath;
         }
-        return filePath.substring(0, filePath.indexOf("_")); // Extrait tout avant '_'
+        return filePath.substring(0, filePath.indexOf("_"));
     }
-
-
-
-
 }
