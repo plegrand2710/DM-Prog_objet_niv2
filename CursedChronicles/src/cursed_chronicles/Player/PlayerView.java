@@ -9,10 +9,15 @@ import java.util.HashMap;
 public class PlayerView extends JPanel {
     private Player player;
     private HashMap<String, Image[]> sprites;
+    private PlayerController controller;
     private int frameIndex = 0;
     private String path = "assets/sprites/player/";
     private Image weaponSkin;
     private Timer movementTimer;
+    private final int baseMoveSpeed = 100; 
+    private final int speedMoveSpeed = 20; 
+    private boolean isAnimating = false;
+
 
     public PlayerView(Player player) {
         this.player = player;
@@ -21,6 +26,10 @@ public class PlayerView extends JPanel {
         setPreferredSize(new Dimension(640, 640));
     }
 
+    public void setController(PlayerController controller) {
+        this.controller = controller; 
+    }
+    
     private void loadSprites() {
         sprites.put("down", new Image[]{
             loadImage(path + "pasDFace1.png"),
@@ -88,9 +97,8 @@ public class PlayerView extends JPanel {
         } else {
             String direction = player.getDirection();
             Image[] frames = sprites.get(direction);
-            if (frames != null && frames.length > 0) {
-                Image currentFrame = frames[frameIndex];
-                g.drawImage(currentFrame, player.getPositionX() * cellSize, player.getPositionY() * cellSize, cellSize, cellSize, this);
+            if (frames != null && frames.length > 0 && frameIndex < frames.length) {
+                g.drawImage(frames[frameIndex], player.getPositionX() * cellSize, player.getPositionY() * cellSize, cellSize, cellSize, this);
             }
         }
     }
@@ -104,25 +112,38 @@ public class PlayerView extends JPanel {
             return;
         }
 
+        isAnimating = true;
+
+        int moveSpeed = player.isSpeedActive() ? speedMoveSpeed : baseMoveSpeed;
+
         Image[] movementFrames = sprites.get(player.getDirection());
         if (movementFrames == null || movementFrames.length == 0) {
             return;
         }
 
         frameIndex = 0;
-        movementTimer = new Timer(100, new ActionListener() {
+        movementTimer = new Timer(moveSpeed, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (frameIndex < movementFrames.length) {
-                    repaint();
+                if (frameIndex < movementFrames.length - 1) {
                     frameIndex++;
                 } else {
-                    movementTimer.stop();
                     frameIndex = 0;
+                    movementTimer.stop();
+                    isAnimating = false; 
+                    if (controller != null) {
+                        controller.notifyAnimationFinished(); 
+                    }
                 }
+                repaint();
             }
         });
+
         movementTimer.start();
+    }
+    
+    public boolean isAnimating() {
+        return isAnimating;
     }
 
     public void setPlayerImage(Image image) {
@@ -192,4 +213,6 @@ public class PlayerView extends JPanel {
         }
         return filePath.substring(0, filePath.indexOf("_"));
     }
+
+    
 }

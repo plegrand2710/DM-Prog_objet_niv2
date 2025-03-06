@@ -7,14 +7,22 @@ public class PlayerController extends KeyAdapter {
     private Player player;
     private PlayerView playerView;
     private Timer nonSpeedTimer = null;  
+    private boolean canMove = true; 
+
 
     public PlayerController(Player player, PlayerView playerView) {
         this.player = player;
         this.playerView = playerView;
+        this.playerView.setController(this);
+
     }
     
     @Override
     public void keyPressed(KeyEvent e) {
+    	if (!canMove) {
+            return; 
+        }
+    	
         int keyCode = e.getKeyCode();
         int dx = 0, dy = 0;
         String dir = player.getDirection();
@@ -47,30 +55,15 @@ public class PlayerController extends KeyAdapter {
                 return;
         }
         
-        final int baseDx = dx;
-        final int baseDy = dy;
-        final String directionFinal = dir;
-        
-        if (player.isSpeedActive()) {
-            if (nonSpeedTimer != null) {
-                nonSpeedTimer.stop();
-                nonSpeedTimer = null;
-            }
-            player.move(directionFinal, baseDx, baseDy);
+        if (!playerView.isAnimating()) {
+            player.move(dir, dx, dy);
             playerView.updateView();
-        } else {
-            if (nonSpeedTimer == null) {
-                nonSpeedTimer = new Timer(300, new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent evt) {
-                        player.move(directionFinal, baseDx, baseDy);
-                        playerView.updateView();
-                    }
-                });
-                nonSpeedTimer.setInitialDelay(0); 
-                nonSpeedTimer.start();
-            }
+            canMove = false; 
         }
+    }
+    
+    public void notifyAnimationFinished() {
+        canMove = true;
     }
     
     @Override
