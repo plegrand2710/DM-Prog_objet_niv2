@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "donjon2_room1.tmx",
+    "activeFile": "donjon2_room6.tmx",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -142,7 +142,7 @@
         },
         "Tilesets/atlas_walls_high-16x32.tsx": {
             "dynamicWrapping": false,
-            "scaleInDock": 1.3301,
+            "scaleInDock": 0.8855,
             "scaleInEditor": 1
         },
         "Tilesets/atlas_walls_low-16x16.tsx": {
@@ -262,8 +262,8 @@
             "scale": 1.9374,
             "selectedLayer": 7,
             "viewCenter": {
-                "x": 125.16775059357906,
-                "y": 147.87860018581605
+                "x": 128.26468462888408,
+                "y": 148.91091153091773
             }
         },
         "dunjeon1_room1.tmx": {
@@ -331,22 +331,26 @@
         "Tilesets/atlas_walls_high-16x32.tsx",
         "Tilesets/atlas_floor-16x16.tsx",
         "Tilesets/0x72_DungeonTilesetII_v1.7.tsx",
-        "donjon1_room5.tmx",
-        "donjon2_room1.tmx"
+        "donjon2_room1.tmx",
+        "donjon2_room2.tmx",
+        "donjon2_room3.tmx",
+        "donjon2_room4.tmx",
+        "donjon2_room5.tmx",
+        "donjon2_room6.tmx"
     ],
     "project": "tiled-project.tiled-project",
     "recentFiles": [
-        "donjon2_room5.tmx",
-        "donjon2_room4.tmx",
-        "donjon2_room3.tmx",
-        "donjon2_room2.tmx",
-        "donjon2_room6.tmx",
-        "donjon2_room1.tmx",
-        "donjon1_room5.tmx",
         "Tilesets/atlas_walls_low-16x16.tsx",
         "Tilesets/atlas_walls_high-16x32.tsx",
         "Tilesets/atlas_floor-16x16.tsx",
         "Tilesets/0x72_DungeonTilesetII_v1.7.tsx",
+        "donjon2_room1.tmx",
+        "donjon2_room2.tmx",
+        "donjon2_room3.tmx",
+        "donjon2_room4.tmx",
+        "donjon2_room5.tmx",
+        "donjon2_room6.tmx",
+        "donjon1_room5.tmx",
         "donjon1_room4.tmx"
     ],
     "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
