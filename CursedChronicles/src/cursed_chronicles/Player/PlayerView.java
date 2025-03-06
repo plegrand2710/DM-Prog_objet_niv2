@@ -11,7 +11,6 @@ public class PlayerView extends JPanel {
     private HashMap<String, Image[]> sprites; 
     private int frameIndex = 0; 
     private String path = "assets/sprites/player/";
-    // Champ pour le skin spécifique de l'arme, s'il est activé
     private Image weaponSkin;
 
     public PlayerView(Player player) {
@@ -83,7 +82,6 @@ public class PlayerView extends JPanel {
             g.drawLine(0, y, getWidth(), y);
         }
         
-        // Si un skin d'arme est défini, l'afficher
         if (weaponSkin != null) {
             g.drawImage(weaponSkin, player.getPositionX() * cellSize, player.getPositionY() * cellSize, cellSize, cellSize, this);
         } else {
@@ -115,41 +113,43 @@ public class PlayerView extends JPanel {
     public void updateWeaponSkin() {
         ItemWeapon weapon = player.getCurrentWeapon();
         if (weapon != null) {
+            String weaponName = extractWeaponName(weapon.getName()); 
             final String[] swingFrames;
             String direction = player.getDirection();
+            
             if ("right".equals(direction)) {
                 swingFrames = new String[] {
-                    path + "epeActionDroite.png",
-                    path + "epeActionViteDroite.png",
-                    path + "epeActionDroite.png",
-                    path + "epeSimpleDroite.png"
+                    path + weaponName + "ActionDroite.png",
+                    path + weaponName + "ActionViteDroite.png",
+                    path + weaponName + "ActionDroite.png",
+                    path + weaponName + "SimpleDroite.png"
                 };
             } else if ("left".equals(direction)) {
                 swingFrames = new String[] {
-                    path + "epeActionGauche.png",
-                    path + "epeActionViteGauche.png",
-                    path + "epeActionGauche.png",
-                    path + "epeSimpleGauche.png"
+                    path + weaponName + "ActionGauche.png",
+                    path + weaponName + "ActionViteGauche.png",
+                    path + weaponName + "ActionGauche.png",
+                    path + weaponName + "SimpleGauche.png"
                 };
             } else if ("up".equals(direction)) {
                 swingFrames = new String[] {
-                    path + "epeActionDos.png",
-                    path + "epeActionViteDos.png",
-                    path + "epeActionDos.png",
-                    path + "epeSimpleDos.png"
+                    path + weaponName + "ActionDos.png",
+                    path + weaponName + "ActionViteDos.png",
+                    path + weaponName + "ActionDos.png",
+                    path + weaponName + "SimpleDos.png"
                 };
             } else if ("down".equals(direction)) {
                 swingFrames = new String[] {
-                    path + "epeActionFace.png",
-                    path + "epeActionViteFace.png",
-                    path + "epeActionFace.png",
-                    path + "epeSimpleFace.png"
+                    path + weaponName + "ActionFace.png",
+                    path + weaponName + "ActionViteFace.png",
+                    path + weaponName + "ActionFace.png",
+                    path + weaponName + "SimpleFace.png"
                 };
             } else {
                 swingFrames = new String[0]; 
             }
             
-            Timer timer = new Timer(500, null);
+            Timer timer = new Timer(200, null);
             timer.addActionListener(new ActionListener() {
                 int frame = 0;
                 @Override
@@ -167,6 +167,18 @@ public class PlayerView extends JPanel {
             timer.start();
         }
     }
+
+    /**
+     * Extrait le nom de l'arme depuis le filePath avant le premier '_'
+     */
+    private String extractWeaponName(String filePath) {
+        if (filePath == null || !filePath.contains("_")) {
+            return filePath; // Retourne le nom complet si pas de '_'
+        }
+        return filePath.substring(0, filePath.indexOf("_")); // Extrait tout avant '_'
+    }
+
+
 
 
 }
