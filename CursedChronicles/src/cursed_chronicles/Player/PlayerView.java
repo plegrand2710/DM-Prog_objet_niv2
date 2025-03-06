@@ -9,6 +9,8 @@ public class PlayerView extends JPanel {
     private HashMap<String, Image[]> sprites; 
     private int frameIndex = 0; 
     private String path = "assets/sprites/player/";
+    // Champ pour le skin spécifique de l'arme, s'il est activé
+    private Image weaponSkin;
 
     public PlayerView(Player player) {
         this.player = player;
@@ -62,8 +64,6 @@ public class PlayerView extends JPanel {
         Image image = icon.getImage();
         if (image.getWidth(null) == -1) {
             System.out.println("Erreur de chargement de l'image : " + path);
-        } else {
-            System.out.println("Image chargée avec succès : " + path);
         }
         return image;
     }
@@ -81,19 +81,60 @@ public class PlayerView extends JPanel {
             g.drawLine(0, y, getWidth(), y);
         }
         
-        String direction = player.getDirection();
-        Image[] frames = sprites.get(direction);
-        if (frames != null && frames.length > 0) {
-            Image currentFrame = frames[frameIndex];
-            g.drawImage(currentFrame, player.getPositionX() * cellSize, player.getPositionY() * cellSize, cellSize, cellSize, this);
+        // Si un skin d'arme est défini, l'afficher
+        if (weaponSkin != null) {
+            g.drawImage(weaponSkin, player.getPositionX() * cellSize, player.getPositionY() * cellSize, cellSize, cellSize, this);
+        } else {
+            String direction = player.getDirection();
+            Image[] frames = sprites.get(direction);
+            if (frames != null && frames.length > 0) {
+                Image currentFrame = frames[frameIndex];
+                g.drawImage(currentFrame, player.getPositionX() * cellSize, player.getPositionY() * cellSize, cellSize, cellSize, this);
+            }
         }
     }
-
 
     public void updateView() {
         Image[] currentAnimation = sprites.get(player.getDirection());
         if (currentAnimation != null && currentAnimation.length > 0) {
             frameIndex = (frameIndex + 1) % currentAnimation.length;
+        }
+        repaint();
+    }
+    
+    public void setPlayerImage(Image image) {
+        this.weaponSkin = image;
+    }
+    
+    public void resetPlayerImage() {
+        this.weaponSkin = null;
+    }
+    
+    public void updateWeaponSkin() {
+        ItemWeapon weapon = player.getCurrentWeapon();
+        System.out.println("direction : " + player.getDirection());
+        System.out.println("equal : " + ("down".equals(player.getDirection())));
+        System.out.println("weapon : " + player.getCurrentWeapon());
+
+        if (weapon != null) {
+            if ("right".equals(player.getDirection())) {
+                setPlayerImage(new ImageIcon(path+"epeActionDroite.png").getImage());
+                System.out.println("changement de skinn droit");
+
+            } else if ("left".equals(player.getDirection())) {
+                setPlayerImage(new ImageIcon(path+"epeActionGauche.png").getImage());
+                System.out.println("changement de skinn gauche");
+
+            } else if ("up".equals(player.getDirection())) {
+                setPlayerImage(new ImageIcon(path+"epeActionDos.png").getImage());
+                System.out.println("changement de skinn dos");
+
+            } else if ("down".equals(player.getDirection())) {
+                System.out.println("changement de skinn face");
+
+                setPlayerImage(new ImageIcon(path+"epeActionFace.png").getImage());
+
+            }
         }
         repaint();
     }

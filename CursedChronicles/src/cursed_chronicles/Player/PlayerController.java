@@ -19,6 +19,13 @@ public class PlayerController extends KeyAdapter {
         int dx = 0, dy = 0;
         String dir = player.getDirection();
         
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            System.out.println("espace appuyé ");
+
+            playerView.updateWeaponSkin();
+            return;
+        }
+        
         switch (keyCode) {
             case KeyEvent.VK_UP:
                 dy = -1;

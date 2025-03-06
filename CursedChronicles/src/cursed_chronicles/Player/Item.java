@@ -4,12 +4,12 @@ import java.awt.Image;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
-public class Item {
+public abstract class Item {
     private String name;
     private String description;
     private ArrayList<Characteristic> characteristics;
     private Image image;
-    private int quantity; 
+    private int quantity;
 
     public Item(String filePath) {
         this.quantity = 1;
@@ -22,15 +22,6 @@ public class Item {
         
         this.image = new ImageIcon(filePath).getImage();
         
-        String type = ItemCharacteristicsUtil.getCharacteristicType(fileName);
-        int bonus = ItemCharacteristicsUtil.getBonusFromFilename(fileName);
-        
-        if (!type.isEmpty()) {
-            this.description = type + " : " + bonus;
-            addCharacteristic(new Characteristic(type, bonus));
-        } else {
-            this.description = this.name;
-        }
     }
 
     public String getName() {
@@ -39,6 +30,10 @@ public class Item {
     
     public String getDescription() {
         return description;
+    }
+    
+    protected void setDescription(String description) {
+        this.description = description;
     }
     
     public Image getImage() {
@@ -66,11 +61,11 @@ public class Item {
     public ArrayList<Characteristic> getCharacteristics() {
         return new ArrayList<>(characteristics);
     }
-
+    
     public void addCharacteristic(Characteristic characteristic) {
         characteristics.add(characteristic);
     }
-
+    
     public void removeCharacteristic(String characteristicName) {
         characteristics.removeIf(c -> c.getName().equalsIgnoreCase(characteristicName));
     }
@@ -83,17 +78,6 @@ public class Item {
             sb.append(" x").append(quantity);
         }
         sb.append(" - ").append(description);
-        /*if (!characteristics.isEmpty()) {
-            sb.append(" [");
-            for (Characteristic c : characteristics) {
-                sb.append(c.toString()).append(", ");
-            }
-            int lastIndex = sb.lastIndexOf(", ");
-            if (lastIndex != -1) {
-                sb.delete(lastIndex, sb.length());
-            }
-            sb.append("]");
-        }*/
         return sb.toString();
     }
 }

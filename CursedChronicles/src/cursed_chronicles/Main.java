@@ -9,11 +9,11 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
-        // Définir les chemins pour les assets
+        // Chemins pour les assets
         String playerPath = "assets/sprites/player/";
         String boosterPath = "assets/sprites/booster/";
         
-        // Tableau de noms bruts
+        // Tableau des noms bruts
         String[] rawNames = {
             "booster_damage.png",
             "booster_defense_1.png",
@@ -48,11 +48,10 @@ public class Main {
             "sword_sprite.png"
         };
         
-        // Construire itemFileNames avec le chemin complet directement
+        // Construction du tableau complet de chemins
         String[] itemFileNames = new String[rawNames.length];
         for (int i = 0; i < rawNames.length; i++) {
             String fileName = rawNames[i];
-            // Si le nom contient "epe", c'est une arme (utiliser playerPath)
             if (fileName.toLowerCase().contains("epe")) {
                 itemFileNames[i] = playerPath + fileName;
             } else {
@@ -61,10 +60,8 @@ public class Main {
         }
         
         SwingUtilities.invokeLater(() -> {
-            // Création du joueur
             Player player = new Player("Hero");
 
-            // Création des panneaux d'information, inventaire et journal
             InventoryPanel inventoryPanel = new InventoryPanel(player);
             inventoryPanel.showInventory();
             JournalPanel journalPanel = new JournalPanel();
@@ -74,11 +71,9 @@ public class Main {
             JFrame gameFrame = new JFrame("Game Window");
             gameFrame.setLayout(new BorderLayout());
             
-            // Affichage du joueur (PlayerView)
             PlayerView playerView = new PlayerView(player);
             gameFrame.add(playerView, BorderLayout.CENTER);
             
-            // Panel sud : affichage des items disponibles dans le monde
             JPanel itemsPanel = new JPanel();
             itemsPanel.setLayout(new GridLayout(0, 4, 5, 5));
             int scaledWidth = 32;
@@ -89,17 +84,18 @@ public class Main {
                     System.out.println("Erreur de chargement de l'image : " + fullPath);
                     continue;
                 }
-                // Pour l'affichage du monde, on peut scaler l'image ici
                 Image scaledImg = img.getScaledInstance(scaledWidth, scaledHeight, Image.SCALE_SMOOTH);
-                // Créer l'item à partir du chemin complet
-                Item item = new Item(fullPath);
-                // Pour l'affichage, on peut utiliser scaledImg dans le label
+                Item item;
+                if (fullPath.toLowerCase().contains("booster")) {
+                    item = new ItemBooster(fullPath);
+                } else {
+                    item = new ItemWeapon(fullPath);
+                }
                 JLabel itemLabel = new JLabel(new ImageIcon(scaledImg));
                 itemsPanel.add(itemLabel);
             }
             gameFrame.add(new JScrollPane(itemsPanel), BorderLayout.SOUTH);
             
-            // Panel nord : contrôles pour modifier les caractéristiques et gérer l'inventaire
             JPanel controlPanel = new JPanel(new FlowLayout());
             String[] characteristicOptions = {"Life", "Defense", "Speed"};
             JComboBox<String> charCombo = new JComboBox<>(characteristicOptions);
@@ -115,7 +111,7 @@ public class Main {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String selectedChar = (String) charCombo.getSelectedItem();
-                    int delta = 0;
+                    int delta;
                     try {
                         delta = Integer.parseInt(deltaField.getText());
                     } catch (NumberFormatException ex) {
@@ -151,15 +147,12 @@ public class Main {
             });
             controlPanel.add(activateSpeedButton);
             
-            // Panel de contrôle pour l'inventaire : on utilise seulement les items boosters (ceux qui ne contiennent pas "epe")
             ArrayList<String> invItemFilesList = new ArrayList<>();
             ArrayList<String> invItemNamesList = new ArrayList<>();
             for (String fullPath : itemFileNames) {
-                // On exclut les items d'arme (ceux contenant playerPath)
                 if (fullPath.toLowerCase().contains(playerPath.toLowerCase()))
                     continue;
                 invItemFilesList.add(fullPath);
-                // Extraire le nom sans chemin ni extension
                 int lastSlash = fullPath.lastIndexOf('/');
                 String fileName = (lastSlash != -1) ? fullPath.substring(lastSlash + 1) : fullPath;
                 int dotIndex = fileName.lastIndexOf('.');
@@ -171,7 +164,7 @@ public class Main {
             
             JPanel inventoryControlPanel = new JPanel(new FlowLayout());
             JComboBox<String> invItemCombo = new JComboBox<>(invItemNames);
-            inventoryControlPanel.add(new JLabel("Choisissez un objet : "));
+            inventoryControlPanel.add(new JLabel("Choisissez un booster : "));
             inventoryControlPanel.add(invItemCombo);
             JButton addInventoryButton = new JButton("Ajouter à l'inventaire");
             addInventoryButton.addActionListener(new ActionListener() {
@@ -179,13 +172,19 @@ public class Main {
                 public void actionPerformed(ActionEvent e) {
                     int index = invItemCombo.getSelectedIndex();
                     if (index < 0) return;
-                    String itemName = invItemNames[index];
-                    String fileName = invItemFiles[index];
-                    Image itemImg = new ImageIcon(fileName).getImage();
+                    String filePath = invItemFiles[index];
+                    Image itemImg = new ImageIcon(filePath).getImage();
                     if (itemImg.getWidth(null) == -1) {
-                        System.out.println("Erreur de chargement de l'image pour " + itemName);
+                        System.out.println("Erreur de chargement de l'image pour " + invItemNames[index]);
                     } else {
-                        Item newItem = new Item(fileName);
+                        Item newItem;
+                        int lastSlash = filePath.lastIndexOf('/');
+                        String justName = (lastSlash >= 0) ? filePath.substring(lastSlash + 1) : filePath;
+                        if (justName.toLowerCase().contains("booster")) {
+                            newItem = new ItemBooster(filePath);
+                        } else {
+                            newItem = new ItemWeapon(filePath);
+                        }
                         player.getInventory().addItem(newItem);
                         inventoryPanel.updateInventory(player.getInventory().getItems());
                         inventoryPanel.showInventory();
@@ -193,6 +192,7 @@ public class Main {
                     gameFrame.requestFocusInWindow();
                 }
             });
+
             inventoryControlPanel.add(addInventoryButton);
             controlPanel.add(inventoryControlPanel);
             
@@ -204,6 +204,7 @@ public class Main {
             gameFrame.setVisible(true);
             
             gameFrame.addKeyListener(new PlayerController(player, playerView));
+
             gameFrame.setFocusable(true);
             gameFrame.requestFocusInWindow();
             
