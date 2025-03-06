@@ -1,0 +1,193 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "dunjeon1_room1.tmx",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/Map/0x72_DungeonTilesetII_v1.7.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/Map/Dunjeons/dunjeon1_room1.tmx": {
+            "scale": 1.4992187499999998,
+            "selectedLayer": 5,
+            "viewCenter": {
+                "x": 117.39447628973423,
+                "y": 53.36112558624282
+            }
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/Map/Dunjeons/dunjeon1_room2.tmx": {
+            "scale": 1.9862,
+            "selectedLayer": 5,
+            "viewCenter": {
+                "x": 90.12184070083575,
+                "y": 146.51092538515758
+            }
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/Map/Dunjeons/dunjeon1_room3.tmx": {
+            "scale": 1.4992187499999998,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 123.39760291818655,
+                "y": 142.07399687337158
+            }
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/Map/Dunjeons/dunjeon1_room4.tmx": {
+            "scale": 1.6861,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 107.34831860506495,
+                "y": 166.6567819227804
+            }
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/Map/Dunjeons/dunjeon1_room5.tmx": {
+            "scale": 1.4992187499999998,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 122.73058884835851,
+                "y": 133.4028139656071
+            }
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/Map/atlas_walls_high-16x32.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/Map/atlas_walls_low-16x16.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tilesets/0x72_DungeonTilesetII_v1.7.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tilesets/0x72_DungeonTilesetII_v1.7_SideDoors.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tilesets/atlas_floor-16x16.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tilesets/atlas_walls_high-16x32.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tilesets/atlas_walls_low-16x16.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tilesets/dunjeon1_room2.tmx": {
+            "scale": 1.5015,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 95.9040959040959,
+                "y": 106.56010656010656
+            }
+        },
+        "Tilesets/dunjeon2_room2.tmx": {
+            "scale": 2.1078125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 128.09488510007415,
+                "y": 152.29058561897705
+            }
+        },
+        "atlas_walls_high-16x32.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "dunjeon1_room1.tmx": {
+            "scale": 0.608,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 18.91447368421052,
+                "y": 134.86842105263162
+            }
+        },
+        "dunjeon1_room2.tmx": {
+            "scale": 1.56,
+            "selectedLayer": 6,
+            "viewCenter": {
+                "x": 143.26923076923077,
+                "y": 153.8461538461538
+            }
+        },
+        "dunjeon1_room3.tmx": {
+            "expandedObjectLayers": [
+                9,
+                8
+            ],
+            "scale": 1.3901,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 54.312639378461995,
+                "y": 241.70922955183082
+            }
+        },
+        "dunjeon1_room4.tmx": {
+            "scale": 1.3473,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": -30.060120240480956,
+                "y": 181.84517182513179
+            }
+        },
+        "dunjeon1_room5.tmx": {
+            "scale": 1.444,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 87.95013850415515,
+                "y": 166.2049861495845
+            }
+        },
+        "dunjeon2_room1.tmx": {
+            "scale": 1.3541,
+            "selectedLayer": 7,
+            "viewCenter": {
+                "x": 127.76013588361272,
+                "y": 127.76013588361272
+            }
+        }
+    },
+    "last.externalTilesetPath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/maps/Tilesets",
+    "last.imagePath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/TileSets/0x72_DungeonTilesetII_v1.7",
+    "map.height": 16,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 16,
+    "openFiles": [
+        "dunjeon1_room1.tmx"
+    ],
+    "project": "tiled-project.tiled-project",
+    "recentFiles": [
+        "dunjeon1_room1.tmx",
+        "Tilesets/0x72_DungeonTilesetII_v1.7.tsx",
+        "Tilesets/0x72_DungeonTilesetII_v1.7_SideDoors.tsx",
+        "dunjeon1_room4.tmx",
+        "dunjeon2_room1.tmx",
+        "dunjeon1_room3.tmx",
+        "dunjeon1_room5.tmx",
+        "dunjeon1_room2.tmx",
+        "Tilesets/dunjeon2_room2.tmx",
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/Map/Dunjeons/dunjeon1_room5.tmx",
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/Map/Dunjeons/dunjeon1_room4.tmx",
+        "Tilesets/dunjeon1_room2.tmx"
+    ],
+    "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}

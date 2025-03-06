@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="1">
- <tileset firstgid="1" source="Tilesets/atlas_walls_low-16x16.tsx"/>
- <tileset firstgid="49" source="Tilesets/atlas_walls_high-16x32.tsx"/>
- <tileset firstgid="241" source="Tilesets/0x72_DungeonTilesetII_v1.7.tsx"/>
+ <tileset firstgid="1" source="atlas_walls_low-16x16.tsx"/>
+ <tileset firstgid="49" source="atlas_walls_high-16x32.tsx"/>
+ <tileset firstgid="241" source="0x72_DungeonTilesetII_v1.7.tsx"/>
  <layer id="1" name="Floor" width="16" height="16">
   <data encoding="csv">
 34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,
@@ -23,7 +23,7 @@
 178,370,370,370,370,370,370,370,370,370,370,370,370,370,370,178
 </data>
  </layer>
- <layer id="8" name="Traps" width="16" height="16">
+ <layer id="2" name="Traps" width="16" height="16">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -43,7 +43,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="2" name="Side_walls" width="16" height="16">
+ <layer id="3" name="Side_walls" width="16" height="16">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 180,0,0,0,0,0,0,0,0,0,0,0,0,0,0,21,
@@ -63,7 +63,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="3" name="Front_walls" width="16" height="16">
+ <layer id="4" name="Front_walls" width="16" height="16">
   <data encoding="csv">
 50,195,195,195,195,195,195,195,195,195,195,195,195,195,195,52,
 74,219,219,219,219,219,219,219,219,219,219,219,219,219,219,76,
@@ -83,7 +83,7 @@
 170,219,219,219,219,219,219,0,0,219,219,219,219,219,219,172
 </data>
  </layer>
- <layer id="4" name="Pillar" width="16" height="16">
+ <layer id="5" name="Pillar" width="16" height="16">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -103,7 +103,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="5" name="Front_doors" width="16" height="16">
+ <layer id="6" name="Front_doors" width="16" height="16">
   <data encoding="csv">
 0,0,0,0,0,0,209,210,211,212,0,0,0,0,0,0,
 0,0,0,0,0,0,233,234,235,236,0,0,0,0,0,0,
@@ -123,7 +123,7 @@
 0,0,0,0,0,0,237,238,239,240,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="6" name="Side_doors" width="16" height="16">
+ <layer id="7" name="Side_doors" width="16" height="16">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -143,7 +143,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="7" name="Decorations" width="16" height="16">
+ <layer id="8" name="Decorations" width="16" height="16">
   <data encoding="csv">
 0,0,0,0,0,246,0,0,0,0,246,0,0,0,0,0,
 0,0,306,0,306,0,306,0,0,306,0,306,0,306,0,0,
