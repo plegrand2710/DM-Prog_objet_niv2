@@ -4,12 +4,15 @@ import cursed_chronicles.Player.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.util.ArrayList;
 
 public class Main {
     
     public static void main(String[] args) {
-
+    	
+    	 setupLWJGLLibraryPath();
+    	
         String playerPath = "assets/sprites/player/";
         String boosterPath = "assets/sprites/booster/";
         
@@ -188,5 +191,25 @@ public class Main {
             player.move("down", 0, 1);
             playerView.updateView();
         });
+    }
+    
+    private static void setupLWJGLLibraryPath() {
+        String osName = System.getProperty("os.name").toLowerCase();
+        String nativePath = "lib/native/";
+
+        if (osName.contains("win")) {
+            nativePath += "windows";
+        } else if (osName.contains("mac")) {
+            nativePath += "macosx";
+        } else if (osName.contains("linux")) {
+            nativePath += "linux";
+        } else {
+            System.err.println("OS non supporté !");
+            return;
+        }
+
+        System.setProperty("org.lwjgl.librarypath", new File(nativePath).getAbsolutePath());
+        
+        System.out.println("Setup natives for : " + osName + "\n");
     }
 }
