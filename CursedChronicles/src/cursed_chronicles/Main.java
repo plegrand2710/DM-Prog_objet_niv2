@@ -153,9 +153,9 @@ public class Main {
             gameFrame.setFocusable(true);
             gameFrame.requestFocusInWindow();
             
-            player.move("right", 1, 0);
-            player.move("down", 0, 1);
-            playerView.updateView();
+            playerView.movePlayer(1, 0); // Move right
+            playerView.movePlayer(0, 1); // Move down
+
         });
     }
 }

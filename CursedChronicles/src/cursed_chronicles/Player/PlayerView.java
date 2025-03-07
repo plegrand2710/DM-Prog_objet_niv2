@@ -8,16 +8,21 @@ import java.util.HashMap;
 
 public class PlayerView extends JPanel {
     private Player player;
-    private HashMap<String, Image[]> sprites;
     private PlayerController controller;
+    private HashMap<String, Image[]> sprites;
     private int frameIndex = 0;
     private String path = "assets/sprites/player/";
     private Image weaponSkin;
     private Timer movementTimer;
-    private final int baseMoveSpeed = 100; 
-    private final int speedMoveSpeed = 20; 
-    private boolean isAnimating = false;
+    
+    private final int baseMoveSpeed = 100; // Vitesse normale d'animation
+    private final int speedMoveSpeed = 50; // Vitesse en mode speed
+    private int moveSpeed = baseMoveSpeed; // Vitesse actuelle
 
+    private boolean isAnimating = false;
+    private int targetX, targetY;
+    private int currentX, currentY;
+    private int stepSize = 8; // Nombre de pixels par mise à jour d'animation
 
     public PlayerView(Player player) {
         this.player = player;
@@ -27,9 +32,9 @@ public class PlayerView extends JPanel {
     }
 
     public void setController(PlayerController controller) {
-        this.controller = controller; 
+        this.controller = controller;
     }
-    
+
     private void loadSprites() {
         sprites.put("down", new Image[]{
             loadImage(path + "pasDFace1.png"),
@@ -82,58 +87,46 @@ public class PlayerView extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
         int cellSize = 64;
-        g.setColor(Color.LIGHT_GRAY);
-        for (int x = 0; x < getWidth(); x += cellSize) {
-            g.drawLine(x, 0, x, getHeight());
-        }
-        for (int y = 0; y < getHeight(); y += cellSize) {
-            g.drawLine(0, y, getWidth(), y);
-        }
-        
+
         if (weaponSkin != null) {
-            g.drawImage(weaponSkin, player.getPositionX() * cellSize, player.getPositionY() * cellSize, cellSize, cellSize, this);
+            g.drawImage(weaponSkin, currentX, currentY, cellSize, cellSize, this);
         } else {
             String direction = player.getDirection();
             Image[] frames = sprites.get(direction);
             if (frames != null && frames.length > 0 && frameIndex < frames.length) {
-                g.drawImage(frames[frameIndex], player.getPositionX() * cellSize, player.getPositionY() * cellSize, cellSize, cellSize, this);
+                g.drawImage(frames[frameIndex], currentX, currentY, cellSize, cellSize, this);
             }
         }
     }
 
-    public void updateView() {
-        animateMovement();
-    }
+    public void movePlayer(int dx, int dy) {
+        if (isAnimating) return;
 
-    private void animateMovement() {
-        if (movementTimer != null && movementTimer.isRunning()) {
-            return;
-        }
+        moveSpeed = player.isSpeedActive() ? speedMoveSpeed : baseMoveSpeed;
 
+        currentX = player.getPositionX() * 64;
+        currentY = player.getPositionY() * 64;
+        targetX = currentX + dx * 64;
+        targetY = currentY + dy * 64;
+
+        player.move(player.getDirection(), dx, dy);
         isAnimating = true;
 
-        int moveSpeed = player.isSpeedActive() ? speedMoveSpeed : baseMoveSpeed;
-
-        Image[] movementFrames = sprites.get(player.getDirection());
-        if (movementFrames == null || movementFrames.length == 0) {
-            return;
-        }
-
-        frameIndex = 0;
-        movementTimer = new Timer(moveSpeed, new ActionListener() {
+        movementTimer = new Timer(moveSpeed / 10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (frameIndex < movementFrames.length - 1) {
-                    frameIndex++;
-                } else {
-                    frameIndex = 0;
-                    movementTimer.stop();
-                    isAnimating = false; 
+                if (Math.abs(targetX - currentX) <= stepSize && Math.abs(targetY - currentY) <= stepSize) {
+                    currentX = targetX;
+                    currentY = targetY;
+                    ((Timer) e.getSource()).stop();
+                    isAnimating = false;
                     if (controller != null) {
-                        controller.notifyAnimationFinished(); 
+                        controller.notifyAnimationFinished();
                     }
+                } else {
+                    currentX += (targetX > currentX) ? stepSize : (targetX < currentX) ? -stepSize : 0;
+                    currentY += (targetY > currentY) ? stepSize : (targetY < currentY) ? -stepSize : 0;
                 }
                 repaint();
             }
@@ -141,10 +134,11 @@ public class PlayerView extends JPanel {
 
         movementTimer.start();
     }
-    
+
     public boolean isAnimating() {
         return isAnimating;
     }
+
 
     public void setPlayerImage(Image image) {
         this.weaponSkin = image;

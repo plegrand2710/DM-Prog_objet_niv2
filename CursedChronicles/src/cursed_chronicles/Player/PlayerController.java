@@ -56,8 +56,8 @@ public class PlayerController extends KeyAdapter {
         }
         
         if (!playerView.isAnimating()) {
-            player.move(dir, dx, dy);
-            playerView.updateView();
+        	playerView.movePlayer(dx, dy);
+
             canMove = false; 
         }
     }
