@@ -38,8 +38,8 @@ public class RoomView extends JLayeredPane {
         _frontWallsLayer = createLayerPanel(room.getFrontWallsLayer(), tilesetBasePath + "front_walls/", 4);
         _frontDoorsLayer = createLayerPanel(room.getFrontDoorsLayer(), tilesetBasePath + "front_doors/", 5);
         _chestsLayer = createLayerPanel(room.getChestsLayer(), tilesetBasePath + "chests/", 6);
-        _decorationsLayer = createLayerPanel(room.getDecorationsLayer(), tilesetBasePath + "decorations/", 7);
-        _pillarLayer = createLayerPanel(room.getPillarLayer(), tilesetBasePath + "pillar/", 8);
+        _pillarLayer = createLayerPanel(room.getPillarLayer(), tilesetBasePath + "pillars/", 7);
+        _decorationsLayer = createLayerPanel(room.getDecorationsLayer(), tilesetBasePath + "decorations/", 8);
 
         add(_floorLayer, Integer.valueOf(0));
         add(_trapsLayer, Integer.valueOf(1));
@@ -48,8 +48,8 @@ public class RoomView extends JLayeredPane {
         add(_frontWallsLayer, Integer.valueOf(4));
         add(_frontDoorsLayer, Integer.valueOf(5));
         add(_chestsLayer, Integer.valueOf(6));
-        add(_decorationsLayer, Integer.valueOf(7));
-        add(_pillarLayer, Integer.valueOf(8));
+        add(_pillarLayer, Integer.valueOf(7));
+        add(_decorationsLayer, Integer.valueOf(8));
 
         repaint();
     }

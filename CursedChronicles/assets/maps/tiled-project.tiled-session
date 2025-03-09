@@ -226,7 +226,7 @@
         },
         "donjon1_room3.tmx": {
             "scale": 2.0023,
-            "selectedLayer": 7,
+            "selectedLayer": 0,
             "viewCenter": {
                 "x": 113.11991210108376,
                 "y": 131.84837436947512
@@ -234,18 +234,18 @@
         },
         "donjon1_room4.tmx": {
             "scale": 1.8224,
-            "selectedLayer": 1,
+            "selectedLayer": 7,
             "viewCenter": {
                 "x": 122.6404741000878,
                 "y": 155.838454784899
             }
         },
         "donjon1_room5.tmx": {
-            "scale": 1.8676,
-            "selectedLayer": 6,
+            "scale": 2.46,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 88.61640608267297,
-                "y": 156.61811951167277
+                "x": 120.52845528455283,
+                "y": 106.50406504065037
             }
         },
         "donjon2_room1.tmx": {
@@ -349,7 +349,7 @@
             }
         }
     },
-    "last.exportedFilePath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/maps/donjon1_room3",
+    "last.exportedFilePath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/maps/donjon1_room5",
     "last.externalTilesetPath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/maps/Tilesets",
     "last.imagePath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/maps/Tilesets",
     "map.height": 1,
@@ -364,17 +364,17 @@
     ],
     "project": "tiled-project.tiled-project",
     "recentFiles": [
-        "Tilesets/atlas_walls_low-16x16.tsx",
-        "Tilesets/atlas_floor-16x16.tsx",
-        "donjon1_room1.tmx",
+        "donjon1_room2.tmx",
         "donjon1_room4.tmx",
         "donjon1_room3.tmx",
+        "donjon1_room1.tmx",
+        "Tilesets/atlas_walls_low-16x16.tsx",
+        "Tilesets/atlas_floor-16x16.tsx",
         "/Users/manuarii/Documents/DM-POON2-ASSETS/assets/maps/donjon1_room3.tmx",
         "donjon2_room2.tmx",
         "/Users/manuarii/Documents/DM-POON2-ASSETS/assets/maps/donjon2_room5.tmx",
         "Tilesets/atlas_walls_high-16x32.tsx",
         "Tilesets/0x72_DungeonTilesetII_v1.7.tsx",
-        "donjon1_room2.tmx",
         "donjon2_room1.tmx"
     ],
     "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",

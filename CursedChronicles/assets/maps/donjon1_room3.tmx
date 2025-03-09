@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="1">
+ <editorsettings>
+  <export target="donjon1_room3/donjon1_room3.csv" format="csv"/>
+ </editorsettings>
  <tileset firstgid="1" source="Tilesets/0x72_DungeonTilesetII_v1.7.tsx"/>
  <tileset firstgid="1025" source="Tilesets/atlas_walls_high-16x32.tsx"/>
  <tileset firstgid="1217" source="Tilesets/atlas_walls_low-16x16.tsx"/>
- <layer id="1" name="Floor" width="16" height="16" visible="0">
+ <layer id="1" name="Floor" width="16" height="16">
   <data encoding="csv">
 1250,1250,1250,1250,1250,1250,1250,1250,1250,1250,1250,1250,1250,1250,1250,1250,
 1250,1250,1250,1250,1250,1250,1250,1250,1250,1250,1250,1250,1250,1250,1250,1250,
