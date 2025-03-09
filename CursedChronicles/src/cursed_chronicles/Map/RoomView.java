@@ -7,52 +7,74 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
 
-public class RoomView extends JPanel {
-    private int[][] _floorGrid;
-    private int[][] _trapsGrid;
-    private int[][] _sideWallsGrid;
-    private int[][] _sideDoorsGrid;
-    private int[][] _frontWallsGrid;
-    private int[][] _frontDoorsGrid;
-    private int[][] _pillarGrid;
+public class RoomView extends JLayeredPane {
+    private JPanel _floorLayer;
+    private JPanel _trapsLayer;
+    private JPanel _sideWallsLayer;
+    private JPanel _sideDoorsLayer;
+    private JPanel _frontWallsLayer;
+    private JPanel _frontDoorsLayer;
+    private JPanel _pillarLayer;
 
-    private Map<Integer, Image> _floorImages;
-    private Map<Integer, Image> _trapsImages;
-    private Map<Integer, Image> _sideWallsImages;
-    private Map<Integer, Image> _sideDoorsImages;
-    private Map<Integer, Image> _frontWallsImages;
-    private Map<Integer, Image> _frontDoorsImages;
-    private Map<Integer, Image> _pillarImages;
-
-    private final int _tileSize = 16; // Taille réelle des tuiles en pixels
-    private final int _scaleFactor = 3; // Facteur d’agrandissement des tuiles
-    private final int _displayTileSize = _tileSize * _scaleFactor; // Taille finale des tuiles affichées
+    private final int _tileSize = 16;
+    private final int _scaleFactor = 3;
+    private final int _displayTileSize = _tileSize * _scaleFactor;
 
     public RoomView() {
-        setPreferredSize(new Dimension(16 * _displayTileSize, 16 * _displayTileSize)); // Nouvelle taille de la fenêtre
+        setPreferredSize(new Dimension(16 * _displayTileSize, 16 * _displayTileSize));
     }
 
     public void displayRoom(Room room, String tilesetBasePath) {
-        _floorGrid = room.getFloorLayer();
-        _trapsGrid = room.getTrapsLayer();
-        _sideWallsGrid = room.getSideWallsLayer();
-        _sideDoorsGrid = room.getSideDoorsLayer();
-        _frontWallsGrid = room.getFrontWallsLayer();
-        _frontDoorsGrid = room.getFrontDoorsLayer();
-        _pillarGrid = room.getPillarLayer();
+        removeAll(); // Supprime les anciens calques si existants
 
-        loadTileImages(tilesetBasePath);
+        // Création et ajout des calques avec leur Z-index
+        _floorLayer = createLayerPanel(room.getFloorLayer(), tilesetBasePath + "floor/", 0);
+        _trapsLayer = createLayerPanel(room.getTrapsLayer(), tilesetBasePath + "traps/", 1);
+        _sideWallsLayer = createLayerPanel(room.getSideWallsLayer(), tilesetBasePath + "side_walls/", 2);
+        _sideDoorsLayer = createLayerPanel(room.getSideDoorsLayer(), tilesetBasePath + "side_doors/", 3);
+        _frontWallsLayer = createLayerPanel(room.getFrontWallsLayer(), tilesetBasePath + "front_walls/", 4);
+        _frontDoorsLayer = createLayerPanel(room.getFrontDoorsLayer(), tilesetBasePath + "front_doors/", 5);
+        _pillarLayer = createLayerPanel(room.getPillarLayer(), tilesetBasePath + "pillar/", 6);
+
+        add(_floorLayer, Integer.valueOf(0));
+        add(_trapsLayer, Integer.valueOf(1));
+        add(_sideWallsLayer, Integer.valueOf(2));
+        add(_sideDoorsLayer, Integer.valueOf(3));
+        add(_frontWallsLayer, Integer.valueOf(4));
+        add(_frontDoorsLayer, Integer.valueOf(5));
+        add(_pillarLayer, Integer.valueOf(6));
+
         repaint();
     }
 
-    private void loadTileImages(String tilesetBasePath) {
-        _floorImages = loadImagesFromFolder(tilesetBasePath + "floor/");
-        _trapsImages = loadImagesFromFolder(tilesetBasePath + "traps/");
-        _sideWallsImages = loadImagesFromFolder(tilesetBasePath + "side_walls/");
-        _sideDoorsImages = loadImagesFromFolder(tilesetBasePath + "side_doors/");
-        _frontWallsImages = loadImagesFromFolder(tilesetBasePath + "front_walls/");
-        _frontDoorsImages = loadImagesFromFolder(tilesetBasePath + "front_doors/");
-        _pillarImages = loadImagesFromFolder(tilesetBasePath + "pillar/");
+    private JPanel createLayerPanel(int[][] layerGrid, String tilesetPath, int zIndex) {
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                drawLayer(g, layerGrid, tilesetPath);
+            }
+        };
+        panel.setOpaque(false);
+        panel.setBounds(0, 0, getPreferredSize().width, getPreferredSize().height);
+        return panel;
+    }
+
+    private void drawLayer(Graphics g, int[][] layerGrid, String tilesetPath) {
+        if (layerGrid == null) return;
+
+        Map<Integer, Image> tileImages = loadImagesFromFolder(tilesetPath);
+        for (int i = 0; i < layerGrid.length; i++) {
+            for (int j = 0; j < layerGrid[i].length; j++) {
+                int tileNumber = layerGrid[i][j];
+                if (tileNumber < 0) continue;
+
+                Image tileImage = tileImages.get(tileNumber);
+                if (tileImage != null) {
+                    g.drawImage(tileImage, j * _displayTileSize, i * _displayTileSize, _displayTileSize, _displayTileSize, this);
+                }
+            }
+        }
     }
 
     private Map<Integer, Image> loadImagesFromFolder(String folderPath) {
@@ -75,36 +97,5 @@ public class RoomView extends JPanel {
             }
         }
         return tileMap;
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        drawLayer(g, _floorGrid, _floorImages);
-        drawLayer(g, _trapsGrid, _trapsImages);
-        drawLayer(g, _sideWallsGrid, _sideWallsImages);
-        drawLayer(g, _sideDoorsGrid, _sideDoorsImages);
-        drawLayer(g, _frontWallsGrid, _frontWallsImages);
-        drawLayer(g, _frontDoorsGrid, _frontDoorsImages);
-        drawLayer(g, _pillarGrid, _pillarImages);
-    }
-
-    private void drawLayer(Graphics g, int[][] layerGrid, Map<Integer, Image> tileImages) {
-        if (layerGrid == null || tileImages == null) return;
-
-        for (int i = 0; i < layerGrid.length; i++) {
-            for (int j = 0; j < layerGrid[i].length; j++) {
-                int tileNumber = layerGrid[i][j];
-
-                // Ne pas dessiner les cases ayant la valeur -1
-                if (tileNumber < 0) continue;
-
-                Image tileImage = tileImages.get(tileNumber);
-
-                if (tileImage != null) {
-                    g.drawImage(tileImage, j * _displayTileSize, i * _displayTileSize, this);
-                }
-            }
-        }
     }
 }

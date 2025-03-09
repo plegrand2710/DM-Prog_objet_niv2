@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class Main {
+public class MainPauline {
 
     public static void main(String[] args) {
         String playerPath = "assets/sprites/player/";
