@@ -242,10 +242,10 @@
         },
         "donjon1_room5.tmx": {
             "scale": 2.46,
-            "selectedLayer": 4,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 120.52845528455283,
-                "y": 106.50406504065037
+                "x": 128.65853658536585,
+                "y": 131.3008130081301
             }
         },
         "donjon2_room1.tmx": {

@@ -16,7 +16,7 @@ public class RoomView extends JLayeredPane {
     private JPanel _frontWallsLayer;
     private JPanel _frontDoorsLayer;
     private JPanel _chestsLayer;
-    private JPanel _decorationsLayer; // Nouveau layer pour les décorations
+    private JPanel _decorationsLayer;
     private JPanel _pillarLayer;
 
     private final int _tileSize = 16;
