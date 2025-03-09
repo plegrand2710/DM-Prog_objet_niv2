@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 public class PlayerView extends JPanel {
+	private static int CONSTX = 48;
+	private static int CONSTY = 48;
+
     private Player player;
     private PlayerController controller;
     private HashMap<String, Image[]> sprites;
@@ -15,9 +18,11 @@ public class PlayerView extends JPanel {
     private Image weaponSkin;
     private Timer movementTimer;
     
-    private final int baseMoveSpeed = 100; // Vitesse normale d'animation
-    private final int speedMoveSpeed = 50; // Vitesse en mode speed
-    private int moveSpeed = baseMoveSpeed; // Vitesse actuelle
+    private Timer animationTimer;  // ✅ Ajout d'un timer global pour l'animation
+
+    private final int baseMoveSpeed = 250;
+    private final int speedMoveSpeed = 50; 
+    private int moveSpeed = baseMoveSpeed; 
 
     private boolean isAnimating = false;
     private int targetX, targetY;
@@ -28,7 +33,11 @@ public class PlayerView extends JPanel {
         this.player = player;
         this.sprites = new HashMap<>();
         loadSprites();
-//        setPreferredSize(new Dimension(640, 640));
+        setPreferredSize(new Dimension(640, 640));
+        animationTimer = new Timer(moveSpeed/4, e -> {
+            frameIndex = (frameIndex + 1) % sprites.get(player.getDirection()).length;
+            repaint();
+        });
     }
 
     public void setController(PlayerController controller) {
@@ -105,40 +114,56 @@ public class PlayerView extends JPanel {
 
         moveSpeed = player.isSpeedActive() ? speedMoveSpeed : baseMoveSpeed;
 
-        currentX = player.getPositionX() * 64;
-        currentY = player.getPositionY() * 64;
-        targetX = currentX + dx * 64;
-        targetY = currentY + dy * 64;
+        currentX = player.getPositionX() * CONSTX;
+        currentY = player.getPositionY() * CONSTY;
+        targetX = currentX + dx * CONSTX;
+        targetY = currentY + dy * CONSTY;
 
-        player.move(player.getDirection(), dx, dy);
+        String newDirection = determineDirection(dx, dy);
+        player.setDirection(newDirection);
+
+        player.move(newDirection, dx, dy);
         isAnimating = true;
+        if (!animationTimer.isRunning()) {
+            animationTimer.start();  // ✅ Démarre l'animation si ce n'est pas déjà fait
+        }
 
-        movementTimer = new Timer(moveSpeed / 10, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (Math.abs(targetX - currentX) <= stepSize && Math.abs(targetY - currentY) <= stepSize) {
-                    currentX = targetX;
-                    currentY = targetY;
-                    ((Timer) e.getSource()).stop();
-                    isAnimating = false;
-                    if (controller != null) {
-                        controller.notifyAnimationFinished();
-                    }
-                } else {
-                    currentX += (targetX > currentX) ? stepSize : (targetX < currentX) ? -stepSize : 0;
-                    currentY += (targetY > currentY) ? stepSize : (targetY < currentY) ? -stepSize : 0;
+        movementTimer = new Timer(moveSpeed / 10, e -> {
+            if (Math.abs(targetX - currentX) <= stepSize && Math.abs(targetY - currentY) <= stepSize) {
+                currentX = targetX;
+                currentY = targetY;
+                ((Timer) e.getSource()).stop();
+                isAnimating = false;
+                if (controller != null) {
+                    controller.notifyAnimationFinished();
                 }
-                repaint();
+            } else {
+                currentX += (targetX > currentX) ? stepSize : (targetX < currentX) ? -stepSize : 0;
+                currentY += (targetY > currentY) ? stepSize : (targetY < currentY) ? -stepSize : 0;
             }
+            repaint();
         });
 
         movementTimer.start();
+    }
+
+    private String determineDirection(int dx, int dy) {
+        if (dx > 0) return "right";
+        if (dx < 0) return "left";
+        if (dy > 0) return "down";
+        if (dy < 0) return "up";
+        return player.getDirection(); 
     }
 
     public boolean isAnimating() {
         return isAnimating;
     }
 
+    public void stopAnimation() {
+        animationTimer.stop();
+        frameIndex = 0; // ✅ Réinitialise le sprite
+        repaint();
+    }
 
     public void setPlayerImage(Image image) {
         this.weaponSkin = image;
