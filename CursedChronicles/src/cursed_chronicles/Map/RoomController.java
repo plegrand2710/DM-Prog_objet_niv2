@@ -6,8 +6,8 @@ public class RoomController {
     private String _tilesetPath;
 
     public RoomController(RoomView roomView, String tilesetPath) {
-        this._roomView = roomView;
-        this._tilesetPath = tilesetPath;
+        _roomView = roomView;
+        _tilesetPath = tilesetPath;
     }
 
     public void loadRoom(Room room) {

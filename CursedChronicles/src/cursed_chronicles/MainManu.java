@@ -25,7 +25,7 @@ public class MainManu {
             // Création de la salle
             RoomView roomView = new RoomView();
             RoomController controller = new RoomController(roomView, "assets/maps/tiles/");
-            Room room = new Room("donjon1_room5");
+            Room room = new Room("donjon1_room1");
             controller.loadRoom(room);
 
             // Création du joueur
