@@ -35,7 +35,7 @@ public class MainManu {
 
             // Définition des tailles et positions
             roomView.setBounds(0, 0, gameFrame.getWidth(), gameFrame.getHeight());
-            playerView.setBounds(0, 0, gameFrame.getWidth(), gameFrame.getHeight());
+            playerView.setBounds(135, 135, gameFrame.getWidth(), gameFrame.getHeight());
 
             // Ajout des éléments dans le LayeredPane avec un Z-index défini
             roomView.add(playerView, Integer.valueOf(3)); // Joueur entre les murs latéraux et frontaux

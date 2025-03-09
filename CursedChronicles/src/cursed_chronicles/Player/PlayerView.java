@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 public class PlayerView extends JPanel {
+	private static final int CONST = 48;
     private Player player;
     private PlayerController controller;
     private HashMap<String, Image[]> sprites;
@@ -105,10 +106,10 @@ public class PlayerView extends JPanel {
 
         moveSpeed = player.isSpeedActive() ? speedMoveSpeed : baseMoveSpeed;
 
-        currentX = player.getPositionX() * 64;
-        currentY = player.getPositionY() * 64;
-        targetX = currentX + dx * 64;
-        targetY = currentY + dy * 64;
+        currentX = player.getPositionX() * CONST;
+        currentY = player.getPositionY() * CONST;
+        targetX = currentX + dx * CONST;
+        targetY = currentY + dy * CONST;
 
         player.move(player.getDirection(), dx, dy);
         isAnimating = true;
