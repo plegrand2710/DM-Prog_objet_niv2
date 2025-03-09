@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 public class PlayerView extends JPanel {
-	private static final int CONST = 48;
     private Player player;
     private PlayerController controller;
     private HashMap<String, Image[]> sprites;
