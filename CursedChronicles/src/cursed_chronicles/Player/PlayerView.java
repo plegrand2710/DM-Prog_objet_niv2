@@ -28,7 +28,7 @@ public class PlayerView extends JPanel {
         this.player = player;
         this.sprites = new HashMap<>();
         loadSprites();
-//        setPreferredSize(new Dimension(640, 640));
+        setPreferredSize(new Dimension(640, 640));
     }
 
     public void setController(PlayerController controller) {
@@ -105,10 +105,10 @@ public class PlayerView extends JPanel {
 
         moveSpeed = player.isSpeedActive() ? speedMoveSpeed : baseMoveSpeed;
 
-        currentX = player.getPositionX() * 64;
-        currentY = player.getPositionY() * 64;
-        targetX = currentX + dx * 64;
-        targetY = currentY + dy * 64;
+        currentX = player.getPositionX() * 16;
+        currentY = player.getPositionY() * 16;
+        targetX = currentX + dx * 16;
+        targetY = currentY + dy * 16;
 
         player.move(player.getDirection(), dx, dy);
         isAnimating = true;
