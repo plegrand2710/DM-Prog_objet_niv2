@@ -28,7 +28,7 @@ public class PlayerView extends JPanel {
         this.player = player;
         this.sprites = new HashMap<>();
         loadSprites();
-        setPreferredSize(new Dimension(640, 640));
+//        setPreferredSize(new Dimension(640, 640));
     }
 
     public void setController(PlayerController controller) {
