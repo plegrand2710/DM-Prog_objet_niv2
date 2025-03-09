@@ -21,6 +21,8 @@ public class Player {
     private String direction;  
     private boolean isMoving; 
     private boolean speedActive = false;
+    
+    private ItemWeapon currentWeapon;
 
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
@@ -36,6 +38,9 @@ public class Player {
         this.direction = "down";
         this.isMoving = false;
         initializeDefaultCharacteristics();
+        String swordPath = "assets/sprites/booster/sword_sprite.png";
+        currentWeapon = new ItemWeapon(swordPath); 
+        this.inventory.addItem(currentWeapon);
     }
 
     private void initializeDefaultCharacteristics() {
@@ -257,6 +262,14 @@ public class Player {
                 modifyCharacteristic(type, bonus);
             }
         }
+    }
+    
+    public void setCurrentWeapon(ItemWeapon weapon) {
+        this.currentWeapon = weapon;
+    }
+
+    public ItemWeapon getCurrentWeapon() {
+        return currentWeapon;
     }
     
     public boolean isSpeedActive() {
