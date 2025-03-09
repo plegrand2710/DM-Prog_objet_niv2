@@ -105,10 +105,10 @@ public class PlayerView extends JPanel {
 
         moveSpeed = player.isSpeedActive() ? speedMoveSpeed : baseMoveSpeed;
 
-        currentX = player.getPositionX() * CONST;
-        currentY = player.getPositionY() * CONST;
-        targetX = currentX + dx * CONST;
-        targetY = currentY + dy * CONST;
+        currentX = player.getPositionX() * 64;
+        currentY = player.getPositionY() * 64;
+        targetX = currentX + dx * 64;
+        targetY = currentY + dy * 64;
 
         player.move(player.getDirection(), dx, dy);
         isAnimating = true;
