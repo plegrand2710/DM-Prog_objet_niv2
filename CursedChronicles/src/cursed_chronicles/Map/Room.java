@@ -12,6 +12,8 @@ public class Room {
     private int[][] _frontWallsLayer;
     private int[][] _frontDoorsLayer;
     private int[][] _pillarLayer;
+    private int[][] _chestsLayer; // Nouveau calque pour les coffres
+    private int[][] _decorationsLayer;
 
     public Room(String name) {
         _name = name;
@@ -28,6 +30,8 @@ public class Room {
         _frontWallsLayer = loadCSV(basePath + _name + "_Front_walls.csv");
         _frontDoorsLayer = loadCSV(basePath + _name + "_Front_doors.csv");
         _pillarLayer = loadCSV(basePath + _name + "_Pillar.csv");
+        _chestsLayer = loadCSV(basePath + _name + "_Chests.csv"); // Chargement du layer Chests
+        _decorationsLayer = loadCSV(basePath + _name + "_Decorations.csv");
     }
 
     private int[][] loadCSV(String filePath) {
@@ -88,9 +92,17 @@ public class Room {
     public int[][] getFrontDoorsLayer() {
         return _frontDoorsLayer;
     }
+    
+    public int[][] getDecorationsLayer() {
+        return _decorationsLayer;
+    }
 
     public int[][] getPillarLayer() {
         return _pillarLayer;
+    }
+
+    public int[][] getChestsLayer() {
+        return _chestsLayer;
     }
 
     public String getName() {

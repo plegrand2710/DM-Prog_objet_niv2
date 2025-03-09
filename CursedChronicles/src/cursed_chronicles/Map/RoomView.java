@@ -8,12 +8,15 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 public class RoomView extends JLayeredPane {
-    private JPanel _floorLayer;
+    private static final long serialVersionUID = 1L;
+	private JPanel _floorLayer;
     private JPanel _trapsLayer;
     private JPanel _sideWallsLayer;
     private JPanel _sideDoorsLayer;
     private JPanel _frontWallsLayer;
     private JPanel _frontDoorsLayer;
+    private JPanel _chestsLayer;
+    private JPanel _decorationsLayer; // Nouveau layer pour les décorations
     private JPanel _pillarLayer;
 
     private final int _tileSize = 16;
@@ -34,7 +37,9 @@ public class RoomView extends JLayeredPane {
         _sideDoorsLayer = createLayerPanel(room.getSideDoorsLayer(), tilesetBasePath + "side_doors/", 3);
         _frontWallsLayer = createLayerPanel(room.getFrontWallsLayer(), tilesetBasePath + "front_walls/", 4);
         _frontDoorsLayer = createLayerPanel(room.getFrontDoorsLayer(), tilesetBasePath + "front_doors/", 5);
-        _pillarLayer = createLayerPanel(room.getPillarLayer(), tilesetBasePath + "pillar/", 6);
+        _chestsLayer = createLayerPanel(room.getChestsLayer(), tilesetBasePath + "chests/", 6);
+        _decorationsLayer = createLayerPanel(room.getDecorationsLayer(), tilesetBasePath + "decorations/", 7);
+        _pillarLayer = createLayerPanel(room.getPillarLayer(), tilesetBasePath + "pillar/", 8);
 
         add(_floorLayer, Integer.valueOf(0));
         add(_trapsLayer, Integer.valueOf(1));
@@ -42,7 +47,9 @@ public class RoomView extends JLayeredPane {
         add(_sideDoorsLayer, Integer.valueOf(3));
         add(_frontWallsLayer, Integer.valueOf(4));
         add(_frontDoorsLayer, Integer.valueOf(5));
-        add(_pillarLayer, Integer.valueOf(6));
+        add(_chestsLayer, Integer.valueOf(6));
+        add(_decorationsLayer, Integer.valueOf(7));
+        add(_pillarLayer, Integer.valueOf(8));
 
         repaint();
     }
