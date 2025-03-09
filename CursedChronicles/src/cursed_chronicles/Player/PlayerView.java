@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 public class PlayerView extends JPanel {
+	private static int CONSTX = 48;
+	private static int CONSTY = 48;
+
     private Player player;
     private PlayerController controller;
     private HashMap<String, Image[]> sprites;
@@ -15,9 +18,9 @@ public class PlayerView extends JPanel {
     private Image weaponSkin;
     private Timer movementTimer;
     
-    private final int baseMoveSpeed = 100; // Vitesse normale d'animation
-    private final int speedMoveSpeed = 50; // Vitesse en mode speed
-    private int moveSpeed = baseMoveSpeed; // Vitesse actuelle
+    private final int baseMoveSpeed = 100;
+    private final int speedMoveSpeed = 50; 
+    private int moveSpeed = baseMoveSpeed; 
 
     private boolean isAnimating = false;
     private int targetX, targetY;
@@ -105,12 +108,15 @@ public class PlayerView extends JPanel {
 
         moveSpeed = player.isSpeedActive() ? speedMoveSpeed : baseMoveSpeed;
 
-        currentX = player.getPositionX() * 16;
-        currentY = player.getPositionY() * 16;
-        targetX = currentX + dx * 16;
-        targetY = currentY + dy * 16;
+        currentX = player.getPositionX() * CONSTX;
+        currentY = player.getPositionY() * CONSTY;
+        targetX = currentX + dx * CONSTX;
+        targetY = currentY + dy * CONSTY;
 
-        player.move(player.getDirection(), dx, dy);
+        String newDirection = determineDirection(dx, dy);
+        player.setDirection(newDirection);
+
+        player.move(newDirection, dx, dy);
         isAnimating = true;
 
         movementTimer = new Timer(moveSpeed / 10, new ActionListener() {
@@ -133,6 +139,14 @@ public class PlayerView extends JPanel {
         });
 
         movementTimer.start();
+    }
+
+    private String determineDirection(int dx, int dy) {
+        if (dx > 0) return "right";
+        if (dx < 0) return "left";
+        if (dy > 0) return "down";
+        if (dy < 0) return "up";
+        return player.getDirection(); 
     }
 
     public boolean isAnimating() {

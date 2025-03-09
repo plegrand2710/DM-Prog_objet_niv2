@@ -130,9 +130,7 @@ public class Player {
         positionX += dx;
         positionY += dy;
         setMoving(true);
-        journal.addEntry("Moved " + direction + " to (" + positionX + ", " + positionY + ").");
-        pcs.firePropertyChange("positionX", oldX, positionX);
-        pcs.firePropertyChange("positionY", oldY, positionY);
+        addJournalEntry("Moved " + direction + " to (" + positionX + ", " + positionY + ").");
     }
 
 
@@ -245,6 +243,11 @@ public class Player {
             });
             speedTimer.start();
         }
+    }
+    
+    public void addJournalEntry(String entry) {
+        journal.addEntry(entry);
+        pcs.firePropertyChange("journalEntry", null, entry); 
     }
     
     public void useItem(Item item) {
