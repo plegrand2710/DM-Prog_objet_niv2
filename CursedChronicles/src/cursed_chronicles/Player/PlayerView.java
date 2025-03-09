@@ -18,7 +18,9 @@ public class PlayerView extends JPanel {
     private Image weaponSkin;
     private Timer movementTimer;
     
-    private final int baseMoveSpeed = 100;
+    private Timer animationTimer;  // ✅ Ajout d'un timer global pour l'animation
+
+    private final int baseMoveSpeed = 250;
     private final int speedMoveSpeed = 50; 
     private int moveSpeed = baseMoveSpeed; 
 
@@ -32,6 +34,10 @@ public class PlayerView extends JPanel {
         this.sprites = new HashMap<>();
         loadSprites();
         setPreferredSize(new Dimension(640, 640));
+        animationTimer = new Timer(moveSpeed/4, e -> {
+            frameIndex = (frameIndex + 1) % sprites.get(player.getDirection()).length;
+            repaint();
+        });
     }
 
     public void setController(PlayerController controller) {
@@ -118,24 +124,24 @@ public class PlayerView extends JPanel {
 
         player.move(newDirection, dx, dy);
         isAnimating = true;
+        if (!animationTimer.isRunning()) {
+            animationTimer.start();  // ✅ Démarre l'animation si ce n'est pas déjà fait
+        }
 
-        movementTimer = new Timer(moveSpeed / 10, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (Math.abs(targetX - currentX) <= stepSize && Math.abs(targetY - currentY) <= stepSize) {
-                    currentX = targetX;
-                    currentY = targetY;
-                    ((Timer) e.getSource()).stop();
-                    isAnimating = false;
-                    if (controller != null) {
-                        controller.notifyAnimationFinished();
-                    }
-                } else {
-                    currentX += (targetX > currentX) ? stepSize : (targetX < currentX) ? -stepSize : 0;
-                    currentY += (targetY > currentY) ? stepSize : (targetY < currentY) ? -stepSize : 0;
+        movementTimer = new Timer(moveSpeed / 10, e -> {
+            if (Math.abs(targetX - currentX) <= stepSize && Math.abs(targetY - currentY) <= stepSize) {
+                currentX = targetX;
+                currentY = targetY;
+                ((Timer) e.getSource()).stop();
+                isAnimating = false;
+                if (controller != null) {
+                    controller.notifyAnimationFinished();
                 }
-                repaint();
+            } else {
+                currentX += (targetX > currentX) ? stepSize : (targetX < currentX) ? -stepSize : 0;
+                currentY += (targetY > currentY) ? stepSize : (targetY < currentY) ? -stepSize : 0;
             }
+            repaint();
         });
 
         movementTimer.start();
@@ -153,6 +159,11 @@ public class PlayerView extends JPanel {
         return isAnimating;
     }
 
+    public void stopAnimation() {
+        animationTimer.stop();
+        frameIndex = 0; // ✅ Réinitialise le sprite
+        repaint();
+    }
 
     public void setPlayerImage(Image image) {
         this.weaponSkin = image;

@@ -1,4 +1,4 @@
-package cursed_chronicles;
+/*package cursed_chronicles;
 
 import cursed_chronicles.Map.Room;
 import cursed_chronicles.Map.RoomController;
@@ -72,9 +72,9 @@ public class MainPauline {
             gameFrame.setVisible(true);
         });
     }
-}
+}*/
 
-/*package cursed_chronicles;
+package cursed_chronicles;
 
 import cursed_chronicles.Player.*;
 import javax.swing.*;
@@ -254,4 +254,4 @@ public class MainPauline {
 
         });
     }
-}*/
+}

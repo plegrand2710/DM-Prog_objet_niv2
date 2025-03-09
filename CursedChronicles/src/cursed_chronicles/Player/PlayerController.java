@@ -68,9 +68,13 @@ public class PlayerController extends KeyAdapter {
     
     @Override
     public void keyReleased(KeyEvent e) {
-        if (nonSpeedTimer != null) {
-            nonSpeedTimer.stop();
-            nonSpeedTimer = null;
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_UP:
+            case KeyEvent.VK_DOWN:
+            case KeyEvent.VK_LEFT:
+            case KeyEvent.VK_RIGHT:
+                playerView.stopAnimation(); // ✅ Arrête l’animation quand la touche est relâchée
+                break;
         }
     }
 }
