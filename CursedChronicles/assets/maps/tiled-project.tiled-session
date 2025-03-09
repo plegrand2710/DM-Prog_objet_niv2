@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "donjon2_room6.tmx",
+    "activeFile": "/Users/manuarii/Documents/DM-POON2-ASSETS/assets/maps/donjon1_room3.tmx",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -122,13 +122,43 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "/Users/manuarii/Documents/DM-POON2-ASSETS/assets/maps/Tilesets/0x72_DungeonTilesetII_v1.7.tsx": {
+            "scaleInDock": 1
+        },
+        "/Users/manuarii/Documents/DM-POON2-ASSETS/assets/maps/Tilesets/atlas_walls_high-16x32.tsx": {
+            "scaleInDock": 1
+        },
+        "/Users/manuarii/Documents/DM-POON2-ASSETS/assets/maps/donjon1_room3.tmx": {
+            "scale": 1.2153,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 122.19205134534681,
+                "y": 153.04862996790914
+            }
+        },
+        "/Users/manuarii/Documents/DM-POON2-ASSETS/assets/maps/donjon2_room5.tmx": {
+            "scale": 1.5428,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 97.54990925589836,
+                "y": 182.13637542131193
+            }
+        },
         "0x72_DungeonTilesetII_v1.7.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "TESTID.tmx": {
+            "scale": 1.7126,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 54.01144458717741,
+                "y": 114.44587177391102
+            }
+        },
         "Tilesets/0x72_DungeonTilesetII_v1.7.tsx": {
             "dynamicWrapping": false,
-            "scaleInDock": 1.4961,
+            "scaleInDock": 1.4197,
             "scaleInEditor": 1
         },
         "Tilesets/0x72_DungeonTilesetII_v1.7_SideDoors.tsx": {
@@ -137,17 +167,17 @@
         },
         "Tilesets/atlas_floor-16x16.tsx": {
             "dynamicWrapping": false,
-            "scaleInDock": 1.4082,
+            "scaleInDock": 2.1357,
             "scaleInEditor": 1
         },
         "Tilesets/atlas_walls_high-16x32.tsx": {
             "dynamicWrapping": false,
-            "scaleInDock": 0.8855,
+            "scaleInDock": 1.3275,
             "scaleInEditor": 1
         },
         "Tilesets/atlas_walls_low-16x16.tsx": {
             "dynamicWrapping": false,
-            "scaleInDock": 3.3086,
+            "scaleInDock": 2.4352,
             "scaleInEditor": 1
         },
         "Tilesets/dunjeon1_room2.tmx": {
@@ -179,35 +209,35 @@
             }
         },
         "donjon1_room1.tmx": {
-            "scale": 1.5936,
-            "selectedLayer": 4,
+            "scale": 2.06,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 147.1511044176707,
-                "y": 160.32881526104418
+                "x": 98.78640776699031,
+                "y": 162.13592233009712
             }
         },
         "donjon1_room2.tmx": {
-            "scale": 1.5549,
+            "scale": 2.486,
             "selectedLayer": 7,
             "viewCenter": {
-                "x": 157.24483889639205,
-                "y": 145.66853173837546
+                "x": 138.17377312952533,
+                "y": 144.40868865647624
             }
         },
         "donjon1_room3.tmx": {
             "scale": 2.0023,
             "selectedLayer": 8,
             "viewCenter": {
-                "x": 113.11991210108377,
-                "y": 132.0980871997203
+                "x": 113.11991210108376,
+                "y": 131.84837436947512
             }
         },
         "donjon1_room4.tmx": {
             "scale": 1.8224,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 122.64047410008777,
-                "y": 155.56409130816505
+                "x": 122.6404741000878,
+                "y": 155.838454784899
             }
         },
         "donjon1_room5.tmx": {
@@ -219,19 +249,19 @@
             }
         },
         "donjon2_room1.tmx": {
-            "scale": 1.8942,
-            "selectedLayer": 4,
+            "scale": 1.6365,
+            "selectedLayer": 7,
             "viewCenter": {
-                "x": 123.79896526237991,
-                "y": 135.94129447787984
+                "x": 97.46410021387103,
+                "y": 166.20837152459515
             }
         },
         "donjon2_room2.tmx": {
-            "scale": 1.6952,
+            "scale": 2.01,
             "selectedLayer": 7,
             "viewCenter": {
-                "x": 131.8428504011326,
-                "y": 150.12977819726282
+                "x": 113.68159203980102,
+                "y": 149.2537313432836
             }
         },
         "donjon2_room3.tmx": {
@@ -319,39 +349,35 @@
             }
         }
     },
+    "last.exportedFilePath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/maps/donjon1_room1",
     "last.externalTilesetPath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/maps/Tilesets",
     "last.imagePath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/maps/Tilesets",
-    "map.height": 16,
+    "map.height": 1,
+    "map.lastUsedExportFilter": "CSV files (*.csv)",
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
-    "map.width": 16,
+    "map.width": 1,
     "openFiles": [
-        "Tilesets/atlas_walls_low-16x16.tsx",
-        "Tilesets/atlas_walls_high-16x32.tsx",
-        "Tilesets/atlas_floor-16x16.tsx",
-        "Tilesets/0x72_DungeonTilesetII_v1.7.tsx",
-        "donjon2_room1.tmx",
-        "donjon2_room2.tmx",
-        "donjon2_room3.tmx",
-        "donjon2_room4.tmx",
-        "donjon2_room5.tmx",
-        "donjon2_room6.tmx"
+        "donjon1_room1.tmx",
+        "donjon1_room4.tmx",
+        "donjon1_room3.tmx",
+        "/Users/manuarii/Documents/DM-POON2-ASSETS/assets/maps/donjon1_room3.tmx"
     ],
     "project": "tiled-project.tiled-project",
     "recentFiles": [
+        "donjon1_room4.tmx",
+        "donjon1_room3.tmx",
+        "/Users/manuarii/Documents/DM-POON2-ASSETS/assets/maps/donjon1_room3.tmx",
+        "donjon2_room2.tmx",
+        "/Users/manuarii/Documents/DM-POON2-ASSETS/assets/maps/donjon2_room5.tmx",
+        "donjon1_room1.tmx",
         "Tilesets/atlas_walls_low-16x16.tsx",
         "Tilesets/atlas_walls_high-16x32.tsx",
         "Tilesets/atlas_floor-16x16.tsx",
         "Tilesets/0x72_DungeonTilesetII_v1.7.tsx",
-        "donjon2_room1.tmx",
-        "donjon2_room2.tmx",
-        "donjon2_room3.tmx",
-        "donjon2_room4.tmx",
-        "donjon2_room5.tmx",
-        "donjon2_room6.tmx",
-        "donjon1_room5.tmx",
-        "donjon1_room4.tmx"
+        "donjon1_room2.tmx",
+        "donjon2_room1.tmx"
     ],
     "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
     "tileset.lastUsedFormat": "tsx",
