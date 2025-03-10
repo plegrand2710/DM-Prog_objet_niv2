@@ -1,6 +1,7 @@
 package cursed_chronicles.Player;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +10,9 @@ import java.util.HashMap;
 public class PlayerView extends JPanel {
 	private static int CONSTX = 48;
 	private static int CONSTY = 48;
+	
+	private static int GAMEFRAMEWIDTH = 256;
+	private static int GAMEFRAMEHEIGHT = 256;
 
     private Player player;
     private PlayerController controller;
@@ -18,7 +22,7 @@ public class PlayerView extends JPanel {
     private Image weaponSkin;
     private Timer movementTimer;
     
-    private Timer animationTimer;  // ✅ Ajout d'un timer global pour l'animation
+    private Timer animationTimer;  // Ajout d'un timer global pour l'animation
 
     private final int baseMoveSpeed = 250;
     private final int speedMoveSpeed = 50; 
@@ -28,6 +32,8 @@ public class PlayerView extends JPanel {
     private int targetX, targetY;
     private int currentX, currentY;
     private int stepSize = 8; // Nombre de pixels par mise à jour d'animation
+    
+    
 
     public PlayerView(Player player) {
         this.player = player;
@@ -38,6 +44,7 @@ public class PlayerView extends JPanel {
             frameIndex = (frameIndex + 1) % sprites.get(player.getDirection()).length;
             repaint();
         });
+        setOpaque(false); // Rendre transparent pour ne pas masquer la salle
     }
 
     public void setController(PlayerController controller) {
@@ -125,7 +132,7 @@ public class PlayerView extends JPanel {
         player.move(newDirection, dx, dy);
         isAnimating = true;
         if (!animationTimer.isRunning()) {
-            animationTimer.start();  // ✅ Démarre l'animation si ce n'est pas déjà fait
+            animationTimer.start();  // Démarre l'animation si ce n'est pas déjà fait
         }
 
         movementTimer = new Timer(moveSpeed / 10, e -> {
@@ -161,7 +168,7 @@ public class PlayerView extends JPanel {
 
     public void stopAnimation() {
         animationTimer.stop();
-        frameIndex = 0; // ✅ Réinitialise le sprite
+        frameIndex = 0; // Réinitialise le sprite
         repaint();
     }
 
@@ -231,6 +238,10 @@ public class PlayerView extends JPanel {
             return filePath;
         }
         return filePath.substring(0, filePath.indexOf("_"));
+    }
+    
+    public void setSpawnPosition(int px, int py) {
+    	setBounds(180, 135, GAMEFRAMEWIDTH, GAMEFRAMEHEIGHT);
     }
 
     

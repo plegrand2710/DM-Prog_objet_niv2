@@ -14,6 +14,7 @@ public class Room {
     private int[][] _pillarLayer;
     private int[][] _chestsLayer;
     private int[][] _decorationsLayer;
+    
     private int[][] _collisionsLayer;
 
     public Room(String name) {

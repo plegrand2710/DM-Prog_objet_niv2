@@ -1,9 +1,12 @@
 package cursed_chronicles.Map;
 
+import cursed_chronicles.Player.PlayerController;
+
 public class RoomController {
     private Room _currentRoom;
     private RoomView _roomView;
     private String _tilesetPath;
+    private PlayerController _playerController;
 
     public RoomController(RoomView roomView, String tilesetPath) {
         _roomView = roomView;
@@ -18,5 +21,14 @@ public class RoomController {
         
         _currentRoom = room;
         _roomView.displayRoom(_currentRoom, _tilesetPath);
+        _playerController.setCollisionsLayer(_currentRoom.getCollisionsLayer());
+    }
+    
+    public PlayerController getPlayerController() {
+    	return _playerController;
+    }
+    
+    public void setPlayerController(PlayerController playerController) {
+    	_playerController = playerController;
     }
 }

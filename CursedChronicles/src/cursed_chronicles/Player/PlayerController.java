@@ -3,11 +3,16 @@ package cursed_chronicles.Player;
 import java.awt.event.*;
 import javax.swing.Timer;
 
+import cursed_chronicles.Map.RoomController;
+
 public class PlayerController extends KeyAdapter {
     private Player player;
     private PlayerView playerView;
     private Timer nonSpeedTimer = null;  
     private boolean canMove = true; 
+    private RoomController _roomController;
+    
+    private int[][] _collisionsLayer;
 
 
     public PlayerController(Player player, PlayerView playerView) {
@@ -15,6 +20,23 @@ public class PlayerController extends KeyAdapter {
         this.playerView = playerView;
         this.playerView.setController(this);
 
+    }
+    
+
+    public RoomController getRoomController() {
+    	return _roomController;
+    }
+    
+    public void setRoomController(RoomController roomController) {
+    	_roomController = roomController;
+    }
+    
+    public int[][] getCollisionsLayer() {
+        return _collisionsLayer;
+    }
+    
+    public void setCollisionsLayer(int[][] collisionsLayer) {
+    	_collisionsLayer = collisionsLayer;
     }
     
     @Override
@@ -73,8 +95,12 @@ public class PlayerController extends KeyAdapter {
             case KeyEvent.VK_DOWN:
             case KeyEvent.VK_LEFT:
             case KeyEvent.VK_RIGHT:
-                playerView.stopAnimation(); // ✅ Arrête l’animation quand la touche est relâchée
+                playerView.stopAnimation(); // Arrête l’animation quand la touche est relâchée
                 break;
         }
+    }
+    
+    public void setPlayerPosition(int px, int py) {
+    	playerView.setSpawnPosition(px, py);
     }
 }

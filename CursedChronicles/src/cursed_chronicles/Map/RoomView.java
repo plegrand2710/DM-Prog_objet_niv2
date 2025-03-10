@@ -23,6 +23,9 @@ public class RoomView extends JLayeredPane {
     private final int _scaleFactor = 3;
     private final int _displayTileSize = _tileSize * _scaleFactor;
 
+    
+    
+    
     public RoomView() {
         setPreferredSize(new Dimension(16 * _displayTileSize, 16 * _displayTileSize));
     }
