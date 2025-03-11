@@ -3,6 +3,7 @@ package cursed_chronicles.Player;
 import java.awt.event.*;
 import javax.swing.Timer;
 
+import cursed_chronicles.Constant;
 import cursed_chronicles.Map.RoomController;
 
 public class PlayerController extends KeyAdapter {
@@ -77,17 +78,26 @@ public class PlayerController extends KeyAdapter {
                 return;
         }
         
+        if (!isAllowedToMove(player.getPositionX()+dx, player.getPositionY()+dy)) {
+        	return;
+        }
+        
         if (!playerView.isAnimating()) {
         	playerView.movePlayer(dx, dy);
 
             canMove = false; 
         }
         
-        displayPlayerCurrentPosition();
+//        displayPlayerCurrentPosition();
+        displayCurrentCollisionId();
     }
     
     private void displayPlayerCurrentPosition() {
     	System.out.println("Player current position : " + player.getPositionX() + "/" + player.getPositionY());
+    }
+    
+    public void displayCurrentCollisionId() {
+    	System.out.println("Current collision id : " + _roomController.getCurrentRoom().getCollisionsLayer()[player.getPositionY()][player.getPositionX()]);
     }
     
     public void notifyAnimationFinished() {
@@ -104,6 +114,24 @@ public class PlayerController extends KeyAdapter {
                 playerView.stopAnimation(); // Arrête l’animation quand la touche est relâchée
                 break;
         }
+    }
+    
+    public boolean isAllowedToMove(int newX, int newY) {
+//    	System.out.println("To : " + newX + "/" + newY);
+    	if (newX < 0 || newX >= 16 || newY < 0 || newY >= 16) {
+    		
+    		return false;
+    	}
+    	
+    	if (_roomController.isInCollision(newX, newY) ) {
+    		return false;
+    	}
+    	
+    	return true;
+    }
+    
+    public void setSpawn() {
+    	playerView.setSpawn();
     }
     
     public void setPlayerPosition(int px, int py) {

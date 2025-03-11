@@ -242,8 +242,13 @@ public class PlayerView extends JPanel {
         return filePath.substring(0, filePath.indexOf("_"));
     }
     
+    public void setSpawn() {
+    	setBounds(0, 0, Constant.GAME_FRAME_WIDTH * Constant.RATIO_PLAYER_ROOM, Constant.GAME_FRAME_HEIGHT * Constant.RATIO_PLAYER_ROOM);
+    }
+    
     public void setPosition(int px, int py) {
-    	setBounds(px, py, GAMEFRAMEWIDTH * Constant.RATIO_PLAYER_ROOM, GAMEFRAMEHEIGHT * Constant.RATIO_PLAYER_ROOM);
+    	currentX = px*Constant.PLAYER_SIZE;
+    	currentY = py*Constant.PLAYER_SIZE;
     }
 
     

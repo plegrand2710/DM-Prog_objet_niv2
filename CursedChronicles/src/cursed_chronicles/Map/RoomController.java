@@ -1,5 +1,6 @@
 package cursed_chronicles.Map;
 
+import cursed_chronicles.Constant;
 import cursed_chronicles.Player.PlayerController;
 
 public class RoomController {
@@ -28,5 +29,17 @@ public class RoomController {
     
     public void setPlayerController(PlayerController playerController) {
     	_playerController = playerController;
+    }
+    
+    public Room getCurrentRoom() {
+    	return _currentRoom;
+    }
+    
+    public boolean isInCollision(int positionX, int positionY) {
+    	if (_currentRoom.getCollisionsLayer()[positionY][positionX] == Constant.WALL_COLLISION_ID) {
+//    		System.out.println("Collisions layer : " + _currentRoom.getCollisionsLayer()[positionX][positionY]);
+    		return true;
+    	}
+    	return false;
     }
 }
