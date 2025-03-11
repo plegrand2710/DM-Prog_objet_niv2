@@ -1,4 +1,4 @@
-/*package cursed_chronicles;
+package cursed_chronicles;
 
 import cursed_chronicles.Map.Room;
 import cursed_chronicles.Map.RoomController;
@@ -43,7 +43,7 @@ public class MainPauline {
 
             // Définition des tailles et positions
             roomView.setBounds(0, 0, gameFrame.getWidth(), gameFrame.getHeight());
-            playerView.setBounds(135, 135, gameFrame.getWidth(), gameFrame.getHeight());
+            playerView.setBounds(143, 140, gameFrame.getWidth(), gameFrame.getHeight());
 
             // Ajout des éléments dans le LayeredPane avec un Z-index défini
             layeredPane.add(roomView, Integer.valueOf(1));  // Salle en arrière-plan
@@ -72,9 +72,9 @@ public class MainPauline {
             gameFrame.setVisible(true);
         });
     }
-}*/
+}
 
-package cursed_chronicles;
+/*package cursed_chronicles;
 
 import cursed_chronicles.Player.*;
 import javax.swing.*;
@@ -254,4 +254,4 @@ public class MainPauline {
 
         });
     }
-}
+}*/

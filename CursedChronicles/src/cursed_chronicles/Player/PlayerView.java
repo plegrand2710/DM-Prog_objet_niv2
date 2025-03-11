@@ -18,7 +18,7 @@ public class PlayerView extends JPanel {
     private Image weaponSkin;
     private Timer movementTimer;
     
-    private Timer animationTimer;  // ✅ Ajout d'un timer global pour l'animation
+    private Timer animationTimer;  
 
     private final int baseMoveSpeed = 250;
     private final int speedMoveSpeed = 50; 
@@ -27,7 +27,7 @@ public class PlayerView extends JPanel {
     private boolean isAnimating = false;
     private int targetX, targetY;
     private int currentX, currentY;
-    private int stepSize = 8; // Nombre de pixels par mise à jour d'animation
+    private int stepSize = 8; 
 
     public PlayerView(Player player) {
         this.player = player;
@@ -96,7 +96,7 @@ public class PlayerView extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        int cellSize = 64;
+        int cellSize = 48;
 
         if (weaponSkin != null) {
             g.drawImage(weaponSkin, currentX, currentY, cellSize, cellSize, this);
@@ -125,7 +125,7 @@ public class PlayerView extends JPanel {
         player.move(newDirection, dx, dy);
         isAnimating = true;
         if (!animationTimer.isRunning()) {
-            animationTimer.start();  // ✅ Démarre l'animation si ce n'est pas déjà fait
+            animationTimer.start(); 
         }
 
         movementTimer = new Timer(moveSpeed / 10, e -> {
@@ -161,7 +161,7 @@ public class PlayerView extends JPanel {
 
     public void stopAnimation() {
         animationTimer.stop();
-        frameIndex = 0; // ✅ Réinitialise le sprite
+        frameIndex = 0; 
         repaint();
     }
 
