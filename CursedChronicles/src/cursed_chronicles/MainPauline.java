@@ -1,70 +1,56 @@
-/*package cursed_chronicles;
+package cursed_chronicles;
+
+import java.awt.BorderLayout;
+import javax.swing.*;
 
 import cursed_chronicles.Map.Room;
 import cursed_chronicles.Map.RoomController;
 import cursed_chronicles.Map.RoomView;
-import cursed_chronicles.Player.*;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import cursed_chronicles.Player.Player;
+import cursed_chronicles.Player.PlayerController;
+import cursed_chronicles.Player.PlayerView;
 
 public class MainPauline {
+	
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             
-            // Création de la fenêtre de jeu
+            // Création de la fenêtre de jeu (256x256 pixels)
             JFrame gameFrame = new JFrame("Game Window");
             gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             gameFrame.setSize(800, 800);
             gameFrame.setLocationRelativeTo(null);
 
-            // Création du LayeredPane pour gérer l'affichage en couches
-            JLayeredPane layeredPane = new JLayeredPane();
-            layeredPane.setPreferredSize(new Dimension(gameFrame.getWidth(), gameFrame.getHeight()));
-
             // Création de la salle
             RoomView roomView = new RoomView();
-            RoomController controller = new RoomController(roomView, "assets/maps/tiles/");
-            Room room = new Room("donjon1_room1");
-            controller.loadRoom(room);
+            RoomController roomController = new RoomController(roomView, "assets/maps/tiles/");
+            Room room = new Room("donjon1_room5");
 
             // Création du joueur
             Player player = new Player("Hero");
             PlayerView playerView = new PlayerView(player);
+
             PlayerController playerController = new PlayerController(player, playerView);
-            playerView.setOpaque(false); // Rendre transparent pour ne pas masquer la salle
-
-            // ✅ Initialisation du journal du joueur
-            JournalPanel journalPanel = new JournalPanel(player);
-            journalPanel.showJournal();
             
-            // 🔹 Ajouter une entrée test (peut être supprimé plus tard)
-            player.addJournalEntry("Début de l'aventure dans " + room.getName());
-
+            // Set other controllers
+            roomController.setPlayerController(playerController);
+            playerController.setRoomController(roomController);
+            
+            // Chargement de la salle (IMPORTANT : après avoir initialisé le PlayerController)
+            roomController.loadRoom(room);
+            
             // Définition des tailles et positions
             roomView.setBounds(0, 0, gameFrame.getWidth(), gameFrame.getHeight());
-            playerView.setBounds(135, 135, gameFrame.getWidth(), gameFrame.getHeight());
+            playerView.setBounds(143, 140, gameFrame.getWidth(), gameFrame.getHeight());
 
-            // Ajout des éléments dans le LayeredPane avec un Z-index défini
-            layeredPane.add(roomView, Integer.valueOf(1));  // Salle en arrière-plan
-            layeredPane.add(playerView, Integer.valueOf(2)); // Joueur au-dessus
+            // Ajout du joueur dans la salle avec un Z-index spécifique
+            roomView.add(playerView, Integer.valueOf(3)); 
 
-            // Ajout du LayeredPane à la fenêtre
-            gameFrame.add(layeredPane, BorderLayout.CENTER);
-
+            // Ajout du `RoomView` à la fenêtre
+            gameFrame.add(roomView, BorderLayout.CENTER);
+            
             // Ajout des contrôles du joueur
             gameFrame.addKeyListener(playerController);
-
-            // ✅ Ajout du raccourci clavier pour afficher le journal (touche 'J')
-            gameFrame.addKeyListener(new KeyAdapter() {
-                @Override
-                public void keyPressed(KeyEvent e) {
-                    if (e.getKeyCode() == KeyEvent.VK_J) {
-                        journalPanel.showJournal();
-                    }
-                }
-            });
-
             gameFrame.setFocusable(true);
             gameFrame.requestFocusInWindow();
 
@@ -72,8 +58,9 @@ public class MainPauline {
             gameFrame.setVisible(true);
         });
     }
-}*/
+}
 
+/*
 package cursed_chronicles;
 
 import cursed_chronicles.Player.*;
@@ -254,4 +241,4 @@ public class MainPauline {
 
         });
     }
-}
+}*/

@@ -103,7 +103,7 @@ public class PlayerView extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        int cellSize = 64;
+        int cellSize = 48;
 
         if (weaponSkin != null) {
             g.drawImage(weaponSkin, currentX, currentY, cellSize, cellSize, this);
