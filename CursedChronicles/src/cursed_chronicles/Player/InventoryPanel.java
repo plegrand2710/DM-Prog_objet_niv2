@@ -17,7 +17,9 @@ public class InventoryPanel extends JFrame {
         this.player = player;
         setTitle("🎒 Inventory");
         setSize(400, 300); 
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLayout(new BorderLayout());
 
         boosterListModel = new DefaultListModel<>();

@@ -2,6 +2,10 @@ package cursed_chronicles;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
@@ -24,70 +28,87 @@ public class MainPauline {
 	
 	public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            
-            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            int screenHeight = screenSize.height; 
+            // 📌 Récupération des dimensions de l'écran
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            GraphicsDevice gd = ge.getDefaultScreenDevice();
+            GraphicsConfiguration gc = gd.getDefaultConfiguration();
+            Insets screenInsets = Toolkit.getDefaultToolkit().getScreenInsets(gc);
 
+            int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+            int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+            int taskbarHeight = screenInsets.bottom; 
+
+            // 📌 Création de la fenêtre principale du jeu
             JFrame gameFrame = new JFrame("Game Window");
             gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            gameFrame.setSize(Constant.GAME_FRAME_WIDTH, Constant.GAME_FRAME_HEIGHT);
-            gameFrame.setLocation(0,0);
-            gameFrame.setLayout(new BorderLayout()); 
-
-
+            gameFrame.setLayout(new BorderLayout());
+            gameFrame.setLocation(-5,0);
+            
             RoomView roomView = new RoomView();
             RoomController roomController = new RoomController(roomView);
             Room room = new Room("donjon1_room5");
             
+            // 📌 Création du panneau de narration (ajouté immédiatement)
             NarrationPanel narrationPanel = new NarrationPanel(
-            	    room.getName(),
-            	    "Une odeur étrange flotte dans l'air... "
-            	    + "Les murs sont recouverts de vieilles gravures énigmatiques, à moitié effacées par le temps. "
-            	    + "Les torches vacillent faiblement, projetant des ombres menaçantes sur le sol fissuré. "
-            	    + "Un silence pesant règne, seulement troublé par le lointain écho d'un goutte-à-goutte "
-            	    + "invisible. L'air est chargé d'une tension palpable... Quelque chose semble t'observer."
-            	    , gameFrame);
+                room.getName(),
+                "Une brise glaciale souffle à travers les fissures des murs. "
+                        + "Chaque pas résonne étrangement, comme si la pierre elle-même murmurait. "
+                        + "Un frisson parcourt ton échine. Quelque chose rôde dans l'ombre...",
+                gameFrame
+            );
+            gameFrame.add(narrationPanel, BorderLayout.SOUTH);
+
+            // 📌 Création de la salle
             
+
+            // 📌 Ajout du `roomView` pour qu'il occupe l'espace restant
+            gameFrame.add(roomView, BorderLayout.CENTER);
+
+            // ✅ Calcul de la hauteur disponible après ajout du `NarrationPanel`
+            gameFrame.pack();
+            int gameFrameWidth = gameFrame.getContentPane().getWidth() + 2;
+            int gameFrameHeight = gameFrame.getContentPane().getHeight();
+            int narrationHeight = narrationPanel.getHeight();
+            int availableHeight = screenHeight - narrationHeight + taskbarHeight; 
+
+            // 📌 Création et placement des autres éléments
             Player player = new Player("Hero");
             PlayerView playerView = new PlayerView(player);
 
+            // ✅ Définition de la largeur restante pour les panneaux
+            int panelWidth = screenWidth - gameFrameWidth;
+            int panelHeight = availableHeight / 3; // Divise l'espace restant en 3 parties égales
+
+            // 📌 Création des panneaux
             InventoryPanel inventoryPanel = new InventoryPanel(player);
-            inventoryPanel.showInventory();
             JournalPanel journalPanel = new JournalPanel(player);
-            journalPanel.showJournal();
-            
             PlayerPanel playerPanel = new PlayerPanel(player, inventoryPanel, journalPanel);
-            int screenWidth = screenSize.width;
 
-            int panelWidth = playerPanel.getWidth();  
-            int panelHeight = playerPanel.getHeight(); 
+            // 📌 Positionnement dynamique des panneaux (côté droit)
+            playerPanel.setSize(panelWidth, panelHeight);
+            playerPanel.setLocation(gameFrameWidth, screenHeight - panelHeight - taskbarHeight);
+            playerPanel.setVisible(true);
 
-            playerPanel.setLocation(screenWidth - panelWidth, 0);
-            playerPanel.setVisible(true);    
-            
-            Rectangle playerBounds = playerPanel.getBounds();
-            int panelPlayerWidth = playerBounds.width;  // Largeur réelle du `PlayerPanel`
-            int panelPlayerHeight = playerBounds.height; // Hauteur réelle du `PlayerPanel`
+            inventoryPanel.setSize(panelWidth, panelHeight);
+            inventoryPanel.setLocation(gameFrameWidth, screenHeight - (2 * panelHeight) - taskbarHeight);
+            inventoryPanel.setVisible(true);
 
-            // 📌 Affichage et positionnement du `JornalPanel` juste en dessous du `PlayerPanel`
-            journalPanel.setSize(panelPlayerWidth, journalPanel.getHeight()); // Largeur identique à `PlayerPanel`
-            journalPanel.setLocation(screenWidth - panelPlayerWidth, playerBounds.y + panelPlayerHeight);
+            journalPanel.setSize(panelWidth + 10, panelHeight + 15);
+            journalPanel.setLocation(gameFrameWidth -6, - 1); // **Placée en haut à droite**
             journalPanel.setVisible(true);
+
+            // 📌 Ajout du contrôleur du joueur
             PlayerController playerController = new PlayerController(player, playerView);
-            
             roomController.setPlayerController(playerController);
             playerController.setRoomController(roomController);
-            
+
+            // 📌 Chargement de la salle et positionnement du joueur
             roomController.loadRoom(room);
-            
-            roomView.setBounds(0, 0, gameFrame.getWidth(), gameFrame.getHeight());
             playerController.setSpawn();
             playerController.setPlayerPosition(7, 14);
+            roomView.add(playerView, Integer.valueOf(2));
 
-            roomView.add(playerView, Integer.valueOf(2)); 
-
-            gameFrame.add(roomView, BorderLayout.CENTER); 
-            gameFrame.add(narrationPanel, BorderLayout.SOUTH); 
+            // 📌 Gestion du raccourci clavier pour afficher le `JournalPanel`
             gameFrame.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyPressed(KeyEvent e) {
@@ -98,25 +119,18 @@ public class MainPauline {
                         if (journalPanel.isVisible()) {
                             journalPanel.setVisible(false);
                         } else {
-                        	Rectangle playerBounds = playerPanel.getBounds();
-                            int panelPlayerWidth = playerBounds.width;
-                            int panelPlayerHeight = playerBounds.height;
-
-                            // 📌 Mettre `JournalPanel` juste en dessous du `PlayerPanel`
-                            journalPanel.setSize(panelPlayerWidth, journalPanel.getHeight());
-                            journalPanel.setLocation(screenWidth - panelPlayerWidth, playerBounds.y + panelPlayerHeight);
-
-                            // 📌 Afficher le journal à la bonne position
+                        	journalPanel.setSize(panelWidth + 10, panelHeight + 15);
+                            journalPanel.setLocation(gameFrameWidth -6, - 1); // **Placée en haut à droite**
                             journalPanel.setVisible(true);
                         }
                     }
                 }
             });
+
             gameFrame.addKeyListener(playerController);
             gameFrame.setFocusable(true);
             gameFrame.requestFocusInWindow();
 
-            gameFrame.pack();
             gameFrame.setVisible(true);
         });
     }

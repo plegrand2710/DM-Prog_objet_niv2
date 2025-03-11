@@ -13,7 +13,9 @@ public class PlayerPanel extends JFrame {
     public PlayerPanel(Player player, InventoryPanel inventory, JournalPanel journal) {
         setTitle("👤 Player Info");
         setSize(400, 350);
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        setUndecorated(true);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLayout(new BorderLayout());
 
         nameLabel = new JLabel("Player: " + player.getName());
