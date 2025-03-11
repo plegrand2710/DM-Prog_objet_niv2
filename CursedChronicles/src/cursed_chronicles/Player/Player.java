@@ -278,5 +278,9 @@ public class Player {
     public boolean isSpeedActive() {
         return speedActive;
     }
-
+    
+    public void setPosition(int x, int y) {
+    	setPositionX(x);
+    	setPositionY(y);
+    }
 }

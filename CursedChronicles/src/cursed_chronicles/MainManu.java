@@ -18,13 +18,13 @@ public class MainManu {
             // Création de la fenêtre de jeu (256x256 pixels)
             JFrame gameFrame = new JFrame("Game Window");
             gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            gameFrame.setSize(800, 800);
+            gameFrame.setSize(256, 256);
             gameFrame.setLocationRelativeTo(null);
 
             // Création de la salle
             RoomView roomView = new RoomView();
-            RoomController roomController = new RoomController(roomView, "assets/maps/tiles/");
-            Room room = new Room("donjon1_room5");
+            RoomController roomController = new RoomController(roomView);
+            Room room = new Room("donjon1_room2");
 
             // Création du joueur
             Player player = new Player("Hero");
@@ -41,13 +41,13 @@ public class MainManu {
             
             // Définition des tailles et positions
             roomView.setBounds(0, 0, gameFrame.getWidth(), gameFrame.getHeight());
-            playerView.setBounds(136, 136, gameFrame.getWidth(), gameFrame.getHeight());
+            playerView.setBounds(0, 0, gameFrame.getWidth()*Constant.RATIO_PLAYER_ROOM, gameFrame.getHeight()*Constant.RATIO_PLAYER_ROOM);
 
             // Ajout du joueur dans la salle avec un Z-index spécifique
             roomView.add(playerView, Integer.valueOf(3)); 
 
             // Ajout du `RoomView` à la fenêtre
-            gameFrame.add(roomView, BorderLayout.CENTER);
+            gameFrame.add(roomView);
             
             // Ajout des contrôles du joueur
             gameFrame.addKeyListener(playerController);

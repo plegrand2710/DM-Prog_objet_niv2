@@ -23,36 +23,36 @@ public class RoomView extends JLayeredPane {
     private final int _scaleFactor = 3;
     private final int _displayTileSize = _tileSize * _scaleFactor;
 
-    
+    private final String _tilesetBasePath = "assets/maps/tiles/";
     
     
     public RoomView() {
         setPreferredSize(new Dimension(16 * _displayTileSize, 16 * _displayTileSize));
     }
 
-    public void displayRoom(Room room, String tilesetBasePath) {
+    public void displayRoom(Room room) {
         removeAll(); // Supprime les anciens calques si existants
 
         // Création et ajout des calques avec leur Z-index
-        _floorLayer = createLayerPanel(room.getFloorLayer(), tilesetBasePath + "floor/", 0);
-        _trapsLayer = createLayerPanel(room.getTrapsLayer(), tilesetBasePath + "traps/", 1);
-        _sideWallsLayer = createLayerPanel(room.getSideWallsLayer(), tilesetBasePath + "side_walls/", 2);
-        _sideDoorsLayer = createLayerPanel(room.getSideDoorsLayer(), tilesetBasePath + "side_doors/", 3);
-        _frontWallsLayer = createLayerPanel(room.getFrontWallsLayer(), tilesetBasePath + "front_walls/", 4);
-        _frontDoorsLayer = createLayerPanel(room.getFrontDoorsLayer(), tilesetBasePath + "front_doors/", 5);
-        _chestsLayer = createLayerPanel(room.getChestsLayer(), tilesetBasePath + "chests/", 6);
-        _pillarLayer = createLayerPanel(room.getPillarLayer(), tilesetBasePath + "pillars/", 7);
-        _decorationsLayer = createLayerPanel(room.getDecorationsLayer(), tilesetBasePath + "decorations/", 8);
+        _floorLayer = createLayerPanel(room.getFloorLayer(), _tilesetBasePath + "floor/", 0);
+        _trapsLayer = createLayerPanel(room.getTrapsLayer(), _tilesetBasePath + "traps/", 1);
+        _sideWallsLayer = createLayerPanel(room.getSideWallsLayer(), _tilesetBasePath + "side_walls/", 2);
+        _sideDoorsLayer = createLayerPanel(room.getSideDoorsLayer(), _tilesetBasePath + "side_doors/", 3);
+        _frontWallsLayer = createLayerPanel(room.getFrontWallsLayer(), _tilesetBasePath + "front_walls/", 4);
+        _frontDoorsLayer = createLayerPanel(room.getFrontDoorsLayer(), _tilesetBasePath + "front_doors/", 5);
+        _chestsLayer = createLayerPanel(room.getChestsLayer(), _tilesetBasePath + "chests/", 6);
+        _pillarLayer = createLayerPanel(room.getPillarLayer(), _tilesetBasePath + "pillars/", 7);
+        _decorationsLayer = createLayerPanel(room.getDecorationsLayer(), _tilesetBasePath + "decorations/", 8);
 
         add(_floorLayer, Integer.valueOf(0));
         add(_trapsLayer, Integer.valueOf(1));
         add(_sideWallsLayer, Integer.valueOf(2));
-        add(_sideDoorsLayer, Integer.valueOf(3));
-        add(_frontWallsLayer, Integer.valueOf(4));
-        add(_frontDoorsLayer, Integer.valueOf(5));
-        add(_chestsLayer, Integer.valueOf(6));
-        add(_pillarLayer, Integer.valueOf(7));
-        add(_decorationsLayer, Integer.valueOf(8));
+        add(_sideDoorsLayer, Integer.valueOf(4));
+        add(_frontWallsLayer, Integer.valueOf(5));
+        add(_frontDoorsLayer, Integer.valueOf(6));
+        add(_chestsLayer, Integer.valueOf(7));
+        add(_pillarLayer, Integer.valueOf(8));
+        add(_decorationsLayer, Integer.valueOf(9));
 
         repaint();
     }

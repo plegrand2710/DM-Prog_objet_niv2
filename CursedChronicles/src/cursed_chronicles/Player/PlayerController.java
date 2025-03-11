@@ -82,6 +82,12 @@ public class PlayerController extends KeyAdapter {
 
             canMove = false; 
         }
+        
+        displayPlayerCurrentPosition();
+    }
+    
+    private void displayPlayerCurrentPosition() {
+    	System.out.println("Player current position : " + player.getPositionX() + "/" + player.getPositionY());
     }
     
     public void notifyAnimationFinished() {
@@ -101,6 +107,8 @@ public class PlayerController extends KeyAdapter {
     }
     
     public void setPlayerPosition(int px, int py) {
-    	playerView.setSpawnPosition(px, py);
+    	playerView.setPosition(px, py);
+    	player.setPosition(px, py);
+    	displayPlayerCurrentPosition();
     }
 }

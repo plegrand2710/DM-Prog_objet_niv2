@@ -5,12 +5,10 @@ import cursed_chronicles.Player.PlayerController;
 public class RoomController {
     private Room _currentRoom;
     private RoomView _roomView;
-    private String _tilesetPath;
     private PlayerController _playerController;
 
-    public RoomController(RoomView roomView, String tilesetPath) {
+    public RoomController(RoomView roomView) {
         _roomView = roomView;
-        _tilesetPath = tilesetPath;
     }
 
     public void loadRoom(Room room) {
@@ -20,7 +18,7 @@ public class RoomController {
         }
         
         _currentRoom = room;
-        _roomView.displayRoom(_currentRoom, _tilesetPath);
+        _roomView.displayRoom(_currentRoom);
         _playerController.setCollisionsLayer(_currentRoom.getCollisionsLayer());
     }
     
