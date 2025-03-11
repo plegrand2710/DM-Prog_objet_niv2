@@ -1,16 +1,15 @@
 package cursed_chronicles.Map;
 
+import cursed_chronicles.Constant;
 import cursed_chronicles.Player.PlayerController;
 
 public class RoomController {
     private Room _currentRoom;
     private RoomView _roomView;
-    private String _tilesetPath;
     private PlayerController _playerController;
 
-    public RoomController(RoomView roomView, String tilesetPath) {
+    public RoomController(RoomView roomView) {
         _roomView = roomView;
-        _tilesetPath = tilesetPath;
     }
 
     public void loadRoom(Room room) {
@@ -20,7 +19,7 @@ public class RoomController {
         }
         
         _currentRoom = room;
-        _roomView.displayRoom(_currentRoom, _tilesetPath);
+        _roomView.displayRoom(_currentRoom);
         _playerController.setCollisionsLayer(_currentRoom.getCollisionsLayer());
     }
     
@@ -30,5 +29,17 @@ public class RoomController {
     
     public void setPlayerController(PlayerController playerController) {
     	_playerController = playerController;
+    }
+    
+    public Room getCurrentRoom() {
+    	return _currentRoom;
+    }
+    
+    public boolean isInCollision(int positionX, int positionY) {
+    	if (_currentRoom.getCollisionsLayer()[positionY][positionX] == Constant.WALL_COLLISION_ID) {
+//    		System.out.println("Collisions layer : " + _currentRoom.getCollisionsLayer()[positionX][positionY]);
+    		return true;
+    	}
+    	return false;
     }
 }

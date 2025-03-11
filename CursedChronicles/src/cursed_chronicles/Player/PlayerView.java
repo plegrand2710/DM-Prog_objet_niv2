@@ -2,6 +2,8 @@ package cursed_chronicles.Player;
 
 import javax.swing.*;
 
+import cursed_chronicles.Constant;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -240,8 +242,13 @@ public class PlayerView extends JPanel {
         return filePath.substring(0, filePath.indexOf("_"));
     }
     
-    public void setSpawnPosition(int px, int py) {
-    	setBounds(180, 135, GAMEFRAMEWIDTH, GAMEFRAMEHEIGHT);
+    public void setSpawn() {
+    	setBounds(0, 0, Constant.GAME_FRAME_WIDTH * Constant.RATIO_PLAYER_ROOM, Constant.GAME_FRAME_HEIGHT * Constant.RATIO_PLAYER_ROOM);
+    }
+    
+    public void setPosition(int px, int py) {
+    	currentX = px*Constant.PLAYER_SIZE;
+    	currentY = py*Constant.PLAYER_SIZE;
     }
 
     

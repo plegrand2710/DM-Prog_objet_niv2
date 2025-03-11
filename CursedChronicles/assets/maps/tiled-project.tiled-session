@@ -217,11 +217,11 @@
             }
         },
         "donjon1_room1.tmx": {
-            "scale": 2.9152,
-            "selectedLayer": 6,
+            "scale": 2.1616,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 128.12156970362238,
-                "y": 127.95005488474203
+                "x": 132.07809030347892,
+                "y": 145.26276831976315
             }
         },
         "donjon1_room2.tmx": {
@@ -249,11 +249,11 @@
             }
         },
         "donjon1_room5.tmx": {
-            "scale": 3.12,
-            "selectedLayer": 0,
+            "scale": 2.3295,
+            "selectedLayer": 7,
             "viewCenter": {
-                "x": 128.0448717948718,
-                "y": 127.88461538461537
+                "x": 135.86606567933035,
+                "y": 136.93925735136295
             }
         },
         "donjon2_room1.tmx": {
@@ -357,7 +357,7 @@
             }
         }
     },
-    "last.exportedFilePath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/maps/donjon1_room5/donjon1_room5_2",
+    "last.exportedFilePath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/maps/donjon1_room5",
     "last.externalTilesetPath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/maps/Tilesets",
     "last.imagePath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/sprites/player2/tilesets",
     "map.height": 1,

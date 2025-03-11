@@ -35,8 +35,20 @@ public class Room {
         _chestsLayer = loadCSV(basePath + _name + "_Chests.csv");
         _decorationsLayer = loadCSV(basePath + _name + "_Decorations.csv");
         _collisionsLayer = loadCSV(basePath + _name + "_Collisions.csv");
+        
+//        printCollisionLayer();
     }
 
+//    public void printCollisionLayer() {
+//        for (int y = 0; y < _collisionsLayer.length; y++) {
+//            for (int x = 0; x < _collisionsLayer[y].length; x++) {
+//                System.out.print(_collisionsLayer[y][x] + " ");
+//            }
+//            System.out.println(); // Nouvelle ligne après chaque rangée
+//        }
+//    }
+
+    
     private int[][] loadCSV(String filePath) {
         File file = new File(filePath);
         if (!file.exists()) {
@@ -115,4 +127,5 @@ public class Room {
     public String getName() {
         return _name;
     }
+    
 }

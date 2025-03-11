@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="5">
  <editorsettings>
-  <export target="donjon1_room5/donjon1_room5_2/donjon1_room5_2.csv" format="csv"/>
+  <export target="donjon1_room5/donjon1_room5.csv" format="csv"/>
  </editorsettings>
  <tileset firstgid="1" source="Tilesets/0x72_DungeonTilesetII_v1.7.tsx"/>
  <tileset firstgid="1025" source="Tilesets/atlas_walls_high-16x32.tsx"/>
@@ -66,7 +66,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="2" name="Side_walls" width="16" height="16" visible="0">
+ <layer id="2" name="Side_walls" width="16" height="16">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -86,7 +86,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="3" name="Side_doors" width="16" height="16" visible="0">
+ <layer id="3" name="Side_doors" width="16" height="16">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -106,7 +106,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="4" name="Front_walls" width="16" height="16" visible="0">
+ <layer id="4" name="Front_walls" width="16" height="16">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,1026,1178,1178,1178,1178,1178,1178,1178,1178,1178,1178,1028,0,0,
@@ -126,7 +126,7 @@
 0,0,1201,1202,1202,1202,1202,0,0,1202,1202,1202,1202,1204,0,0
 </data>
  </layer>
- <layer id="5" name="Front_doors" width="16" height="16" visible="0">
+ <layer id="5" name="Front_doors" width="16" height="16">
   <data encoding="csv">
 0,0,0,0,0,0,1161,0,0,1164,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -146,7 +146,7 @@
 0,0,0,0,0,0,1213,1214,1215,1216,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="8" name="Pillars" width="16" height="16" visible="0">
+ <layer id="8" name="Pillar" width="16" height="16">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -166,7 +166,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="7" name="Decorations" width="16" height="16" visible="0">
+ <layer id="7" name="Decorations" width="16" height="16">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,1110,0,0,1110,0,0,1110,0,0,1110,0,0,0,

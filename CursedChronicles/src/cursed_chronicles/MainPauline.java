@@ -23,7 +23,7 @@ public class MainPauline {
 
             // Création de la salle
             RoomView roomView = new RoomView();
-            RoomController roomController = new RoomController(roomView, "assets/maps/tiles/");
+            RoomController roomController = new RoomController(roomView);
             Room room = new Room("donjon1_room5");
 
             // Création du joueur
