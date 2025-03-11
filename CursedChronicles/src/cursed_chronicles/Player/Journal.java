@@ -7,6 +7,14 @@ public class Journal {
 
     public Journal() {
         this.entries = new ArrayList<>();
+        initializeJournal();
+    }
+
+    public void initializeJournal() {
+        entries.add("📖 Journal du joueur 📖\n"
+                + "Ce journal consigne tes découvertes et événements marquants.\n"
+                + "Utilise-le pour suivre ta progression et noter les indices cruciaux.\n"
+                + "Bonne aventure !");
     }
 
     public void addEntry(String entry) {
