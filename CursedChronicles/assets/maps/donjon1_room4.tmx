@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="1">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="1">
  <editorsettings>
   <export target="donjon1_room4/donjon1_room4.csv" format="csv"/>
  </editorsettings>
@@ -146,7 +146,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="8" name="Pillars" width="16" height="16">
+ <layer id="8" name="Pillar" width="16" height="16">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -164,6 +164,26 @@
 0,0,0,0,0,0,0,0,0,0,1208,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="9" name="Collisions" width="16" height="16" visible="0">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+386,386,386,386,386,386,386,386,386,386,386,386,386,386,386,386,
+386,0,0,0,0,0,0,0,0,0,0,0,0,0,0,386,
+386,0,0,0,0,0,0,0,0,0,0,0,0,0,0,386,
+386,0,0,0,0,0,0,0,0,0,386,0,0,0,0,386,
+386,0,0,0,0,0,0,0,0,0,0,0,0,0,0,386,
+386,0,0,0,386,0,0,0,536,536,0,0,0,0,0,386,
+386,0,0,0,536,0,0,0,0,0,0,0,0,0,694,252,
+386,0,0,0,0,0,0,0,0,0,0,536,0,0,0,252,
+386,0,0,0,0,0,0,0,0,0,0,536,0,0,0,386,
+386,0,0,0,386,0,0,536,0,0,0,0,0,0,0,386,
+386,0,0,0,0,0,0,0,0,0,0,0,0,0,0,386,
+386,0,0,0,0,0,0,0,0,0,386,0,0,0,0,386,
+386,0,0,0,0,0,0,0,0,0,0,0,0,0,0,386,
+386,0,0,0,0,0,0,0,0,0,0,0,0,0,0,386
 </data>
  </layer>
 </map>

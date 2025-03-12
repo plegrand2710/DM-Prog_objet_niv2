@@ -1,0 +1,3 @@
+ROOM / DOOR_SOURCE:ROOM_DESTINATION / SPAWN:coordX,coordY
+
+/N:;W:;S:;E:/N:,;W:,;S:,;E:,

@@ -117,7 +117,6 @@ public class PlayerController extends KeyAdapter {
     }
     
     public boolean isAllowedToMove(int newX, int newY) {
-//    	System.out.println("To : " + newX + "/" + newY);
     	if (newX < 0 || newX >= 16 || newY < 0 || newY >= 16) {
     		
     		return false;

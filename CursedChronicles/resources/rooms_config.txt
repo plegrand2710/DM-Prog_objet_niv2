@@ -1,0 +1,7 @@
+donjon1_room1/N:donjon1_room2;W:;S:;E:/N:7,3;W:;S:7,14;E:
+donjon1_room2/N:donjon1_room5;W:donjon1_room4;S:donjon1_room1;E:donjon1_room3/N:7,3;W:1,8;S:7,14;E:14,8
+donjon1_room3/N:;W:donjon1_room2;S:;E:/N:,;W:1,8;S:,;E:,
+donjon1_room4/N:;W:;S:;E:donjon1_room2/N:,;W:,;S:,;E:14,8
+donjon1_room5/N:;W:;S:donjon1_room2;E:/N:,;W:,;S:7,14;E:,
+
+
