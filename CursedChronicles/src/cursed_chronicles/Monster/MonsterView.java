@@ -9,12 +9,14 @@ public class MonsterView extends JPanel {
     private HashMap<String, Image[]> sprites;
     private int frameIndex = 0;
     private final String spritePath = "assets/sprites/monster/";
+    private int currentX, currentY;
 
     public MonsterView(Monster monster) {
         this.monster = monster;
         this.sprites = new HashMap<>();
         loadSprites();
         setPreferredSize(new Dimension(640, 640));
+        setOpaque(false);
     }
 
     private void loadSprites() {
@@ -27,26 +29,24 @@ public class MonsterView extends JPanel {
 
     private Image loadImage(String path) {
         ImageIcon icon = new ImageIcon(path);
-        Image image = icon.getImage();
-        if (image.getWidth(null) == -1) {
-            System.out.println("Erreur de chargement de l'image : " + path);
-        }
-        return image;
+        return icon.getImage();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        int cellSize = 64;
+        int cellSize = 48;
 
         String direction = monster.getDirection();
         Image[] frames = sprites.get(direction);
-        if (frames != null && frames.length > 0 && frameIndex < frames.length) {
-            g.drawImage(frames[frameIndex], monster.getPositionX() * cellSize, monster.getPositionY() * cellSize, cellSize, cellSize, this);
+        if (frames != null && frames.length > 0) {
+            g.drawImage(frames[frameIndex], currentX, currentY, cellSize, cellSize, this);
         }
     }
 
-    public void updateView() {
+    public void updatePosition(int dx, int dy) {
+        currentX += dx;
+        currentY += dy;
         repaint();
     }
 }
