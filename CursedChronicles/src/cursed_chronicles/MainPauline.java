@@ -1,4 +1,4 @@
-package cursed_chronicles;
+/*package cursed_chronicles;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -120,9 +120,9 @@ public class MainPauline {
             gameFrame.setVisible(true);
         });
     }
-}
+}*/
 
-/*
+
 package cursed_chronicles;
 
 import cursed_chronicles.Player.*;
@@ -303,4 +303,4 @@ public class MainPauline {
 
         });
     }
-}*/
+}

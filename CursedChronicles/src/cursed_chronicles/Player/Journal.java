@@ -11,10 +11,10 @@ public class Journal {
     }
 
     public void initializeJournal() {
-        entries.add("📖 Journal du joueur 📖\n"
-                + "Ce journal consigne tes découvertes et événements marquants.\n"
-                + "Utilise-le pour suivre ta progression et noter les indices cruciaux.\n"
-                + "Bonne aventure !");
+        entries.add("📖 Journal du joueur 📖\n");
+        entries.add("Ce journal consigne tes découvertes et événements marquants.\n");
+        entries.add("Utilise-le pour suivre ta progression et noter les indices cruciaux.\n");
+        entries.add("Bonne aventure !");
     }
 
     public void addEntry(String entry) {

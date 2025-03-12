@@ -12,8 +12,6 @@ public class Player {
     private String name;
     private int positionX;
     private int positionY;
-    private int level;
-    private int experiencePoints;
     private Inventory inventory;
     private ArrayList<Characteristic> characteristics;
     private Journal journal;
@@ -30,8 +28,6 @@ public class Player {
         this.name = name;
         this.positionX = 0;
         this.positionY = 0;
-        this.level = 1;
-        this.experiencePoints = 0;
         this.inventory = new Inventory();
         this.characteristics = new ArrayList<>();
         this.journal = new Journal();
@@ -84,20 +80,6 @@ public class Player {
         int oldY = this.positionY;
         this.positionY = positionY; 
         pcs.firePropertyChange("positionY", oldY, positionY);
-    }
-
-    public int getLevel() { return level; }
-    public void setLevel(int level) { 
-        int oldLevel = this.level;
-        this.level = level; 
-        pcs.firePropertyChange("level", oldLevel, level);
-    }
-
-    public int getExperiencePoints() { return experiencePoints; }
-    public void setExperiencePoints(int experiencePoints) { 
-        int oldXP = this.experiencePoints;
-        this.experiencePoints = experiencePoints; 
-        pcs.firePropertyChange("experiencePoints", oldXP, experiencePoints);
     }
 
     public Inventory getInventory() { return inventory; }
@@ -261,7 +243,16 @@ public class Player {
                 if (bonusToApply > 0) {
                     modifyCharacteristic("life", bonusToApply);
                 }
-            } else {
+            } 
+            else if (type.equals("defense")) {
+                int currentDefense = getCharacteristicValue("defense");
+                int maxDefense = 100;
+                int bonusToApply = Math.min(bonus, maxDefense - currentDefense);
+                if (bonusToApply > 0) {
+                    modifyCharacteristic("defense", bonusToApply);
+                }
+            } 
+            else {
                 modifyCharacteristic(type, bonus);
             }
         }
