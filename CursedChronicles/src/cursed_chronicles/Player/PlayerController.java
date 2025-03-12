@@ -176,6 +176,7 @@ public class PlayerController extends KeyAdapter {
 
         if (booster != null) {
             player.getInventory().addItem(booster);
+            player.getInventoryPanel().updateInventory(player.getInventory().getItems());
             _roomController.loadRoom();
             System.out.println("🎉 Booster ramassé : " + booster.getName());
         }

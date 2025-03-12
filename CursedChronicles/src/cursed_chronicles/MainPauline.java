@@ -1,4 +1,4 @@
-package cursed_chronicles;
+/*package cursed_chronicles;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -44,13 +44,11 @@ public class MainPauline {
 	            gameFrame.setLayout(new BorderLayout());
 	            gameFrame.setLocation(-5,0);
 	            
-	            // 📌 Initialisation du Board (qui gère les salles)
 	            RoomView roomView = new RoomView();
 	            Board board = new Board(roomView);
 	            RoomController roomController = board.getRoomController();
 	            Room currentRoom = roomController.getCurrentRoom();
 
-	            // 📌 Création du joueur
 	            Player player = new Player("Hero");
 	            PlayerView playerView = new PlayerView(player);
 	            player.addJournalEntry("📍 Lieu actuel : " + currentRoom.getName());
@@ -127,9 +125,6 @@ public class MainPauline {
 	        });
 	    }
 
-	    /**
-	     * 📌 Génère la narration dynamique en fonction des éléments de la salle.
-	     */
 	    private static String generateRoomNarration(Room room) {
 	        StringBuilder narration = new StringBuilder();
 
@@ -166,8 +161,8 @@ public class MainPauline {
 
 	        return narration.toString();
 	    }
-}
-/*
+}*/
+
 
 package cursed_chronicles;
 
@@ -299,13 +294,13 @@ public class MainPauline {
                         int lastSlash = filePath.lastIndexOf('/');
                         String justName = (lastSlash >= 0) ? filePath.substring(lastSlash + 1) : filePath;
                         if (justName.toLowerCase().contains("booster")) {
-                            newItem = new ItemBooster(filePath);
+                            newItem = new ItemBooster(filePath, 7, 9);
                         } else {
                             newItem = new ItemWeapon(filePath);
                         }
                         player.getInventory().addItem(newItem);
                         inventoryPanel.updateInventory(player.getInventory().getItems());
-                        inventoryPanel.showInventory();
+                        //inventoryPanel.showInventory();
                     }
                     gameFrame.requestFocusInWindow();
                 }
@@ -349,4 +344,4 @@ public class MainPauline {
 
         });
     }
-}*/
+}

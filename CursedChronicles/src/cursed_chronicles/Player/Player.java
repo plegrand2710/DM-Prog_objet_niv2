@@ -13,6 +13,9 @@ public class Player {
     private int positionX;
     private int positionY;
     private Inventory inventory;
+    
+    private InventoryPanel inventoryPanel;
+
     private ArrayList<Characteristic> characteristics;
     private Journal journal;
 
@@ -87,6 +90,9 @@ public class Player {
 
     public Inventory getInventory() { return inventory; }
     public void setInventory(Inventory inventory) { this.inventory = inventory; }
+    
+    public InventoryPanel getInventoryPanel() { return inventoryPanel; }
+    public void setInventoryPanel(InventoryPanel inventoryPanel) { this.inventoryPanel = inventoryPanel; }
 
     public ArrayList<Characteristic> getCharacteristics() { return new ArrayList<>(characteristics); }
     public void setCharacteristics(ArrayList<Characteristic> characteristics) { this.characteristics = characteristics; }

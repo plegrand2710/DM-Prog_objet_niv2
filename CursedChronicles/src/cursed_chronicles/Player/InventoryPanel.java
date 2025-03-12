@@ -88,6 +88,8 @@ public class InventoryPanel extends JFrame {
                 }
             }
         });
+        
+        this.player.setInventoryPanel(this);
     }
 
     public void updateInventory(ArrayList<Item> items) {
