@@ -66,6 +66,7 @@ public class MainPauline {
 
             Player player = new Player("Hero");
             PlayerView playerView = new PlayerView(player);
+            player.addJournalEntry("📍 Lieu actuel : " + room.getName());
 
             int panelWidth = screenWidth - gameFrameWidth;
             int panelHeight = availableHeight / 3;
@@ -121,8 +122,8 @@ public class MainPauline {
         });
     }
 }
-
 /*
+
 package cursed_chronicles;
 
 import cursed_chronicles.Player.*;
@@ -165,7 +166,7 @@ public class MainPauline {
             gameFrame.setLayout(new BorderLayout());
             
             PlayerView playerView = new PlayerView(player);
-            gameFrame.add(playerView, BorderLayout.CENTER);
+            //gameFrame.add(playerView, BorderLayout.CENTER);
             
             
             JPanel controlPanel = new JPanel(new FlowLayout());

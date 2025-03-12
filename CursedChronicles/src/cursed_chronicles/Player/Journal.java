@@ -11,16 +11,22 @@ public class Journal {
     }
 
     public void initializeJournal() {
-        entries.add("📖 Journal du joueur 📖\n"
-                + "Ce journal consigne tes découvertes et événements marquants.\n"
-                + "Utilise-le pour suivre ta progression et noter les indices cruciaux.\n"
-                + "Bonne aventure !");
+        entries.add("📖 Journal du joueur 📖\n");
+        entries.add("Ce journal consigne tes découvertes et événements marquants.\n");
+        entries.add("Utilise-le pour suivre ta progression et noter les indices cruciaux.\n");
+        entries.add("Bonne aventure !");
     }
 
     public void addEntry(String entry) {
         entries.add(entry);
     }
 
+    public void updateEntry(int index, String newEntry) {
+        if (index >= 0 && index < entries.size()) {
+            entries.set(index, newEntry);
+        }
+    }
+    
     public ArrayList<String> getEntries() {
         return new ArrayList<>(entries);
     }

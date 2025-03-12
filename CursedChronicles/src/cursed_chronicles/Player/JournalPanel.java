@@ -27,6 +27,10 @@ public class JournalPanel extends JFrame {
         player.addPropertyChangeListener(evt -> {
             if ("journalEntry".equals(evt.getPropertyName())) {
                 addEntry((String) evt.getNewValue());
+            } else if ("journalUpdate".equals(evt.getPropertyName())) {
+                int index = (int) evt.getOldValue();
+                String updatedText = (String) evt.getNewValue();
+                updateEntry(index, updatedText);
             }
         });
 
@@ -43,6 +47,12 @@ public class JournalPanel extends JFrame {
 
     public void addEntry(String entry) {
         journalModel.addElement(entry);
+    }
+    
+    public void updateEntry(int index, String newText) {
+        if (index >= 0 && index < journalModel.size()) {
+            journalModel.set(index, newText);
+        }
     }
 
     public void updateJournal(List<String> entries) {
