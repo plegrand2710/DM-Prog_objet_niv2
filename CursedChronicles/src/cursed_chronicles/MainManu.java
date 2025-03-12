@@ -24,7 +24,7 @@ public class MainManu {
             // Création de la salle
             RoomView roomView = new RoomView();
             RoomController roomController = new RoomController(roomView);
-            Room room = new Room("donjon1_room5");
+            Room room = new Room("donjon1_room3");
 
             // Création du joueur
             Player player = new Player("Hero");
