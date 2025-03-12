@@ -1,4 +1,4 @@
-/*package cursed_chronicles;
+package cursed_chronicles;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -66,6 +66,7 @@ public class MainPauline {
 
             Player player = new Player("Hero");
             PlayerView playerView = new PlayerView(player);
+            player.addJournalEntry("📍 Lieu actuel : " + room.getName());
 
             int panelWidth = screenWidth - gameFrameWidth;
             int panelHeight = availableHeight / 3;
@@ -120,8 +121,8 @@ public class MainPauline {
             gameFrame.setVisible(true);
         });
     }
-}*/
-
+}
+/*
 
 package cursed_chronicles;
 
@@ -303,4 +304,4 @@ public class MainPauline {
 
         });
     }
-}
+}*/
