@@ -23,6 +23,10 @@ public class PlayerController extends KeyAdapter {
 
     }
     
+    public PlayerView getPlayerView() {
+    	return playerView;
+    }
+    
 
     public RoomController getRoomController() {
     	return _roomController;
@@ -90,6 +94,28 @@ public class PlayerController extends KeyAdapter {
         
 //        displayPlayerCurrentPosition();
         displayCurrentCollisionId();
+        checkTeleportation();
+    }
+    
+    private void checkTeleportation() {
+    	int collisionId = _roomController.getCurrentRoom().getCollisionsLayer()[player.getPositionY()][player.getPositionX()];
+    	
+    	switch (collisionId) {
+    	case Constant.NORTH_DOORS_ID:
+    		_roomController.changeRoomFrom("N");
+    		break;
+    	case Constant.SOUTH_DOORS_ID:
+    		_roomController.changeRoomFrom("S");
+    		
+    		break;
+    	case Constant.WEST_DOORS_ID:
+    		_roomController.changeRoomFrom("W");
+    		break;
+    	case Constant.EAST_DOORS_ID:
+    		_roomController.changeRoomFrom("E");
+    		break;
+    	}
+    	
     }
     
     private void displayPlayerCurrentPosition() {
@@ -137,5 +163,8 @@ public class PlayerController extends KeyAdapter {
     	playerView.setPosition(px, py);
     	player.setPosition(px, py);
     	displayPlayerCurrentPosition();
+    	
+    	playerView.repaint();
+
     }
 }

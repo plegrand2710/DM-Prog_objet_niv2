@@ -24,8 +24,6 @@ public class MainManu {
             // Création de la salle
             RoomView roomView = new RoomView();
             RoomController roomController = new RoomController(roomView);
-//            Room room = new Room("donjon1_room3");
-            
 
             // Création du joueur
             Player player = new Player("Hero");
@@ -37,10 +35,9 @@ public class MainManu {
             roomController.setPlayerController(playerController);
             playerController.setRoomController(roomController);
             
+            
             // Chargement de la salle (IMPORTANT : après avoir initialisé le PlayerController)
 //            roomController.loadRoom(room);
-
-            roomController.setCurrentRoom("donjon1_room1");
             roomController.loadRoom();
             
             // Définition des tailles et positions
@@ -49,7 +46,7 @@ public class MainManu {
             playerController.setPlayerPosition(7, 14);
 
             // Ajout du joueur dans la salle avec un Z-index spécifique
-            roomView.add(playerView, Integer.valueOf(2)); 
+//            roomView.add(playerView, Integer.valueOf(2)); 
 
             // Ajout du `RoomView` à la fenêtre
             gameFrame.add(roomView);

@@ -6,4 +6,9 @@ public class Constant {
 	public static final int PLAYER_SIZE = 48;
 	public static final int GAME_FRAME_WIDTH = 256;
 	public static final int GAME_FRAME_HEIGHT = 256;
+	
+	public static final int NORTH_DOORS_ID = 119;
+	public static final int SOUTH_DOORS_ID = 691;
+	public static final int WEST_DOORS_ID = 151;
+	public static final int EAST_DOORS_ID = 251;
 }

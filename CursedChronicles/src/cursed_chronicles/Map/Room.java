@@ -27,6 +27,8 @@ public class Room {
         initLayers();
     }
 
+    
+    
     private void initLayers() {
         String basePath = "assets/maps/" + _name + "/";
 

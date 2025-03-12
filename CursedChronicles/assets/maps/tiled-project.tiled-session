@@ -225,11 +225,11 @@
             }
         },
         "donjon1_room2.tmx": {
-            "scale": 2.383,
-            "selectedLayer": 8,
+            "scale": 2.6951,
+            "selectedLayer": 9,
             "viewCenter": {
-                "x": 116.44985312631135,
-                "y": 183.38229122954257
+                "x": 126.71143927869097,
+                "y": 148.41749842306407
             }
         },
         "donjon1_room3.tmx": {
@@ -245,7 +245,7 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 122.6404741000878,
-                "y": 155.838454784899
+                "y": 143.76646180860405
             }
         },
         "donjon1_room5.tmx": {
@@ -253,7 +253,7 @@
             "selectedLayer": 8,
             "viewCenter": {
                 "x": 135.86606567933035,
-                "y": 136.93925735136295
+                "y": 127.49517063747587
             }
         },
         "donjon2_room1.tmx": {
@@ -373,7 +373,10 @@
         "donjon1_room2.tmx",
         "donjon1_room3.tmx",
         "donjon1_room4.tmx",
-        "donjon1_room1.tmx"
+        "donjon1_room1.tmx",
+        "donjon2_room2.tmx",
+        "donjon2_room3.tmx",
+        "donjon2_room4.tmx"
     ],
     "project": "tiled-project.tiled-project",
     "recentFiles": [
@@ -382,13 +385,13 @@
         "donjon1_room5.tmx",
         "donjon1_room2.tmx",
         "donjon1_room3.tmx",
+        "donjon2_room4.tmx",
+        "donjon2_room3.tmx",
+        "donjon2_room2.tmx",
         "donjon1_room1.tmx",
         "donjon1_room4.tmx",
         "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/sprites/player2/tilesets/CharAni-Sheet4.tsx",
-        "default_donjon.tmx",
-        "Tilesets/pasMFace.tsx",
-        "/Users/manuarii/Documents/DM-POON2-ASSETS/assets/maps/donjon1_room3.tmx",
-        "donjon2_room2.tmx"
+        "default_donjon.tmx"
     ],
     "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
     "tileset.lastUsedFormat": "tsx",

@@ -7,18 +7,79 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class RoomController {
     private Room _currentRoom;
     private RoomView _roomView;
     private PlayerController _playerController;
-    private HashMap<String, Room> _rooms;
+    private LinkedHashMap<String, Room> _rooms;
 
     public RoomController(RoomView roomView) {
         _roomView = roomView;
-        _rooms = new HashMap<>();
+        _rooms = new LinkedHashMap<>();
         setupRooms();
+        setFirstRoomAsCurrent();
     }
+    
+    public void setFirstRoomAsCurrent() {
+        if (!_rooms.isEmpty()) {
+            _currentRoom = _rooms.values().iterator().next();
+            System.out.println("Première salle définie : " + _currentRoom.getName());
+        } else {
+            System.err.println("Aucune salle disponible.");
+        }
+    }
+    
+    public void changeRoomFrom(String directionSource) {
+    	String nextRoomName = _currentRoom.getDoorDestination(directionSource);
+    	
+    	String directionDestination;
+    	switch (directionSource) {
+    	case "N":
+    		directionDestination = "S";
+    		break;
+    	case "S":
+    		directionDestination = "N";
+    		break;
+    	case "W":
+    		directionDestination = "E";
+    		break;
+    	case "E":
+    		directionDestination = "W";
+    		break;
+    	default:
+    		directionDestination = "S";
+    		break;
+    	}
+    	
+    	
+    	Room nextRoom = _rooms.get(nextRoomName);
+    	int[] nextRoomCoords = nextRoom.getSpawnPoint(directionDestination);
+    	
+    	setCurrentRoom(nextRoomName);
+    	loadRoom();
+    	
+    	System.out.println("Next room spawn point : " + nextRoomCoords[0] + "/" + nextRoomCoords[1]);
+    	
+    	
+    	_playerController.setSpawn();
+    	_playerController.setPlayerPosition(nextRoomCoords[0], nextRoomCoords[1]);
+    	
+    	_playerController.getPlayerView().stopAnimation(); // Stoppe l’animation actuelle
+    	_playerController.getPlayerView().repaint(); // Force un rafraîchissement visuel
+//    	_roomView.add(_playerController.getPlayerView(), Integer.valueOf(2)); 
+
+    	_playerController.notifyAnimationFinished(); // Permet de redonner le contrôle au joueur
+
+
+//    	_playerController.getPlayerView().stopAnimation();
+//    	_playerController.getPlayerView().repaint(); 
+//    	_roomView.add(_playerController.getPlayerView(), Integer.valueOf(2)); 
+
+    	
+    }
+
 
     public void setupRooms() {
         try (BufferedReader br = new BufferedReader(new FileReader("resources/rooms_config.txt"))) {
@@ -119,6 +180,10 @@ public class RoomController {
 //        _currentRoom = room;
         _roomView.displayRoom(_currentRoom);
         _playerController.setCollisionsLayer(_currentRoom.getCollisionsLayer());
+        
+        _roomView.add(_playerController.getPlayerView(), Integer.valueOf(2));
+        _roomView.revalidate();
+        _roomView.repaint();
     }
 
     public Room getRoom(String roomName) {
@@ -131,6 +196,9 @@ public class RoomController {
 
     public void setPlayerController(PlayerController playerController) {
         _playerController = playerController;
+        _playerController.getPlayerView().stopAnimation();
+        _playerController.getPlayerView().repaint();
+
     }
 
     public Room getCurrentRoom() {
