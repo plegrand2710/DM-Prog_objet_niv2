@@ -1,6 +1,7 @@
 package cursed_chronicles.Map;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Room {
@@ -14,11 +15,15 @@ public class Room {
     private int[][] _pillarLayer;
     private int[][] _chestsLayer;
     private int[][] _decorationsLayer;
-    
     private int[][] _collisionsLayer;
+
+    private HashMap<String, String> _doors;
+    private HashMap<String, int[]> _spawnPoints;
 
     public Room(String name) {
         _name = name;
+        _doors = new HashMap<>();
+        _spawnPoints = new HashMap<>();
         initLayers();
     }
 
@@ -35,20 +40,8 @@ public class Room {
         _chestsLayer = loadCSV(basePath + _name + "_Chests.csv");
         _decorationsLayer = loadCSV(basePath + _name + "_Decorations.csv");
         _collisionsLayer = loadCSV(basePath + _name + "_Collisions.csv");
-        
-//        printCollisionLayer();
     }
 
-//    public void printCollisionLayer() {
-//        for (int y = 0; y < _collisionsLayer.length; y++) {
-//            for (int x = 0; x < _collisionsLayer[y].length; x++) {
-//                System.out.print(_collisionsLayer[y][x] + " ");
-//            }
-//            System.out.println(); // Nouvelle ligne après chaque rangée
-//        }
-//    }
-
-    
     private int[][] loadCSV(String filePath) {
         File file = new File(filePath);
         if (!file.exists()) {
@@ -84,6 +77,22 @@ public class Room {
         }
     }
 
+    public void addDoor(String direction, String destination) {
+        _doors.put(direction, destination);
+    }
+
+    public String getDoorDestination(String direction) {
+        return _doors.get(direction);
+    }
+
+    public void setSpawnPoint(String direction, int x, int y) {
+        _spawnPoints.put(direction, new int[]{x, y});
+    }
+
+    public int[] getSpawnPoint(String direction) {
+        return _spawnPoints.getOrDefault(direction, new int[]{0, 0});
+    }
+
     public int[][] getFloorLayer() {
         return _floorLayer;
     }
@@ -107,7 +116,7 @@ public class Room {
     public int[][] getFrontDoorsLayer() {
         return _frontDoorsLayer;
     }
-    
+
     public int[][] getDecorationsLayer() {
         return _decorationsLayer;
     }
@@ -128,4 +137,24 @@ public class Room {
         return _name;
     }
     
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Room Name: ").append(_name).append("\n");
+
+        sb.append("Doors:\n");
+        for (String direction : _doors.keySet()) {
+            sb.append("  ").append(direction).append(" -> ").append(_doors.get(direction)).append("\n");
+        }
+
+        sb.append("Spawn Points:\n");
+        for (String direction : _spawnPoints.keySet()) {
+            int[] coords = _spawnPoints.get(direction);
+            sb.append("  ").append(direction).append(" -> (").append(coords[0]).append(", ").append(coords[1]).append(")\n");
+        }
+
+        return sb.toString();
+    }
+
+
 }
