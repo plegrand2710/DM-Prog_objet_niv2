@@ -13,114 +13,159 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 
+import cursed_chronicles.Map.*;
 import cursed_chronicles.Map.Room;
 import cursed_chronicles.Map.RoomController;
 import cursed_chronicles.Map.RoomView;
-import cursed_chronicles.Player.InventoryPanel;
+import cursed_chronicles.Monster.*;
+import cursed_chronicles.Player.*;
 import cursed_chronicles.Player.JournalPanel;
 import cursed_chronicles.Player.Player;
 import cursed_chronicles.Player.PlayerController;
 import cursed_chronicles.Player.PlayerPanel;
 import cursed_chronicles.Player.PlayerView;
-import cursed_chronicles.UI.NarrationPanel;
+import cursed_chronicles.UI.*;
 
 public class MainPauline {
 	
-	public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            GraphicsDevice gd = ge.getDefaultScreenDevice();
-            GraphicsConfiguration gc = gd.getDefaultConfiguration();
-            Insets screenInsets = Toolkit.getDefaultToolkit().getScreenInsets(gc);
+	 public static void main(String[] args) {
+	        SwingUtilities.invokeLater(() -> {
+	            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+	            GraphicsDevice gd = ge.getDefaultScreenDevice();
+	            GraphicsConfiguration gc = gd.getDefaultConfiguration();
+	            Insets screenInsets = Toolkit.getDefaultToolkit().getScreenInsets(gc);
 
-            int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
-            int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
-            int taskbarHeight = screenInsets.bottom; 
+	            int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+	            int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+	            int taskbarHeight = screenInsets.bottom; 
 
-            JFrame gameFrame = new JFrame("Game Window");
-            gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            gameFrame.setLayout(new BorderLayout());
-            gameFrame.setLocation(-5,0);
-            
-            RoomView roomView = new RoomView();
-            RoomController roomController = new RoomController(roomView);
-            Room room = new Room("donjon1_room5");
-            
-            NarrationPanel narrationPanel = new NarrationPanel(
-                room.getName(),
-                "Une brise glaciale souffle à travers les fissures des murs. "
-                        + "Chaque pas résonne étrangement, comme si la pierre elle-même murmurait. "
-                        + "Un frisson parcourt ton échine. Quelque chose rôde dans l'ombre...",
-                gameFrame
-            );
-            gameFrame.add(narrationPanel, BorderLayout.SOUTH);
-            
+	            JFrame gameFrame = new JFrame("Game Window");
+	            gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	            gameFrame.setLayout(new BorderLayout());
+	            gameFrame.setLocation(-5,0);
+	            
+	            // 📌 Initialisation du Board (qui gère les salles)
+	            RoomView roomView = new RoomView();
+	            Board board = new Board(roomView);
+	            RoomController roomController = board.getRoomController();
+	            Room currentRoom = roomController.getCurrentRoom();
 
-            gameFrame.add(roomView, BorderLayout.CENTER);
+	            // 📌 Création du joueur
+	            Player player = new Player("Hero");
+	            PlayerView playerView = new PlayerView(player);
+	            player.addJournalEntry("📍 Lieu actuel : " + currentRoom.getName());
 
-            gameFrame.pack();
-            int gameFrameWidth = gameFrame.getContentPane().getWidth() + 2;
-            int gameFrameHeight = gameFrame.getContentPane().getHeight();
-            int narrationHeight = narrationPanel.getHeight();
-            int availableHeight = screenHeight - narrationHeight + taskbarHeight; 
+	            // 📌 Génération de la narration en fonction des éléments de la salle
+	            String narrationText = generateRoomNarration(currentRoom);
 
-            Player player = new Player("Hero");
-            PlayerView playerView = new PlayerView(player);
-            player.addJournalEntry("📍 Lieu actuel : " + room.getName());
+	            // 📌 Ajout du panneau de narration
+	            NarrationPanel narrationPanel = new NarrationPanel(
+	                currentRoom.getName(),
+	                narrationText,
+	                gameFrame
+	            );
+	            gameFrame.add(narrationPanel, BorderLayout.SOUTH);
+	            
+	            gameFrame.add(roomView, BorderLayout.CENTER);
+	            gameFrame.pack();
+	            int gameFrameWidth = gameFrame.getContentPane().getWidth() + 2;
+	            int availableHeight = screenHeight - narrationPanel.getHeight() + taskbarHeight; 
 
-            int panelWidth = screenWidth - gameFrameWidth;
-            int panelHeight = availableHeight / 3;
+	            InventoryPanel inventoryPanel = new InventoryPanel(player);
+	            JournalPanel journalPanel = new JournalPanel(player);
+	            PlayerPanel playerPanel = new PlayerPanel(player, inventoryPanel, journalPanel);
 
-            InventoryPanel inventoryPanel = new InventoryPanel(player);
-            JournalPanel journalPanel = new JournalPanel(player);
-            PlayerPanel playerPanel = new PlayerPanel(player, inventoryPanel, journalPanel);
+	            int panelWidth = screenWidth - gameFrameWidth;
+	            int panelHeight = availableHeight / 3;
 
-            playerPanel.setSize(panelWidth, panelHeight);
-            playerPanel.setLocation(gameFrameWidth, screenHeight - panelHeight - taskbarHeight);
-            playerPanel.setVisible(true);
+	            playerPanel.setSize(panelWidth, panelHeight);
+	            playerPanel.setLocation(gameFrameWidth, screenHeight - panelHeight - taskbarHeight);
+	            playerPanel.setVisible(true);
 
-            inventoryPanel.setSize(panelWidth, panelHeight);
-            inventoryPanel.setLocation(gameFrameWidth, screenHeight - (2 * panelHeight) - taskbarHeight);
-            inventoryPanel.setVisible(true);
+	            inventoryPanel.setSize(panelWidth, panelHeight);
+	            inventoryPanel.setLocation(gameFrameWidth, screenHeight - (2 * panelHeight) - taskbarHeight);
+	            inventoryPanel.setVisible(true);
 
-            journalPanel.setSize(panelWidth, panelHeight-60);
-            journalPanel.setLocation(gameFrameWidth , 0); 
-            journalPanel.setVisible(true);
+	            journalPanel.setSize(panelWidth, panelHeight-60);
+	            journalPanel.setLocation(gameFrameWidth, 0); 
+	            journalPanel.setVisible(true);
 
-            PlayerController playerController = new PlayerController(player, playerView);
-            roomController.setPlayerController(playerController);
-            playerController.setRoomController(roomController);
+	            // 📌 Initialisation du contrôleur de joueur
+	            PlayerController playerController = new PlayerController(player, playerView);
+	            roomController.setPlayerController(playerController);
+	            playerController.setRoomController(roomController);
 
-            roomController.loadRoom(room);
-            playerController.setSpawn();
-            playerController.setPlayerPosition(7, 14);
-            roomView.add(playerView, Integer.valueOf(2));
+	            // 📌 Chargement de la salle depuis Board
+	            roomController.loadRoom();
+	            playerController.setSpawn();
+	            playerController.setPlayerPosition(7, 14);
+	            roomView.add(playerView, Integer.valueOf(2));
 
-            gameFrame.addKeyListener(new KeyAdapter() {
-                @Override
-                public void keyPressed(KeyEvent e) {
-                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                        narrationPanel.skipTypingEffect();
-                    }
-                    if (e.getKeyCode() == KeyEvent.VK_J) {
-                        if (journalPanel.isVisible()) {
-                            journalPanel.setVisible(false);
-                        } else {
-                        	journalPanel.setSize(panelWidth + 10, panelHeight + 15);
-                            journalPanel.setLocation(gameFrameWidth -6, - 1); 
-                            journalPanel.setVisible(true);
-                        }
-                    }
-                }
-            });
+	            // 📌 Gestion des entrées clavier pour le jeu
+	            gameFrame.addKeyListener(new KeyAdapter() {
+	                @Override
+	                public void keyPressed(KeyEvent e) {
+	                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+	                        narrationPanel.skipTypingEffect();
+	                    }
+	                    if (e.getKeyCode() == KeyEvent.VK_J) {
+	                        if (journalPanel.isVisible()) {
+	                            journalPanel.setVisible(false);
+	                        } else {
+	                            journalPanel.setSize(panelWidth + 10, panelHeight + 15);
+	                            journalPanel.setLocation(gameFrameWidth - 6, -1); 
+	                            journalPanel.setVisible(true);
+	                        }
+	                    }
+	                }
+	            });
 
-            gameFrame.addKeyListener(playerController);
-            gameFrame.setFocusable(true);
-            gameFrame.requestFocusInWindow();
+	            gameFrame.addKeyListener(playerController);
+	            gameFrame.setFocusable(true);
+	            gameFrame.requestFocusInWindow();
+	            gameFrame.setVisible(true);
+	        });
+	    }
 
-            gameFrame.setVisible(true);
-        });
-    }
+	    /**
+	     * 📌 Génère la narration dynamique en fonction des éléments de la salle.
+	     */
+	    private static String generateRoomNarration(Room room) {
+	        StringBuilder narration = new StringBuilder();
+
+	        // 📌 Description de base
+	        narration.append("Une brise glaciale souffle à travers les fissures des murs.\n");
+
+	        // 📌 Ajout des monstres
+	        if (!room.getMonsters().isEmpty()) {
+	            narration.append("Des créatures rôdent dans l'ombre : ");
+	            for (Monster monster : room.getMonsters()) {
+	                narration.append(monster.getName()).append(" ");
+	            }
+	            narration.append("\n");
+	        }
+
+	        // 📌 Ajout des boosters
+	        if (!room.getBoosters().isEmpty()) {
+	            narration.append("Vous remarquez des objets brillants au sol : ");
+	            for (ItemBooster booster : room.getBoosters()) {
+	                narration.append(booster.getName()).append(" ");
+	            }
+	            narration.append("\n");
+	        }
+
+	        // 📌 Ajout des coffres
+	        if (!room.getChests().isEmpty()) {
+	            narration.append("Quelques coffres anciens sont disposés dans la salle...\n");
+	        }
+
+	        // 📌 Ajout d'un indice si présent
+	        if (room.getHint() != null) {
+	            narration.append("Un indice est gravé sur le mur : ").append(room.getHint()).append("\n");
+	        }
+
+	        return narration.toString();
+	    }
 }
 /*
 

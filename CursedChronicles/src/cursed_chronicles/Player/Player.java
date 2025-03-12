@@ -26,10 +26,11 @@ public class Player {
 
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
+    
     public Player(String name) {
         this.name = name;
         this.positionX = 0;
-        this.positionY = 0;
+        this.positionY = 0;        
         this.inventory = new Inventory(this);
         this.characteristics = new ArrayList<>();
         this.journal = new Journal();

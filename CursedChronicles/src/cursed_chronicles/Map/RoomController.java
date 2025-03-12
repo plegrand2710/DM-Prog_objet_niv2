@@ -208,4 +208,8 @@ public class RoomController {
     public boolean isInCollision(int positionX, int positionY) {
         return _currentRoom.getCollisionsLayer()[positionY][positionX] == Constant.WALL_COLLISION_ID;
     }
+    
+    public LinkedHashMap<String, Room> getRooms() {
+        return _rooms;
+    }
 }

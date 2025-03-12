@@ -1,8 +1,15 @@
 package cursed_chronicles.Map;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Random;
 import java.util.Scanner;
+
+import cursed_chronicles.Monster.Monster;
+import cursed_chronicles.Player.Item;
+import cursed_chronicles.Player.ItemBooster;
 
 public class Room {
     private String _name;
@@ -19,11 +26,20 @@ public class Room {
 
     private HashMap<String, String> _doors;
     private HashMap<String, int[]> _spawnPoints;
+    
+    private ArrayList<Monster> _monsters; // Monstres dans la salle
+    private ArrayList<ItemBooster> _boosters; // Boosters posés au sol
+    private HashMap<int[], ArrayList<ItemBooster>> _chests; // Coffres contenant des boosters (coordonnées -> contenu)
+    private String _hint; 
 
     public Room(String name) {
         _name = name;
         _doors = new HashMap<>();
         _spawnPoints = new HashMap<>();
+        _monsters = new ArrayList<>();
+        _boosters = new ArrayList<>();
+        _chests = new HashMap<>();
+        _hint = null; 
         initLayers();
     }
 
@@ -157,6 +173,71 @@ public class Room {
 
         return sb.toString();
     }
+    public void addMonster(Monster monster) {
+        _monsters.add(monster);
+    }
 
+    public void removeMonster(Monster monster) {
+        _monsters.remove(monster);
+    }
 
+    public void addBooster(ItemBooster booster) {
+        _boosters.add(booster);
+    }
+
+    public void removeBooster(ItemBooster booster) {
+        _boosters.remove(booster);
+    }
+
+    public void addChest(int x, int y, ArrayList<ItemBooster> contents) {
+        _chests.put(new int[]{x, y}, contents);
+    }
+
+    public ArrayList<ItemBooster> openChest(int x, int y) {
+        int[] key = new int[]{x, y};
+        return _chests.remove(key);
+    }
+
+    public void setHint(String hint) {
+        _hint = hint;
+    }
+
+    public String getHint() {
+        return _hint;
+    }
+
+    public ArrayList<Monster> getMonsters() {
+        return new ArrayList<>(_monsters);
+    }
+
+    public ArrayList<ItemBooster> getBoosters() {
+        return new ArrayList<>(_boosters);
+    }
+
+    public HashMap<int[], ArrayList<ItemBooster>> getChests() {
+        return new HashMap<>(_chests);
+    }
+
+    public HashMap<int[], ItemBooster> getBoosterPositions() {
+        HashMap<int[], ItemBooster> boosterPositions = new HashMap<>();
+
+        for (ItemBooster booster : _boosters) {
+            int[] position = new int[]{booster.getX(), booster.getY()};
+            boosterPositions.put(position, booster);
+        }
+
+        return boosterPositions;
+    }
+
+    public ItemBooster pickUpBooster(int x, int y) {
+        Iterator<ItemBooster> iterator = _boosters.iterator();
+        while (iterator.hasNext()) {
+            ItemBooster booster = iterator.next();
+            if (booster.getX() == x && booster.getY() == y) {
+                iterator.remove();  // Supprime le booster de la salle
+                return booster;     // Retourne le booster ramassé
+            }
+        }
+        return null; // Aucun booster à cette position
+    }
 }

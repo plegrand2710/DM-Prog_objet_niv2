@@ -3,6 +3,7 @@ package cursed_chronicles.Map;
 import javax.swing.*;
 
 import cursed_chronicles.Constant;
+import cursed_chronicles.Player.ItemBooster;
 
 import java.awt.*;
 import java.io.*;
@@ -21,7 +22,8 @@ public class RoomView extends JLayeredPane {
     private JPanel _chestsLayer;
     private JPanel _decorationsLayer;
     private JPanel _pillarLayer;
-    
+    private JPanel _boostersLayer;
+
     
 //    private JPanel _collisionsLayer;
 
@@ -51,6 +53,7 @@ public class RoomView extends JLayeredPane {
         _decorationsLayer = createLayerPanel(room.getDecorationsLayer(), _tilesetBasePath + "decorations/", 9);
 //        _collisionsLayer = createLayerPanel(room.getCollisionsLayer(), _tilesetBasePath + "collisions/", 10);
         
+        _boostersLayer = createBoosterLayer(room);
 
         
         add(_floorLayer, Integer.valueOf(0));
@@ -63,6 +66,7 @@ public class RoomView extends JLayeredPane {
         add(_pillarLayer, Integer.valueOf(8));
         add(_decorationsLayer, Integer.valueOf(9));
 //        add(_collisionsLayer, Integer.valueOf(10));
+        add(_boostersLayer, Integer.valueOf(10)); // 📌 Boosters affichés au-dessus des décors
 
         repaint();
     }
@@ -117,5 +121,48 @@ public class RoomView extends JLayeredPane {
             }
         }
         return tileMap;
+    }
+    
+    private JPanel createBoosterLayer(Room room) {
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                drawBoosters(g, room);
+            }
+        };
+        panel.setOpaque(false);
+        panel.setBounds(0, 0, getPreferredSize().width, getPreferredSize().height);
+        return panel;
+    }
+    
+    private void drawBoosters(Graphics g, Room room) {
+        Map<int[], ItemBooster> boosters = room.getBoosterPositions();
+        for (Map.Entry<int[], ItemBooster> entry : boosters.entrySet()) {
+            int[] position = entry.getKey();
+            ItemBooster booster = entry.getValue();
+            Image boosterSprite = loadBoosterImage(booster.getName());
+
+            if (boosterSprite != null) {
+                g.drawImage(boosterSprite, position[0] * _displayTileSize, position[1] * _displayTileSize, _displayTileSize, _displayTileSize, this);
+            }
+        }
+    }
+    
+    private Image loadBoosterImage(String boosterName) {
+        String imagePath = "assets/sprites/booster/" + boosterName + ".png";
+        File imageFile = new File(imagePath);
+        if (!imageFile.exists()) {
+            System.err.println("Image de booster introuvable : " + imagePath);
+            return null;
+        }
+
+        try {
+            Image originalImage = ImageIO.read(imageFile);
+            return originalImage.getScaledInstance(_displayTileSize, _displayTileSize, Image.SCALE_SMOOTH);
+        } catch (IOException e) {
+            System.err.println("Erreur lors du chargement de l'image du booster : " + boosterName);
+            return null;
+        }
     }
 }

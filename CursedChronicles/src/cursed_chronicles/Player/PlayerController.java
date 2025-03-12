@@ -90,6 +90,8 @@ public class PlayerController extends KeyAdapter {
         	playerView.movePlayer(dx, dy);
 
             canMove = false; 
+            checkForBoosterPickup();
+
         }
         
 //        displayPlayerCurrentPosition();
@@ -166,5 +168,16 @@ public class PlayerController extends KeyAdapter {
     	
     	playerView.repaint();
 
+    }
+    
+    private void checkForBoosterPickup() {
+        int[] playerPos = { player.getPositionX(), player.getPositionY() };
+        ItemBooster booster = _roomController.getCurrentRoom().pickUpBooster(playerPos[0], playerPos[1]);
+
+        if (booster != null) {
+            player.getInventory().addItem(booster);
+            _roomController.loadRoom();
+            System.out.println("🎉 Booster ramassé : " + booster.getName());
+        }
     }
 }
