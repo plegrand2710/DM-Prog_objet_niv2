@@ -1,82 +1,81 @@
-/*package cursed_chronicles.Monster;
+package cursed_chronicles.Monster;
 
-import java.util.ArrayList;
 import cursed_chronicles.Player.Characteristic;
-import cursed_chronicles.Player.Player;
+import java.util.ArrayList;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 public class Monster {
     private String name;
     private int positionX;
     private int positionY;
     private int level;
-    private int difficultyLevel;
     private ArrayList<Characteristic> characteristics;
-    //private StrategieCombat strategieCombat;
+    private String direction;
+    private boolean isMoving;
+    private MovementStrategy movementStrategy;
 
-    public Monster(String name, int difficultyLevel, StrategieCombat strategieCombat) {
+    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+
+    public Monster(String name, int positionX, int positionY, int level) {
         this.name = name;
-        this.positionX = 0;
-        this.positionY = 0;
-        this.level = difficultyLevel;
-        this.difficultyLevel = difficultyLevel;
+        this.positionX = positionX;
+        this.positionY = positionY;
+        this.level = level;
         this.characteristics = new ArrayList<>();
-        //this.strategieCombat = strategieCombat;
+        this.direction = "NONE";
+        this.isMoving = false;
 
-        initializeDefaultCharacteristics();
-    }
+        // Ajouter les caractéristiques de base
+        characteristics.add(new Characteristic("life", level == 1 ? 50 : 200));
+        characteristics.add(new Characteristic("defense", level == 1 ? 5 : 20));
+        characteristics.add(new Characteristic("speed", level == 1 ? 2 : 4));
 
-    // Initialisation des caractéristiques par défaut
-    private void initializeDefaultCharacteristics() {
-        characteristics.add(new Characteristic("Life", 100));
-        characteristics.add(new Characteristic("Defense", 100));
-        characteristics.add(new Characteristic("Speed", 5));
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getPositionX() {
-        return positionX;
-    }
-
-    public int getPositionY() {
-        return positionY;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public int getDifficultyLevel() {
-        return difficultyLevel;
-    }
-
-    public ArrayList<Characteristic> getCharacteristics() {
-        return characteristics;
-    }
-
-    public void setPosition(int x, int y) {
-        this.positionX = x;
-        this.positionY = y;
-    }
-
-    public void defineCharacteristics() {
-        for (Characteristic c : characteristics) {
-            System.out.println(c);
+        // Déterminer la stratégie de mouvement
+        if (level == 1) {
+            this.movementStrategy = new RandomMovementStrategy();
+        } else {
+            this.movementStrategy = new ChasePlayerStrategy();
         }
     }
 
-    public void attack(Player player) {
-        strategieCombat.executer(this, player);
+    public void move(int playerX, int playerY) {
+        movementStrategy.move(this, playerX, playerY);
     }
 
-    public void defend() {
-        System.out.println(name + " se défend !");
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(listener);
+    }
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(listener);
     }
 
-    @Override
-    public String toString() {
-        return "Monstre: " + name + " (Niveau: " + level + ", Difficulté: " + difficultyLevel + ")";
+    // Getters et Setters
+    public String getName() { return name; }
+    public int getPositionX() { return positionX; }
+    public int getPositionY() { return positionY; }
+    public int getLevel() { return level; }
+    public ArrayList<Characteristic> getCharacteristics() { return characteristics; }
+    public String getDirection() { return direction; }
+    public boolean isMoving() { return isMoving; }
+    public void setPositionX(int positionX) { 
+        int oldX = this.positionX;
+        this.positionX = positionX; 
+        pcs.firePropertyChange("positionX", oldX, positionX);
     }
-}*/
+    public void setPositionY(int positionY) { 
+        int oldY = this.positionY;
+        this.positionY = positionY; 
+        pcs.firePropertyChange("positionY", oldY, positionY);
+    }
+    public void setDirection(String direction) { 
+        String oldDirection = this.direction;
+        this.direction = direction; 
+        pcs.firePropertyChange("direction", oldDirection, direction);
+    }
+    public void setMoving(boolean moving) { 
+        boolean oldMoving = this.isMoving;
+        this.isMoving = moving; 
+        pcs.firePropertyChange("isMoving", oldMoving, moving);
+    }
+}
