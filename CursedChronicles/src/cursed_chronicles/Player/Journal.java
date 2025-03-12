@@ -21,6 +21,12 @@ public class Journal {
         entries.add(entry);
     }
 
+    public void updateEntry(int index, String newEntry) {
+        if (index >= 0 && index < entries.size()) {
+            entries.set(index, newEntry);
+        }
+    }
+    
     public ArrayList<String> getEntries() {
         return new ArrayList<>(entries);
     }

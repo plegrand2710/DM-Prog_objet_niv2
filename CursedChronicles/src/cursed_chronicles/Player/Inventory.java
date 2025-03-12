@@ -4,19 +4,24 @@ import java.util.ArrayList;
 
 public class Inventory {
     private ArrayList<Item> items;
+    private Player player;
 
-    public Inventory() {
+    public Inventory(Player player) {
         this.items = new ArrayList<>();
+        this.player = player;
     }
 
     public void addItem(Item newItem) {
         for (Item item : items) {
             if (item.getName().equalsIgnoreCase(newItem.getName())) {
                 item.incrementQuantity();
+                player.addJournalEntry("📦 Objet ajouté : " + newItem.getName() + " (x" + item.getQuantity() + ")");
                 return;
             }
         }
         items.add(newItem);
+        player.addJournalEntry("📦 Objet ajouté : " + newItem.getName() + " - " + newItem.getDescription());
+
     }
 
     public void removeItem(Item itemToRemove) {
@@ -25,8 +30,11 @@ public class Inventory {
             if (item.getName().equalsIgnoreCase(itemToRemove.getName())) {
                 if (item.getQuantity() > 1) {
                     item.decrementQuantity();
+                    player.addJournalEntry("🗑️ Objet utilisé : " + itemToRemove.getName() + " (reste x" + item.getQuantity() + ")");
                 } else {
                     items.remove(i);
+                    player.addJournalEntry("🗑️ Objet consommé : " + itemToRemove.getName() + " - Retiré de l'inventaire");
+
                 }
                 break;
             }

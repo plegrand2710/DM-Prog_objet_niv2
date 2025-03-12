@@ -22,13 +22,15 @@ public class Player {
     
     private ItemWeapon currentWeapon;
 
+    private int lastMoveEntryIndex = -1; 
+
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     public Player(String name) {
         this.name = name;
         this.positionX = 0;
         this.positionY = 0;
-        this.inventory = new Inventory();
+        this.inventory = new Inventory(this);
         this.characteristics = new ArrayList<>();
         this.journal = new Journal();
         this.direction = "down";
@@ -112,8 +114,19 @@ public class Player {
         positionX += dx;
         positionY += dy;
         setMoving(true);
-        addJournalEntry("Moved " + direction + " to (" + positionX + ", " + positionY + ").");
-    }
+        
+        String moveEntry = "Déplacement actuel : " + direction + " (" + positionX + ", " + positionY + ")";
+
+        if (lastMoveEntryIndex == -1) { 
+            addJournalEntry(moveEntry);
+            lastMoveEntryIndex = journal.getEntries().size() - 1; 
+            System.out.println("Nouvelle entrée ajoutée au journal à l'index : " + lastMoveEntryIndex);
+        } else { 
+        	journal.updateEntry(lastMoveEntryIndex, moveEntry);
+        	pcs.firePropertyChange("journalUpdate", lastMoveEntryIndex, moveEntry);            
+        	System.out.println("Mise à jour de l'entrée existante à l'index : " + lastMoveEntryIndex);
+        }    
+   }
 
 
     public void stopMoving() {
@@ -206,7 +219,7 @@ public class Player {
     public void applyBooster(String characteristicName, int bonus) {
         modifyCharacteristic(characteristicName, bonus);
     }
-
+    
     public void activateSpeed() {
         if (!speedActive && getCharacteristicValue("speed") > 0) {
             speedActive = true;

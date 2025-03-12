@@ -165,7 +165,7 @@ public class MainPauline {
             gameFrame.setLayout(new BorderLayout());
             
             PlayerView playerView = new PlayerView(player);
-            gameFrame.add(playerView, BorderLayout.CENTER);
+            //gameFrame.add(playerView, BorderLayout.CENTER);
             
             
             JPanel controlPanel = new JPanel(new FlowLayout());
