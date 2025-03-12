@@ -28,7 +28,6 @@ public class MainPauline {
 	
 	public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            // 📌 Récupération des dimensions de l'écran
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             GraphicsDevice gd = ge.getDefaultScreenDevice();
             GraphicsConfiguration gc = gd.getDefaultConfiguration();
@@ -38,7 +37,6 @@ public class MainPauline {
             int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
             int taskbarHeight = screenInsets.bottom; 
 
-            // 📌 Création de la fenêtre principale du jeu
             JFrame gameFrame = new JFrame("Game Window");
             gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             gameFrame.setLayout(new BorderLayout());
@@ -48,7 +46,6 @@ public class MainPauline {
             RoomController roomController = new RoomController(roomView);
             Room room = new Room("donjon1_room5");
             
-            // 📌 Création du panneau de narration (ajouté immédiatement)
             NarrationPanel narrationPanel = new NarrationPanel(
                 room.getName(),
                 "Une brise glaciale souffle à travers les fissures des murs. "
@@ -57,34 +54,26 @@ public class MainPauline {
                 gameFrame
             );
             gameFrame.add(narrationPanel, BorderLayout.SOUTH);
-
-            // 📌 Création de la salle
             
 
-            // 📌 Ajout du `roomView` pour qu'il occupe l'espace restant
             gameFrame.add(roomView, BorderLayout.CENTER);
 
-            // ✅ Calcul de la hauteur disponible après ajout du `NarrationPanel`
             gameFrame.pack();
             int gameFrameWidth = gameFrame.getContentPane().getWidth() + 2;
             int gameFrameHeight = gameFrame.getContentPane().getHeight();
             int narrationHeight = narrationPanel.getHeight();
             int availableHeight = screenHeight - narrationHeight + taskbarHeight; 
 
-            // 📌 Création et placement des autres éléments
             Player player = new Player("Hero");
             PlayerView playerView = new PlayerView(player);
 
-            // ✅ Définition de la largeur restante pour les panneaux
             int panelWidth = screenWidth - gameFrameWidth;
-            int panelHeight = availableHeight / 3; // Divise l'espace restant en 3 parties égales
+            int panelHeight = availableHeight / 3;
 
-            // 📌 Création des panneaux
             InventoryPanel inventoryPanel = new InventoryPanel(player);
             JournalPanel journalPanel = new JournalPanel(player);
             PlayerPanel playerPanel = new PlayerPanel(player, inventoryPanel, journalPanel);
 
-            // 📌 Positionnement dynamique des panneaux (côté droit)
             playerPanel.setSize(panelWidth, panelHeight);
             playerPanel.setLocation(gameFrameWidth, screenHeight - panelHeight - taskbarHeight);
             playerPanel.setVisible(true);
@@ -93,22 +82,19 @@ public class MainPauline {
             inventoryPanel.setLocation(gameFrameWidth, screenHeight - (2 * panelHeight) - taskbarHeight);
             inventoryPanel.setVisible(true);
 
-            journalPanel.setSize(panelWidth + 10, panelHeight + 15);
-            journalPanel.setLocation(gameFrameWidth -6, - 1); // **Placée en haut à droite**
+            journalPanel.setSize(panelWidth, panelHeight-60);
+            journalPanel.setLocation(gameFrameWidth , 0); 
             journalPanel.setVisible(true);
 
-            // 📌 Ajout du contrôleur du joueur
             PlayerController playerController = new PlayerController(player, playerView);
             roomController.setPlayerController(playerController);
             playerController.setRoomController(roomController);
 
-            // 📌 Chargement de la salle et positionnement du joueur
             roomController.loadRoom(room);
             playerController.setSpawn();
             playerController.setPlayerPosition(7, 14);
             roomView.add(playerView, Integer.valueOf(2));
 
-            // 📌 Gestion du raccourci clavier pour afficher le `JournalPanel`
             gameFrame.addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyPressed(KeyEvent e) {
@@ -120,7 +106,7 @@ public class MainPauline {
                             journalPanel.setVisible(false);
                         } else {
                         	journalPanel.setSize(panelWidth + 10, panelHeight + 15);
-                            journalPanel.setLocation(gameFrameWidth -6, - 1); // **Placée en haut à droite**
+                            journalPanel.setLocation(gameFrameWidth -6, - 1); 
                             journalPanel.setVisible(true);
                         }
                     }
