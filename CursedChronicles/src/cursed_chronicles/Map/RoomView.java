@@ -3,9 +3,12 @@ package cursed_chronicles.Map;
 import javax.swing.*;
 
 import cursed_chronicles.Constant;
+import cursed_chronicles.Monster.ChasePlayerStrategy;
 import cursed_chronicles.Monster.Monster;
+import cursed_chronicles.Monster.RandomMovementStrategy;
 import cursed_chronicles.Player.ItemBooster;
 import cursed_chronicles.Player.ItemWeapon;
+import cursed_chronicles.Player.PlayerController;
 
 import java.awt.*;
 import java.io.*;
@@ -26,9 +29,9 @@ public class RoomView extends JLayeredPane {
     private JPanel _pillarLayer;
     private JPanel _boostersLayer;
     private JPanel _monstersLayer;
-    private JPanel _weaponsLayer; // 📌 Nouveau panneau pour afficher les armes
+    private JPanel _weaponsLayer; 
+    private Timer monsterMovementTimer; 
 
-    
 //    private JPanel _collisionsLayer;
 
     private final int _tileSize = 16;
@@ -37,9 +40,12 @@ public class RoomView extends JLayeredPane {
 
     private final String _tilesetBasePath = "assets/maps/tiles/";
     private final String _monsterSpritePath = "assets/sprites/monster/";
+    private PlayerController _playerController;
 
     
-    public RoomView() {
+    public RoomView(PlayerController playerController) {
+        this._playerController = playerController;
+
         setPreferredSize(new Dimension(16 * _displayTileSize, 16 * _displayTileSize));
     }
 
@@ -72,11 +78,12 @@ public class RoomView extends JLayeredPane {
         add(_pillarLayer, Integer.valueOf(8));
         add(_decorationsLayer, Integer.valueOf(9));
 //        add(_collisionsLayer, Integer.valueOf(10));
-        add(_boostersLayer, Integer.valueOf(10)); // 📌 Boosters affichés au-dessus des décors
+        add(_boostersLayer, Integer.valueOf(10));
         add(_monstersLayer, Integer.valueOf(11));
-        add(_weaponsLayer, Integer.valueOf(12)); // 📌 Ajout des armes
-
+        add(_weaponsLayer, Integer.valueOf(12));
         repaint();
+        startMonsterMovement(room);
+
     }
 
     private JPanel createLayerPanel(int[][] layerGrid, String tilesetPath, int zIndex) {
@@ -109,22 +116,44 @@ public class RoomView extends JLayeredPane {
         for (Monster monster : room.getMonsters()) {
             Image monsterSprite = loadMonsterImage(_monsterSpritePath + monster.getName().toLowerCase() + "_down.png");
             if (monsterSprite != null) {
-                g.drawImage(monsterSprite, monster.getPositionX() * _displayTileSize, monster.getPositionY() * _displayTileSize, _displayTileSize, _displayTileSize, this);
+                g.drawImage(monsterSprite, 
+                            monster.getPositionX() * _displayTileSize, 
+                            monster.getPositionY() * _displayTileSize, 
+                            _displayTileSize, _displayTileSize, this);
             }
         }
     }
-    
+
     private Image loadMonsterImage(String path) {
-        File file = new File(path);
-        if (!file.exists()) {
-            System.err.println("Image non trouvée : " + path);
-            return null;
+        ImageIcon icon = new ImageIcon(path);
+        return icon.getImage();
+    }
+    
+    private void startMonsterMovement(Room room) {
+        if (monsterMovementTimer != null) {
+            monsterMovementTimer.stop();
         }
-        try {
-            return ImageIO.read(file).getScaledInstance(_displayTileSize, _displayTileSize, Image.SCALE_SMOOTH);
-        } catch (IOException e) {
-            System.err.println("Erreur de chargement : " + path);
-            return null;
+
+        monsterMovementTimer = new Timer(500, e -> {
+            moveMonsters(room);
+            repaint();
+        });
+
+        monsterMovementTimer.start();
+    }
+    
+    private void moveMonsters(Room room) {
+        int playerX = _playerController.getPlayer().getPositionX();
+        int playerY = _playerController.getPlayer().getPositionY();
+
+        for (Monster monster : room.getMonsters()) {
+            if (monster.getLevel() > 1) {
+                monster.setMovementStrategy(new ChasePlayerStrategy());
+            } else { 
+                monster.setMovementStrategy(new RandomMovementStrategy());
+            }
+
+            monster.move(playerX, playerY);
         }
     }
     

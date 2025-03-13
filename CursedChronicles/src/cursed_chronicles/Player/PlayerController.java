@@ -315,4 +315,8 @@ public class PlayerController extends KeyAdapter {
             System.out.println();
         }
     }
+    
+    public Player getPlayer() {
+    	return this.player;
+    }
 }

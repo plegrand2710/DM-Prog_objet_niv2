@@ -43,15 +43,18 @@ public class MainPauline {
 	            gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	            gameFrame.setLayout(new BorderLayout());
 	            gameFrame.setLocation(-5,0);
+	            Player player = new Player("Hero");
+	            PlayerView playerView = new PlayerView(player);
 	            
-	            RoomView roomView = new RoomView();
+	            PlayerController playerController = new PlayerController(player, playerView);
+
+	            RoomView roomView = new RoomView(playerController);
 	            Board board = new Board(roomView);
 	            RoomController roomController = board.getRoomController();
 	            Room currentRoom = roomController.getCurrentRoom();
 
-	            Player player = new Player("Hero");
-	            PlayerView playerView = new PlayerView(player);
 	            player.addJournalEntry("📍 Lieu actuel : " + currentRoom.getName());
+
 
 	            String narrationText = generateRoomNarration(currentRoom);
 
@@ -86,7 +89,6 @@ public class MainPauline {
 	            journalPanel.setLocation(gameFrameWidth, 0); 
 	            journalPanel.setVisible(true);
 
-	            PlayerController playerController = new PlayerController(player, playerView);
 	            roomController.setPlayerController(playerController);
 	            playerController.setRoomController(roomController);
 

@@ -34,9 +34,9 @@ public class Board {
 
         roomData.put("donjon1_room2", new RoomElements(
             new ArrayList<Monster>() {{
-                add(new Monster("skull", 12, 8, 2));
-                add(new Monster("skull", 12, 8, 2));
-                add(new Monster("skull", 12, 8, 2));
+                add(new Monster("skull", 12, 8, 1, null));
+                add(new Monster("skull", 12, 8, 1, null));
+                add(new Monster("skull", 12, 8, 1, null));
             }},
             new ArrayList<>(),
             new ArrayList<>(),
@@ -68,10 +68,10 @@ public class Board {
 
         roomData.put("donjon1_room4", new RoomElements(
                 new ArrayList<Monster>() {{
-                    add(new Monster("vampire", 20, 10, 2));
-                    add(new Monster("vampire", 20, 10, 2));
-                    add(new Monster("vampire", 20, 10, 2));
-                    add(new Monster("vampire", 20, 10, 2));
+                    add(new Monster("vampire", 20, 10, 1, null));
+                    add(new Monster("vampire", 20, 10, 1, null));
+                    add(new Monster("vampire", 20, 10, 1, null));
+                    add(new Monster("vampire", 20, 10, 1, null));
                 }},
                 new ArrayList<>(),
                 new ArrayList<>(),
@@ -80,7 +80,7 @@ public class Board {
         
         roomData.put("donjon1_room5", new RoomElements(
                 new ArrayList<Monster>() {{        
-                	add(new Monster("Demon", 12, 8, 2));
+                	add(new Monster("Demon", 12, 8, 2, null));
 
                 }},
                 new ArrayList<>(),
@@ -90,12 +90,22 @@ public class Board {
         for (Room room : _rooms) {
             RoomElements elements = roomData.get(room.getName());
             if (elements != null) {
-                elements.monsters.forEach(monster -> {
+            	for (Monster monster : elements.monsters) {
                     int[] position = getRandomFreePosition(room);
                     monster.setPositionX(position[0]);
                     monster.setPositionY(position[1]);
-                    room.addMonster(monster);
-                });
+
+                    Monster correctedMonster = new Monster(
+                        monster.getName(), 
+                        monster.getPositionX(), 
+                        monster.getPositionY(), 
+                        monster.getLevel(), 
+                        room
+                    );
+
+                    room.addMonster(correctedMonster);
+                }
+
 
                 elements.items.forEach(item -> {
                     int[] position = getRandomFreePosition(room);

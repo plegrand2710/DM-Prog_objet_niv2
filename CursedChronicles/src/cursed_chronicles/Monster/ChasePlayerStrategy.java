@@ -1,6 +1,9 @@
 package cursed_chronicles.Monster;
 
 import javax.swing.*;
+
+import cursed_chronicles.Map.Room;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,7 +12,7 @@ public class ChasePlayerStrategy implements MovementStrategy {
     private final int baseMoveSpeed = 250;
 
     @Override
-    public void move(Monster monster, int playerX, int playerY) {
+    public void move(Monster monster, int playerX, int playerY, Room room) {
         if (monster.isMoving()) return; 
 
         int dx = Integer.compare(playerX, monster.getPositionX());
