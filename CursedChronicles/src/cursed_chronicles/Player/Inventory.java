@@ -5,12 +5,16 @@ import java.util.ArrayList;
 public class Inventory {
     private ArrayList<Item> items;
     private Player player;
+    private InventoryPanel inventoryPanel;
 
     public Inventory(Player player) {
         this.items = new ArrayList<>();
         this.player = player;
     }
 
+    public void setInventoryPanel(InventoryPanel inventoryPanel) { this.inventoryPanel = inventoryPanel; }
+    
+    
     public void addItem(Item newItem) {
         for (Item item : items) {
             if (item.getName().equalsIgnoreCase(newItem.getName())) {

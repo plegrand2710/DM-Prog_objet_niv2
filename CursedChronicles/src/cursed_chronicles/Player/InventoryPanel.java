@@ -88,6 +88,8 @@ public class InventoryPanel extends JFrame {
                 }
             }
         });
+        
+        this.player.setInventoryPanel(this);
     }
 
     public void updateInventory(ArrayList<Item> items) {
@@ -125,6 +127,10 @@ public class InventoryPanel extends JFrame {
                 weaponList.setSelectedIndex(0);
             }
         }
+        boosterList.repaint();
+        boosterList.revalidate();
+        weaponList.repaint();
+        weaponList.revalidate();
     }
 
     public void showInventory() {
@@ -162,6 +168,7 @@ class ItemCellRenderer extends JLabel implements ListCellRenderer<Item> {
             Image original = item.getImage();
             Image scaledImage = original.getScaledInstance(ICON_WIDTH, ICON_HEIGHT, Image.SCALE_SMOOTH);
             Icon icon = new ImageIcon(scaledImage);
+            System.out.println("🔍 Affichage de l'image : " + item.getName() + " -> " + (item.getImage() != null ? "OK" : "Aucune image"));
             if (item.getQuantity() > 1) {
                 icon = new QuantityOverlayIcon(icon, item.getQuantity());
             }

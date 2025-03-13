@@ -10,121 +10,139 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.*;
 
+import cursed_chronicles.Map.*;
 import cursed_chronicles.Map.Room;
 import cursed_chronicles.Map.RoomController;
 import cursed_chronicles.Map.RoomView;
-import cursed_chronicles.Player.InventoryPanel;
+import cursed_chronicles.Monster.*;
+import cursed_chronicles.Player.*;
 import cursed_chronicles.Player.JournalPanel;
 import cursed_chronicles.Player.Player;
 import cursed_chronicles.Player.PlayerController;
 import cursed_chronicles.Player.PlayerPanel;
 import cursed_chronicles.Player.PlayerView;
-import cursed_chronicles.UI.NarrationPanel;
+import cursed_chronicles.UI.*;
 
 public class MainPauline {
 	
-	public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            GraphicsDevice gd = ge.getDefaultScreenDevice();
-            GraphicsConfiguration gc = gd.getDefaultConfiguration();
-            Insets screenInsets = Toolkit.getDefaultToolkit().getScreenInsets(gc);
+	 public static void main(String[] args) {
+	        SwingUtilities.invokeLater(() -> {
+	            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+	            GraphicsDevice gd = ge.getDefaultScreenDevice();
+	            GraphicsConfiguration gc = gd.getDefaultConfiguration();
+	            Insets screenInsets = Toolkit.getDefaultToolkit().getScreenInsets(gc);
 
-            int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
-            int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
-            int taskbarHeight = screenInsets.bottom; 
+	            int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+	            int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+	            int taskbarHeight = screenInsets.bottom; 
 
-            JFrame gameFrame = new JFrame("Game Window");
-            gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            gameFrame.setLayout(new BorderLayout());
-            gameFrame.setLocation(-5,0);
-            
-            RoomView roomView = new RoomView();
-            RoomController roomController = new RoomController(roomView);
-            Room room = new Room("donjon1_room5");
-            
-            NarrationPanel narrationPanel = new NarrationPanel(
-                room.getName(),
-                "Une brise glaciale souffle à travers les fissures des murs. "
-                        + "Chaque pas résonne étrangement, comme si la pierre elle-même murmurait. "
-                        + "Un frisson parcourt ton échine. Quelque chose rôde dans l'ombre...",
-                gameFrame
-            );
-            gameFrame.add(narrationPanel, BorderLayout.SOUTH);
-            
+	            JFrame gameFrame = new JFrame("Game Window");
+	            gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	            gameFrame.setLayout(new BorderLayout());
+	            gameFrame.setLocation(-5,0);
+	            
+	            StoryManager storyManager = new StoryManager();
+	            storyManager.loadStoriesFromFile("resources/histoire-cursed-chronicles.txt");
+	            Story selectedStory = getRandomStory(storyManager);
+	            System.out.println("story " + selectedStory);
+	            if (selectedStory == null) {
+	                JOptionPane.showMessageDialog(null, "Aucune histoire sélectionnée. Le jeu va se fermer.", "Erreur", JOptionPane.ERROR_MESSAGE);
+	                System.exit(0);
+	            }
+	            
+	            Player player = new Player("Hero");
+	            PlayerView playerView = new PlayerView(player);
+	            
+	            PlayerController playerController = new PlayerController(player, playerView);
 
-            gameFrame.add(roomView, BorderLayout.CENTER);
+	            RoomView roomView = new RoomView(playerController, selectedStory);
+	            Board board = new Board(roomView);
+	            RoomController roomController = board.getRoomController();
+	            Room currentRoom = roomController.getCurrentRoom();
 
-            gameFrame.pack();
-            int gameFrameWidth = gameFrame.getContentPane().getWidth() + 2;
-            int gameFrameHeight = gameFrame.getContentPane().getHeight();
-            int narrationHeight = narrationPanel.getHeight();
-            int availableHeight = screenHeight - narrationHeight + taskbarHeight; 
+	            player.addJournalEntry("📍 Lieu actuel : " + currentRoom.getName());
 
-            Player player = new Player("Hero");
-            PlayerView playerView = new PlayerView(player);
-            player.addJournalEntry("📍 Lieu actuel : " + room.getName());
+	            NarrationPanel narrationPanel = new NarrationPanel(
+	                currentRoom,
+	                gameFrame
+	            );
+	            gameFrame.add(narrationPanel, BorderLayout.SOUTH);
+	            roomView.setNarrationPanel(narrationPanel);
+	            gameFrame.add(roomView, BorderLayout.CENTER);
+	            gameFrame.pack();
+	            int gameFrameWidth = gameFrame.getContentPane().getWidth() + 2;
+	            int availableHeight = screenHeight - narrationPanel.getHeight() + taskbarHeight; 
 
-            int panelWidth = screenWidth - gameFrameWidth;
-            int panelHeight = availableHeight / 3;
+	            InventoryPanel inventoryPanel = new InventoryPanel(player);
+	            JournalPanel journalPanel = new JournalPanel(player);
+	            PlayerPanel playerPanel = new PlayerPanel(player, inventoryPanel, journalPanel);
 
-            InventoryPanel inventoryPanel = new InventoryPanel(player);
-            JournalPanel journalPanel = new JournalPanel(player);
-            PlayerPanel playerPanel = new PlayerPanel(player, inventoryPanel, journalPanel);
+	            int panelWidth = screenWidth - gameFrameWidth;
+	            int panelHeight = availableHeight / 3;
 
-            playerPanel.setSize(panelWidth, panelHeight);
-            playerPanel.setLocation(gameFrameWidth, screenHeight - panelHeight - taskbarHeight);
-            playerPanel.setVisible(true);
+	            playerPanel.setSize(panelWidth, panelHeight);
+	            playerPanel.setLocation(gameFrameWidth, screenHeight - panelHeight - taskbarHeight);
+	            playerPanel.setVisible(true);
 
-            inventoryPanel.setSize(panelWidth, panelHeight);
-            inventoryPanel.setLocation(gameFrameWidth, screenHeight - (2 * panelHeight) - taskbarHeight);
-            inventoryPanel.setVisible(true);
+	            inventoryPanel.setSize(panelWidth, panelHeight);
+	            inventoryPanel.setLocation(gameFrameWidth, screenHeight - (2 * panelHeight) - taskbarHeight);
+	            inventoryPanel.setVisible(true);
 
-            journalPanel.setSize(panelWidth, panelHeight-60);
-            journalPanel.setLocation(gameFrameWidth , 0); 
-            journalPanel.setVisible(true);
+	            journalPanel.setSize(panelWidth, panelHeight-70);
+	            journalPanel.setLocation(gameFrameWidth, 0); 
+	            journalPanel.setVisible(true);
 
-            PlayerController playerController = new PlayerController(player, playerView);
-            roomController.setPlayerController(playerController);
-            playerController.setRoomController(roomController);
+	            roomController.setPlayerController(playerController);
+	            playerController.setRoomController(roomController);
 
-            roomController.loadRoom(room);
-            playerController.setSpawn();
-            playerController.setPlayerPosition(7, 14);
-            roomView.add(playerView, Integer.valueOf(2));
+	            roomController.loadRoom();
+	            playerController.setSpawn();
+	            playerController.setPlayerPosition(7, 14);
+	            roomView.add(playerView, Integer.valueOf(2));
 
-            gameFrame.addKeyListener(new KeyAdapter() {
-                @Override
-                public void keyPressed(KeyEvent e) {
-                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                        narrationPanel.skipTypingEffect();
-                    }
-                    if (e.getKeyCode() == KeyEvent.VK_J) {
-                        if (journalPanel.isVisible()) {
-                            journalPanel.setVisible(false);
-                        } else {
-                        	journalPanel.setSize(panelWidth + 10, panelHeight + 15);
-                            journalPanel.setLocation(gameFrameWidth -6, - 1); 
-                            journalPanel.setVisible(true);
-                        }
-                    }
-                }
-            });
+	            gameFrame.addKeyListener(new KeyAdapter() {
+	                @Override
+	                public void keyPressed(KeyEvent e) {
+	                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+	                        narrationPanel.skipTypingEffect();
+	                    }
+	                    if (e.getKeyCode() == KeyEvent.VK_J) {
+	                        if (journalPanel.isVisible()) {
+	                            journalPanel.setVisible(false);
+	                        } else {
+	                            journalPanel.setSize(panelWidth + 10, panelHeight + 15);
+	                            journalPanel.setLocation(gameFrameWidth - 6, -1); 
+	                            journalPanel.setVisible(true);
+	                        }
+	                    }
+	                }
+	            });
 
-            gameFrame.addKeyListener(playerController);
-            gameFrame.setFocusable(true);
-            gameFrame.requestFocusInWindow();
-
-            gameFrame.setVisible(true);
-        });
-    }
+	            gameFrame.addKeyListener(playerController);
+	            
+	            gameFrame.setFocusable(true);
+	            gameFrame.requestFocusInWindow();
+	            gameFrame.setVisible(true);
+	        });
+	    }
+	 private static Story getRandomStory(StoryManager storyManager) {
+	        ArrayList<Story> stories = storyManager.getStories();
+	        if (stories.isEmpty()) {
+	        	System.out.println("vide");
+	            return null;
+	        }
+	        Random random = new Random();
+	        return stories.get(random.nextInt(stories.size()));
+	    }
 }
-/*
 
-package cursed_chronicles;
+
+/*package cursed_chronicles;
 
 import cursed_chronicles.Player.*;
 import javax.swing.*;
@@ -254,13 +272,13 @@ public class MainPauline {
                         int lastSlash = filePath.lastIndexOf('/');
                         String justName = (lastSlash >= 0) ? filePath.substring(lastSlash + 1) : filePath;
                         if (justName.toLowerCase().contains("booster")) {
-                            newItem = new ItemBooster(filePath);
+                            newItem = new ItemBooster(filePath, 7, 9);
                         } else {
                             newItem = new ItemWeapon(filePath);
                         }
                         player.getInventory().addItem(newItem);
                         inventoryPanel.updateInventory(player.getInventory().getItems());
-                        inventoryPanel.showInventory();
+                        //inventoryPanel.showInventory();
                     }
                     gameFrame.requestFocusInWindow();
                 }

@@ -13,6 +13,9 @@ public class Player {
     private int positionX;
     private int positionY;
     private Inventory inventory;
+    
+    private InventoryPanel inventoryPanel;
+
     private ArrayList<Characteristic> characteristics;
     private Journal journal;
 
@@ -26,10 +29,13 @@ public class Player {
 
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
+    private ArrayList<Clue> _cluesJournal = new ArrayList<>();
+    
+    
     public Player(String name) {
         this.name = name;
         this.positionX = 0;
-        this.positionY = 0;
+        this.positionY = 0;        
         this.inventory = new Inventory(this);
         this.characteristics = new ArrayList<>();
         this.journal = new Journal();
@@ -37,7 +43,7 @@ public class Player {
         this.isMoving = false;
         initializeDefaultCharacteristics();
         String swordPath = "assets/sprites/booster/sword_sprite.png";
-        currentWeapon = new ItemWeapon(swordPath); 
+        currentWeapon = new ItemWeapon(swordPath, -1, -1); 
         this.inventory.addItem(currentWeapon);
     }
 
@@ -45,6 +51,7 @@ public class Player {
         characteristics.add(new Characteristic("life", 100));
         characteristics.add(new Characteristic("Defense", 0));
         characteristics.add(new Characteristic("speed", 0));
+        characteristics.add(new Characteristic("damage", 10));
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -61,6 +68,15 @@ public class Player {
             }
         }
         return 0;
+    }
+    
+    public Characteristic getCharacteristic(String name) {
+        for (Characteristic c : characteristics) {
+            if (c.getName().equalsIgnoreCase(name)) {
+                return c;
+            }
+        }
+        return null; 
     }
     
     public String getName() { return name; }
@@ -86,6 +102,9 @@ public class Player {
 
     public Inventory getInventory() { return inventory; }
     public void setInventory(Inventory inventory) { this.inventory = inventory; }
+    
+    public InventoryPanel getInventoryPanel() { return inventoryPanel; }
+    public void setInventoryPanel(InventoryPanel inventoryPanel) { this.inventoryPanel = inventoryPanel; }
 
     public ArrayList<Characteristic> getCharacteristics() { return new ArrayList<>(characteristics); }
     public void setCharacteristics(ArrayList<Characteristic> characteristics) { this.characteristics = characteristics; }
@@ -120,11 +139,9 @@ public class Player {
         if (lastMoveEntryIndex == -1) { 
             addJournalEntry(moveEntry);
             lastMoveEntryIndex = journal.getEntries().size() - 1; 
-            System.out.println("Nouvelle entrée ajoutée au journal à l'index : " + lastMoveEntryIndex);
         } else { 
         	journal.updateEntry(lastMoveEntryIndex, moveEntry);
         	pcs.firePropertyChange("journalUpdate", lastMoveEntryIndex, moveEntry);            
-        	System.out.println("Mise à jour de l'entrée existante à l'index : " + lastMoveEntryIndex);
         }    
    }
 
@@ -168,7 +185,9 @@ public class Player {
                     pcs.firePropertyChange("characteristic_life", oldLife, c.getValue());
                     found = true;
                     if (c.getValue() == 0) {
-                        JOptionPane.showMessageDialog(null, "Game Over", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Game Over", "Game Over, il faut recommencer la quête !", JOptionPane.INFORMATION_MESSAGE);
+                        System.exit(0);  
+
                     }
                     break;
                 }
@@ -283,8 +302,44 @@ public class Player {
         return speedActive;
     }
     
+    public int getWeaponDamage() {
+        ItemWeapon weapon = this.getCurrentWeapon();
+        if (weapon == null) {
+            return 0; 
+        }
+
+        switch (weapon.getName().toLowerCase()) {
+            case "bow_sprite":
+                return 10;
+            case "hammer_sprite":
+                return 20;
+            case "rifler_sprite":
+                return 15;
+            case "sword_sprite":
+            default:
+                return 0; 
+        }
+    }
+    
     public void setPosition(int x, int y) {
     	setPositionX(x);
     	setPositionY(y);
+    }
+    
+    public void addClue(Clue clue) {
+        if (clue == null) return;
+        
+        _cluesJournal.add(clue);
+        
+        StringBuilder cluesEntry = new StringBuilder("📜 **Journal des Indices :**\n");
+        for (Clue c : _cluesJournal) {
+            cluesEntry.append("- ").append(c.getText()).append("\n");
+        }
+        
+        addJournalEntry(cluesEntry.toString());
+    }
+
+    public ArrayList<Clue> getCluesJournal() {
+        return _cluesJournal;
     }
 }

@@ -24,7 +24,7 @@ public class PlayerView extends JPanel {
     private Image weaponSkin;
     private Timer movementTimer;
     
-    private Timer animationTimer;  // Ajout d'un timer global pour l'animation
+    private Timer animationTimer; 
 
     private final int baseMoveSpeed = 250;
     private final int speedMoveSpeed = 50; 
@@ -33,7 +33,7 @@ public class PlayerView extends JPanel {
     private boolean isAnimating = false;
     private int targetX, targetY;
     private int currentX, currentY;
-    private int stepSize = 8; // Nombre de pixels par mise à jour d'animation
+    private int stepSize = 8; 
     
     
 
@@ -46,7 +46,7 @@ public class PlayerView extends JPanel {
             frameIndex = (frameIndex + 1) % sprites.get(player.getDirection()).length;
             repaint();
         });
-        setOpaque(false); // Rendre transparent pour ne pas masquer la salle
+        setOpaque(false); 
     }
 
     public void setController(PlayerController controller) {
@@ -134,7 +134,7 @@ public class PlayerView extends JPanel {
         player.move(newDirection, dx, dy);
         isAnimating = true;
         if (!animationTimer.isRunning()) {
-            animationTimer.start();  // Démarre l'animation si ce n'est pas déjà fait
+            animationTimer.start(); 
         }
 
         movementTimer = new Timer(moveSpeed / 10, e -> {
@@ -170,7 +170,7 @@ public class PlayerView extends JPanel {
 
     public void stopAnimation() {
         animationTimer.stop();
-        frameIndex = 0; // Réinitialise le sprite
+        frameIndex = 0; 
         repaint();
     }
 
@@ -217,7 +217,7 @@ public class PlayerView extends JPanel {
                 swingFrames = new String[0];
             }
             
-            Timer timer = new Timer(200, new ActionListener() {
+            Timer timer = new Timer(100, new ActionListener() {
                 int frame = 0;
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -251,5 +251,16 @@ public class PlayerView extends JPanel {
     	currentY = py*Constant.PLAYER_SIZE;
     }
 
+    public void resetMovement() {
+        if (movementTimer != null && movementTimer.isRunning()) {
+            movementTimer.stop();
+        }
+        if (animationTimer != null && animationTimer.isRunning()) {
+            animationTimer.stop();
+        }
+        isAnimating = false;
+        frameIndex = 0;
+        repaint();
+    }
     
 }

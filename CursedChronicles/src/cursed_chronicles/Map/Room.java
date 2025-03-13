@@ -1,8 +1,16 @@
 package cursed_chronicles.Map;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Random;
 import java.util.Scanner;
+
+import cursed_chronicles.Monster.Monster;
+import cursed_chronicles.Player.Item;
+import cursed_chronicles.Player.ItemBooster;
+import cursed_chronicles.Player.ItemWeapon;
 
 public class Room {
     private String _name;
@@ -19,11 +27,24 @@ public class Room {
 
     private HashMap<String, String> _doors;
     private HashMap<String, int[]> _spawnPoints;
+    
+    private ArrayList<Monster> _monsters; 
+    private ArrayList<ItemBooster> _boosters;
+    private ArrayList<ItemWeapon> _weapons; 
+    private ArrayList<Chest> _chests; 
+
+    private String _hint; 
 
     public Room(String name) {
         _name = name;
         _doors = new HashMap<>();
         _spawnPoints = new HashMap<>();
+        _monsters = new ArrayList<>();
+        _boosters = new ArrayList<>();
+        _weapons = new ArrayList<>();
+
+        _chests = new ArrayList<>();
+        _hint = null; 
         initLayers();
     }
 
@@ -157,6 +178,128 @@ public class Room {
 
         return sb.toString();
     }
+    public void addMonster(Monster monster) {
+        _monsters.add(monster);
+    }
+
+    public void removeMonster(Monster monster) {
+        _monsters.remove(monster);
+    }
+
+    public void addBooster(ItemBooster booster) {
+        _boosters.add(booster);
+    }
+
+    public void removeBooster(ItemBooster booster) {
+        _boosters.remove(booster);
+    }
+
+    public void addChest(ArrayList<Item> contents) {
+        Chest newChest = new Chest(contents); 
+        _chests.add(newChest);
+
+        System.out.println("📦 Nouveau coffre ajouté avec " + contents.size() + " objets");
+        if (contents.isEmpty()) {
+            System.out.println("⚠ Coffre vide.");
+        } else {
+            System.out.print("📍 Contenu : ");
+            for (Item item : contents) {
+                System.out.print(item.getName() + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public ArrayList<Item> openChest(int chestIndex) {
+        if (chestIndex >= 0 && chestIndex < _chests.size()) {
+            Chest chest = _chests.remove(chestIndex); 
+            return chest.getContents(); 
+        }
+        return null; 
+    }
+
+    public int getChestCount() {
+        return _chests.size();
+    }
+
+    public void printChests() {
+        System.out.println("📜 Liste des coffres dans " + _name + " :");
+        for (int i = 0; i < _chests.size(); i++) {
+            System.out.print("📦 Coffre " + (i + 1) + " contient : ");
+            _chests.get(i).printContents();
+        }
+    }
+
+    public void setHint(String hint) {
+        _hint = hint;
+    }
+
+    public String getHint() {
+        return _hint;
+    }
+
+    public ArrayList<Monster> getMonsters() {
+        return new ArrayList<>(_monsters);
+    }
+
+    public ArrayList<ItemBooster> getBoosters() {
+        return new ArrayList<>(_boosters);
+    }
 
 
+    public HashMap<int[], ItemBooster> getBoosterPositions() {
+        HashMap<int[], ItemBooster> boosterPositions = new HashMap<>();
+
+        for (ItemBooster booster : _boosters) {
+            int[] position = new int[]{booster.getX(), booster.getY()};
+            boosterPositions.put(position, booster);
+        }
+
+        return boosterPositions;
+    }
+
+    public ItemBooster pickUpBooster(int x, int y) {
+        Iterator<ItemBooster> iterator = _boosters.iterator();
+        while (iterator.hasNext()) {
+            ItemBooster booster = iterator.next();
+            if (booster.getX() == x && booster.getY() == y) {
+                iterator.remove();  
+                return booster;   
+            }
+        }
+        return null; 
+    }
+    
+    public void addWeapon(ItemWeapon weapon) {
+        _weapons.add(weapon);
+    }
+
+    public void removeWeapon(ItemWeapon weapon) {
+        _weapons.remove(weapon);
+    }
+
+    public ArrayList<ItemWeapon> getWeapons() {
+        return new ArrayList<>(_weapons);
+    }
+
+    public HashMap<int[], ItemWeapon> getWeaponPositions() {
+        HashMap<int[], ItemWeapon> weaponPositions = new HashMap<>();
+        for (ItemWeapon weapon : _weapons) {
+            int[] position = new int[]{weapon.getPositionX(), weapon.getPositionY()};
+            weaponPositions.put(position, weapon);
+        }
+        return weaponPositions;
+    }
+
+    public ItemWeapon pickUpWeapon(int x, int y) {
+        Iterator<ItemWeapon> iterator = _weapons.iterator();
+        while (iterator.hasNext()) {
+            ItemWeapon weapon = iterator.next();
+            if (weapon.getPositionX() == x && weapon.getPositionY() == y) {
+                iterator.remove(); 
+                return weapon; 
+            }
+        }
+        return null;
+    }
 }
