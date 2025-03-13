@@ -3,6 +3,7 @@ package cursed_chronicles.Map;
 import javax.swing.*;
 
 import cursed_chronicles.Constant;
+import cursed_chronicles.Monster.Monster;
 import cursed_chronicles.Player.ItemBooster;
 
 import java.awt.*;
@@ -23,6 +24,7 @@ public class RoomView extends JLayeredPane {
     private JPanel _decorationsLayer;
     private JPanel _pillarLayer;
     private JPanel _boostersLayer;
+    private JPanel _monstersLayer;
 
     
 //    private JPanel _collisionsLayer;
@@ -32,16 +34,16 @@ public class RoomView extends JLayeredPane {
     private final int _displayTileSize = _tileSize * _scaleFactor;
 
     private final String _tilesetBasePath = "assets/maps/tiles/";
-    
+    private final String _monsterSpritePath = "assets/sprites/monster/";
+
     
     public RoomView() {
         setPreferredSize(new Dimension(16 * _displayTileSize, 16 * _displayTileSize));
     }
 
     public void displayRoom(Room room) {
-        removeAll(); // Supprime les anciens calques si existants
+        removeAll();
 
-        // Création et ajout des calques avec leur Z-index
         _floorLayer = createLayerPanel(room.getFloorLayer(), _tilesetBasePath + "floor/", 0);
         _trapsLayer = createLayerPanel(room.getTrapsLayer(), _tilesetBasePath + "traps/", 1);
         _sideWallsLayer = createLayerPanel(room.getSideWallsLayer(), _tilesetBasePath + "side_walls/", 3);
@@ -54,6 +56,7 @@ public class RoomView extends JLayeredPane {
 //        _collisionsLayer = createLayerPanel(room.getCollisionsLayer(), _tilesetBasePath + "collisions/", 10);
         
         _boostersLayer = createBoosterLayer(room);
+        _monstersLayer = createMonsterLayer(room);
 
         
         add(_floorLayer, Integer.valueOf(0));
@@ -67,6 +70,7 @@ public class RoomView extends JLayeredPane {
         add(_decorationsLayer, Integer.valueOf(9));
 //        add(_collisionsLayer, Integer.valueOf(10));
         add(_boostersLayer, Integer.valueOf(10)); // 📌 Boosters affichés au-dessus des décors
+        add(_monstersLayer, Integer.valueOf(11));
 
         repaint();
     }
@@ -84,6 +88,42 @@ public class RoomView extends JLayeredPane {
         return panel;
     }
 
+    private JPanel createMonsterLayer(Room room) {
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                drawMonsters(g, room);
+            }
+        };
+        panel.setOpaque(false);
+        panel.setBounds(0, 0, getPreferredSize().width, getPreferredSize().height);
+        return panel;
+    }
+    
+    private void drawMonsters(Graphics g, Room room) {
+        for (Monster monster : room.getMonsters()) {
+            Image monsterSprite = loadMonsterImage(_monsterSpritePath + monster.getName().toLowerCase() + "_down.png");
+            if (monsterSprite != null) {
+                g.drawImage(monsterSprite, monster.getPositionX() * _displayTileSize, monster.getPositionY() * _displayTileSize, _displayTileSize, _displayTileSize, this);
+            }
+        }
+    }
+    
+    private Image loadMonsterImage(String path) {
+        File file = new File(path);
+        if (!file.exists()) {
+            System.err.println("Image non trouvée : " + path);
+            return null;
+        }
+        try {
+            return ImageIO.read(file).getScaledInstance(_displayTileSize, _displayTileSize, Image.SCALE_SMOOTH);
+        } catch (IOException e) {
+            System.err.println("Erreur de chargement : " + path);
+            return null;
+        }
+    }
+    
     private void drawLayer(Graphics g, int[][] layerGrid, String tilesetPath) {
         if (layerGrid == null) return;
 

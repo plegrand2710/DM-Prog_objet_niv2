@@ -1,6 +1,7 @@
 package cursed_chronicles.Player;
 
 import java.awt.Image;
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
@@ -14,15 +15,32 @@ public abstract class Item {
     public Item(String filePath) {
         this.quantity = 1;
         this.characteristics = new ArrayList<>();
-        
+
         int lastSlash = filePath.lastIndexOf('/');
         String fileName = (lastSlash >= 0) ? filePath.substring(lastSlash + 1) : filePath;
         int dotIndex = fileName.lastIndexOf('.');
         this.name = (dotIndex > 0) ? fileName.substring(0, dotIndex) : fileName;
-        
-        this.image = new ImageIcon(filePath).getImage();
-        
+
+        String[] possiblePaths = {
+            "assets/sprites/booster/" + this.name + ".png",
+            "assets/sprites/player/" + this.name + ".png"
+        };
+
+        this.image = null;
+        for (String path : possiblePaths) {
+            if (new File(path).exists()) {
+                this.image = new ImageIcon(path).getImage();
+                System.out.println("✅ Image trouvée : " + path);
+                break;
+            }
+        }
+
+        if (this.image == null) {
+            System.err.println("⚠ Image non trouvée pour : " + name);
+        }
     }
+
+
 
     public String getName() {
         return name;

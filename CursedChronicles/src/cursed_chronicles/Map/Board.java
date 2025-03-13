@@ -25,10 +25,12 @@ public class Board {
 
         roomData.put("donjon1_room1", new RoomElements(
             new ArrayList<Monster>() {{
-                add(new Monster("Gobelin", 10, 5, 1));
+                add(new Monster("Goblin", 10, 5, 1));
             }},
             new ArrayList<ItemBooster>() {{
-                add(new ItemBooster("booster_speed1", -1, -1)); // Positions à définir plus tard
+                add(new ItemBooster("booster_speed1", -1, -1));
+                add(new ItemBooster("booster_speed2", -1, -1));
+                add(new ItemBooster("booster_defense_3", -1, -1));
             }},
             new ArrayList<ItemBooster>() {{
                 add(new ItemBooster("booster_defense_1", -1, -1));
@@ -59,11 +61,15 @@ public class Board {
             null
         ));
 
-        // 📌 Ajout des éléments dans chaque salle correspondante
         for (Room room : _rooms) {
             RoomElements elements = roomData.get(room.getName());
             if (elements != null) {
-                elements.monsters.forEach(room::addMonster);
+            	elements.monsters.forEach(monster -> {
+                    int[] position = getRandomFreePosition(room);
+                    monster.setPositionX(position[0]);
+                    monster.setPositionY(position[1]);
+                    room.addMonster(monster);
+                });
                 elements.boosters.forEach(booster -> {
                     int[] position = getRandomFreePosition(room);
                     booster.setPosition(position[0], position[1]);
@@ -84,13 +90,13 @@ public class Board {
     
     private int[] getRandomFreePosition(Room room) {
         int[][] collisions = room.getCollisionsLayer();
-        int width = collisions[0].length;
-        int height = collisions.length;
+        int minX = 3, maxX = 12;  // X compris entre 3 et 12
+        int minY = 3, maxY = 14;  // Y compris entre 3 et 14
         int x, y;
         
         do {
-            x = _rand.nextInt(width);
-            y = _rand.nextInt(height);
+            x = _rand.nextInt((maxX - minX) + 1) + minX; // Génère entre minX et maxX
+            y = _rand.nextInt((maxY - minY) + 1) + minY; // Génère entre minY et maxY
         } while (collisions[y][x] == Constant.WALL_COLLISION_ID); // Vérifie que ce n'est pas un mur
 
         return new int[]{x, y};

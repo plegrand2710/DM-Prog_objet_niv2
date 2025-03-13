@@ -20,7 +20,6 @@ public class Inventory {
             if (item.getName().equalsIgnoreCase(newItem.getName())) {
                 item.incrementQuantity();
                 player.addJournalEntry("📦 Objet ajouté : " + newItem.getName() + " (x" + item.getQuantity() + ")");
-                
                 return;
             }
         }

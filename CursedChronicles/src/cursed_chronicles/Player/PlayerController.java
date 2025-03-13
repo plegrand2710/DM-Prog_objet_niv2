@@ -139,7 +139,7 @@ public class PlayerController extends KeyAdapter {
             case KeyEvent.VK_DOWN:
             case KeyEvent.VK_LEFT:
             case KeyEvent.VK_RIGHT:
-                playerView.stopAnimation(); // Arrête l’animation quand la touche est relâchée
+                playerView.stopAnimation();
                 break;
         }
     }
