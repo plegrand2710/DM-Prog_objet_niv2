@@ -5,6 +5,7 @@ import javax.swing.*;
 import cursed_chronicles.Constant;
 import cursed_chronicles.Monster.Monster;
 import cursed_chronicles.Player.ItemBooster;
+import cursed_chronicles.Player.ItemWeapon;
 
 import java.awt.*;
 import java.io.*;
@@ -25,6 +26,7 @@ public class RoomView extends JLayeredPane {
     private JPanel _pillarLayer;
     private JPanel _boostersLayer;
     private JPanel _monstersLayer;
+    private JPanel _weaponsLayer; // 📌 Nouveau panneau pour afficher les armes
 
     
 //    private JPanel _collisionsLayer;
@@ -57,6 +59,7 @@ public class RoomView extends JLayeredPane {
         
         _boostersLayer = createBoosterLayer(room);
         _monstersLayer = createMonsterLayer(room);
+        _weaponsLayer = createWeaponLayer(room); // 📌 Ajout du panneau des armes
 
         
         add(_floorLayer, Integer.valueOf(0));
@@ -71,6 +74,7 @@ public class RoomView extends JLayeredPane {
 //        add(_collisionsLayer, Integer.valueOf(10));
         add(_boostersLayer, Integer.valueOf(10)); // 📌 Boosters affichés au-dessus des décors
         add(_monstersLayer, Integer.valueOf(11));
+        add(_weaponsLayer, Integer.valueOf(12)); // 📌 Ajout des armes
 
         repaint();
     }
@@ -202,6 +206,47 @@ public class RoomView extends JLayeredPane {
             return originalImage.getScaledInstance(_displayTileSize, _displayTileSize, Image.SCALE_SMOOTH);
         } catch (IOException e) {
             System.err.println("Erreur lors du chargement de l'image du booster : " + boosterName);
+            return null;
+        }
+    }
+    
+    private JPanel createWeaponLayer(Room room) {
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                drawWeapons(g, room);
+            }
+        };
+        panel.setOpaque(false);
+        panel.setBounds(0, 0, getPreferredSize().width, getPreferredSize().height);
+        return panel;
+    }
+
+    private void drawWeapons(Graphics g, Room room) {
+        for (ItemWeapon weapon : room.getWeapons()) {
+            Image weaponSprite = loadWeaponImage(weapon.getName());
+            if (weaponSprite != null) {
+                g.drawImage(weaponSprite, weapon.getPositionX() * _displayTileSize, weapon.getPositionY() * _displayTileSize, _displayTileSize, _displayTileSize, this);
+            }
+        }
+    }
+    
+    private Image loadWeaponImage(String weaponName) {
+        String imagePath = "assets/sprites/booster/" + weaponName + ".png";
+        return loadImage(imagePath);
+    }
+    
+    private Image loadImage(String path) {
+        File file = new File(path);
+        if (!file.exists()) {
+            System.err.println("Image non trouvée : " + path);
+            return null;
+        }
+        try {
+            return ImageIO.read(file).getScaledInstance(_displayTileSize, _displayTileSize, Image.SCALE_SMOOTH);
+        } catch (IOException e) {
+            System.err.println("Erreur de chargement : " + path);
             return null;
         }
     }

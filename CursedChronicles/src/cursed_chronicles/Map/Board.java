@@ -13,7 +13,6 @@ public class Board {
     private ArrayList<Room> _rooms;
     private final Random _rand = new Random();
 
-    
     public Board(RoomView roomView) {
         _roomController = new RoomController(roomView);
         _rooms = new ArrayList<>(_roomController.getRooms().values());
@@ -24,24 +23,23 @@ public class Board {
         HashMap<String, RoomElements> roomData = new HashMap<>();
 
         roomData.put("donjon1_room1", new RoomElements(
-            new ArrayList<Monster>() {{
-                add(new Monster("Goblin", 10, 5, 1));
-            }},
-            new ArrayList<ItemBooster>() {{
+            new ArrayList<Monster>(),
+            new ArrayList<Item>() {{
                 add(new ItemBooster("booster_speed1", -1, -1));
-                add(new ItemBooster("booster_speed2", -1, -1));
-                add(new ItemBooster("booster_defense_3", -1, -1));
+                add(new ItemWeapon("bow_sprite", -1, -1));
             }},
-            new ArrayList<ItemBooster>() {{
+            new ArrayList<Item>() {{
                 add(new ItemBooster("booster_defense_1", -1, -1));
+                add(new ItemWeapon("bow_sprite", -1, -1));
             }},
             "Un message est gravé sur le mur : 'La clé est à l'Est...'"
         ));
 
         roomData.put("donjon1_room2", new RoomElements(
             new ArrayList<Monster>() {{
-                add(new Monster("Squelette", 12, 8, 2));
-                add(new Monster("Zombie", 15, 7, 1));
+                add(new Monster("skull", 12, 8, 2));
+                add(new Monster("skull", 12, 8, 2));
+                add(new Monster("skull", 12, 8, 2));
             }},
             new ArrayList<>(),
             new ArrayList<>(),
@@ -50,58 +48,91 @@ public class Board {
 
         roomData.put("donjon1_room3", new RoomElements(
             new ArrayList<Monster>() {{
-                add(new Monster("Ogre", 20, 10, 2));
+
             }},
-            new ArrayList<ItemBooster>() {{
-                add(new ItemBooster("Potion de vitesse", -1, -1));
+            new ArrayList<Item>() {{
+                add(new ItemBooster("booster_damage", -1, -1));
+                add(new ItemBooster("booster_life_1", -1, -1));
             }},
-            new ArrayList<ItemBooster>() {{
-                add(new ItemBooster("Potion secrète", -1, -1));
+            new ArrayList<Item>() {{
+                add(new ItemBooster("booster_defense_1", -1, -1));
+                add(new ItemWeapon("rifler_sprite", -1, -1));
             }},
             null
         ));
 
+        roomData.put("donjon1_room4", new RoomElements(
+                new ArrayList<Monster>() {{
+                    add(new Monster("vampire", 20, 10, 2));
+                    add(new Monster("vampire", 20, 10, 2));
+                    add(new Monster("vampire", 20, 10, 2));
+                    add(new Monster("vampire", 20, 10, 2));
+                }},
+                new ArrayList<>(),
+                new ArrayList<>(),
+                "Les ombres murmurent : 'Seule la lumière révélera le passage.'"
+            ));
+        
+        roomData.put("donjon1_room5", new RoomElements(
+                new ArrayList<Monster>() {{        
+                	add(new Monster("Demon", 12, 8, 2));
+
+                }},
+                new ArrayList<>(),
+                new ArrayList<>(),
+                "Les ombres murmurent : 'Seule la lumière révélera le passage.'"
+            ));
         for (Room room : _rooms) {
             RoomElements elements = roomData.get(room.getName());
             if (elements != null) {
-            	elements.monsters.forEach(monster -> {
+                // 🔥 Ajout des monstres
+                elements.monsters.forEach(monster -> {
                     int[] position = getRandomFreePosition(room);
                     monster.setPositionX(position[0]);
                     monster.setPositionY(position[1]);
                     room.addMonster(monster);
                 });
-                elements.boosters.forEach(booster -> {
+
+                elements.items.forEach(item -> {
                     int[] position = getRandomFreePosition(room);
-                    booster.setPosition(position[0], position[1]);
-                    room.addBooster(booster);
-                });
-                elements.chestBoosters.forEach(chestBooster -> {
-                    int[] position = getRandomFreePosition(room);
-                    chestBooster.setPosition(position[0], position[1]);
-                    room.addChest(position[0], position[1], new ArrayList<ItemBooster>() {{ add(chestBooster); }});
+                    item.setPosition(position[0], position[1]);
+
+                    System.out.println("Item ajouté : " + item.getName() + " | Booster: " + (item instanceof ItemBooster) + " | Weapon: " + (item instanceof ItemWeapon));
+
+                    if (item instanceof ItemBooster) {
+                        room.addBooster((ItemBooster) item);
+                    } else if (item instanceof ItemWeapon) {
+                        room.addWeapon((ItemWeapon) item);
+                    }
                 });
 
+                if (!elements.chestItems.isEmpty()) {
+                    int[] chestPosition = getRandomFreePosition(room);
+                    ArrayList<Item> chestContents = new ArrayList<>(elements.chestItems);
+                    room.addChest(chestPosition[0], chestPosition[1], chestContents);
+                }
+
+                // 🔥 Ajout des indices
                 if (elements.hint != null) {
                     room.setHint(elements.hint);
                 }
             }
         }
     }
-    
+
     private int[] getRandomFreePosition(Room room) {
         int[][] collisions = room.getCollisionsLayer();
         int minX = 3, maxX = 12;  // X compris entre 3 et 12
         int minY = 3, maxY = 14;  // Y compris entre 3 et 14
         int x, y;
-        
+
         do {
-            x = _rand.nextInt((maxX - minX) + 1) + minX; // Génère entre minX et maxX
-            y = _rand.nextInt((maxY - minY) + 1) + minY; // Génère entre minY et maxY
-        } while (collisions[y][x] == Constant.WALL_COLLISION_ID); // Vérifie que ce n'est pas un mur
+            x = _rand.nextInt((maxX - minX) + 1) + minX;
+            y = _rand.nextInt((maxY - minY) + 1) + minY;
+        } while (collisions[y][x] == Constant.WALL_COLLISION_ID);
 
         return new int[]{x, y};
     }
-
 
     public RoomController getRoomController() {
         return _roomController;
@@ -117,14 +148,14 @@ public class Board {
 
     private static class RoomElements {
         ArrayList<Monster> monsters;
-        ArrayList<ItemBooster> boosters;
-        ArrayList<ItemBooster> chestBoosters;
+        ArrayList<Item> items; // Contient à la fois des boosters et des armes visibles
+        ArrayList<Item> chestItems; // Contient les objets à placer dans les coffres
         String hint;
 
-        RoomElements(ArrayList<Monster> monsters, ArrayList<ItemBooster> boosters, ArrayList<ItemBooster> chestBoosters, String hint) {
+        RoomElements(ArrayList<Monster> monsters, ArrayList<Item> items, ArrayList<Item> chestItems, String hint) {
             this.monsters = monsters;
-            this.boosters = boosters;
-            this.chestBoosters = chestBoosters;
+            this.items = items;
+            this.chestItems = chestItems;
             this.hint = hint;
         }
     }

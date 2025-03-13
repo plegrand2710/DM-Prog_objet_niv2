@@ -41,7 +41,7 @@ public class Player {
         this.isMoving = false;
         initializeDefaultCharacteristics();
         String swordPath = "assets/sprites/booster/sword_sprite.png";
-        currentWeapon = new ItemWeapon(swordPath); 
+        currentWeapon = new ItemWeapon(swordPath, -1, -1); 
         this.inventory.addItem(currentWeapon);
     }
 

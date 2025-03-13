@@ -10,17 +10,28 @@ public abstract class Item {
     private String description;
     private ArrayList<Characteristic> characteristics;
     private Image image;
+
+    private int positionX;
+    private int positionY;
     private int quantity;
+
+    private boolean isWeapon;  // Indique si c'est une arme
+    private boolean isBooster; // Indique si c'est un booster
+
 
     public Item(String filePath) {
         this.quantity = 1;
         this.characteristics = new ArrayList<>();
-
+        this.positionX = -1; 
+        this.positionY = -1;
         int lastSlash = filePath.lastIndexOf('/');
         String fileName = (lastSlash >= 0) ? filePath.substring(lastSlash + 1) : filePath;
         int dotIndex = fileName.lastIndexOf('.');
         this.name = (dotIndex > 0) ? fileName.substring(0, dotIndex) : fileName;
 
+        this.isBooster = name.toLowerCase().startsWith("booster");
+        this.isWeapon = !this.isBooster;
+        
         String[] possiblePaths = {
             "assets/sprites/booster/" + this.name + ".png",
             "assets/sprites/player/" + this.name + ".png"
@@ -88,6 +99,16 @@ public abstract class Item {
         characteristics.removeIf(c -> c.getName().equalsIgnoreCase(characteristicName));
     }
     
+
+    public boolean isWeapon() { return isWeapon; }
+    public boolean isBooster() { return isBooster; }
+    
+    public int getPositionX() { return positionX; }
+    public int getPositionY() { return positionY; }
+    public void setPosition(int x, int y) {
+        this.positionX = x;
+        this.positionY = y;
+    }
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
