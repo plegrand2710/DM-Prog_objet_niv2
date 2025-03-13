@@ -225,27 +225,27 @@
             }
         },
         "donjon1_room2.tmx": {
-            "scale": 2.6951,
-            "selectedLayer": 9,
+            "scale": 1.95,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 126.71143927869097,
-                "y": 148.41749842306407
+                "x": 114.10256410256412,
+                "y": 186.15384615384616
             }
         },
         "donjon1_room3.tmx": {
             "scale": 2.0023,
             "selectedLayer": 9,
             "viewCenter": {
-                "x": 113.11991210108376,
-                "y": 131.84837436947512
+                "x": 128.10268191579686,
+                "y": 127.8529690855516
             }
         },
         "donjon1_room4.tmx": {
             "scale": 1.8224,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 122.6404741000878,
-                "y": 143.76646180860405
+                "x": 124.83538191395961,
+                "y": 145.96136962247584
             }
         },
         "donjon1_room5.tmx": {
@@ -253,55 +253,55 @@
             "selectedLayer": 8,
             "viewCenter": {
                 "x": 135.86606567933035,
-                "y": 127.49517063747587
+                "y": 127.49517063747585
             }
         },
         "donjon2_room1.tmx": {
             "scale": 1.6365,
-            "selectedLayer": 7,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 97.46410021387103,
-                "y": 166.20837152459515
+                "x": 104.79682248701498,
+                "y": 196.15032080659944
             }
         },
         "donjon2_room2.tmx": {
             "scale": 2.01,
-            "selectedLayer": 7,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 113.68159203980102,
-                "y": 149.2537313432836
+                "x": 107.21393034825873,
+                "y": 164.67661691542293
             }
         },
         "donjon2_room3.tmx": {
-            "scale": 1.8401,
-            "selectedLayer": 7,
+            "scale": 1.7427,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 116.02630291831966,
-                "y": 129.88424542144446
+                "x": 112.18224594020774,
+                "y": 105.0094680667929
             }
         },
         "donjon2_room4.tmx": {
             "scale": 2.0102,
-            "selectedLayer": 6,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 144.51298378270818,
-                "y": 151.22873345935724
+                "x": 142.523132026664,
+                "y": 120.8834941796836
             }
         },
         "donjon2_room5.tmx": {
-            "scale": 1.8629,
-            "selectedLayer": 6,
+            "scale": 2.3473,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 128.5629931826722,
-                "y": 130.710183047936
+                "x": 116.94287053210073,
+                "y": 147.40339965066246
             }
         },
         "donjon2_room6.tmx": {
             "scale": 1.9374,
-            "selectedLayer": 7,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 128.26468462888408,
-                "y": 148.91091153091773
+                "x": 114.8446371425622,
+                "y": 135.23278620832045
             }
         },
         "dunjeon1_room1.tmx": {
@@ -357,7 +357,7 @@
             }
         }
     },
-    "last.exportedFilePath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/maps/donjon1_room1",
+    "last.exportedFilePath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/maps/donjon2_room6",
     "last.externalTilesetPath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/maps/Tilesets",
     "last.imagePath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/sprites/player2/tilesets",
     "map.height": 1,
@@ -380,18 +380,18 @@
     ],
     "project": "tiled-project.tiled-project",
     "recentFiles": [
-        "Tilesets/atlas_floor-16x16.tsx",
-        "Tilesets/atlas_walls_low-16x16.tsx",
-        "donjon1_room5.tmx",
-        "donjon1_room2.tmx",
-        "donjon1_room3.tmx",
+        "donjon2_room5.tmx",
         "donjon2_room4.tmx",
         "donjon2_room3.tmx",
+        "donjon2_room6.tmx",
         "donjon2_room2.tmx",
         "donjon1_room1.tmx",
+        "donjon2_room1.tmx",
+        "donjon1_room5.tmx",
+        "donjon1_room3.tmx",
         "donjon1_room4.tmx",
-        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/sprites/player2/tilesets/CharAni-Sheet4.tsx",
-        "default_donjon.tmx"
+        "Tilesets/atlas_floor-16x16.tsx",
+        "Tilesets/atlas_walls_low-16x16.tsx"
     ],
     "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
     "tileset.lastUsedFormat": "tsx",

@@ -1,7 +1,16 @@
+donjon2_room1/N:;W:donjon2_room3;S:;E:donjon2_room2/N:,;W:1,8;S:,;E:14,8
+
 donjon1_room1/N:donjon1_room2;W:;S:;E:/N:7,3;W:;S:7,14;E:
 donjon1_room2/N:donjon1_room5;W:donjon1_room4;S:donjon1_room1;E:donjon1_room3/N:7,3;W:1,8;S:7,14;E:14,8
 donjon1_room3/N:;W:donjon1_room2;S:;E:/N:,;W:1,8;S:,;E:,
 donjon1_room4/N:;W:;S:;E:donjon1_room2/N:,;W:,;S:,;E:14,8
 donjon1_room5/N:;W:;S:donjon1_room2;E:/N:,;W:,;S:7,14;E:,
+
+donjon2_room2/N:donjon2_room5;W:donjon2_room1;S:;E:/N:7,3;W:1,8;S:,;E:,
+donjon2_room3/N:donjon2_room4;W:;S:;E:donjon2_room1/N:7,3;W:,;S:,;E:14,8
+donjon2_room4/N:;W:;S:donjon2_room3;E:donjon2_room6/N:,;W:,;S:7,14;E:14,8
+donjon2_room5/N:;W:donjon2_room6;S:donjon2_room2;E:/N:,;W:1,8;S:7,14;E:,
+donjon2_room6/N:;W:donjon2_room4;S:;E:donjon2_room5/N:,;W:1,8;S:,;E:14,8
+
 
 
