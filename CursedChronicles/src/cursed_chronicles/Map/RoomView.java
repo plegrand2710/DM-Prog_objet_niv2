@@ -114,13 +114,33 @@ public class RoomView extends JLayeredPane {
     
     private void drawMonsters(Graphics g, Room room) {
         for (Monster monster : room.getMonsters()) {
-            Image monsterSprite = loadMonsterImage(_monsterSpritePath + monster.getName().toLowerCase() + "_down.png");
+            int spriteSize = monster.isLevel2() ? 32 : 16; // 32x32 pour les boss, 16x16 pour les autres
+            Image monsterSprite = loadMonsterImage(_monsterSpritePath + monster.getName().toLowerCase() + "_down.png", spriteSize);
+
             if (monsterSprite != null) {
-                g.drawImage(monsterSprite, 
-                            monster.getPositionX() * _displayTileSize, 
-                            monster.getPositionY() * _displayTileSize, 
-                            _displayTileSize, _displayTileSize, this);
+                g.drawImage(
+                    monsterSprite,
+                    monster.getPositionX() * _displayTileSize,
+                    monster.getPositionY() * _displayTileSize,
+                    spriteSize * _scaleFactor,  // Multiplie par _scaleFactor pour garder les proportions
+                    spriteSize * _scaleFactor,
+                    this
+                );
             }
+        }
+    }
+
+    private Image loadMonsterImage(String path, int spriteSize) {
+        File file = new File(path);
+        if (!file.exists()) {
+            System.err.println("Image non trouvée : " + path);
+            return null;
+        }
+        try {
+            return ImageIO.read(file).getScaledInstance(spriteSize * _scaleFactor, spriteSize * _scaleFactor, Image.SCALE_SMOOTH);
+        } catch (IOException e) {
+            System.err.println("Erreur de chargement : " + path);
+            return null;
         }
     }
 
