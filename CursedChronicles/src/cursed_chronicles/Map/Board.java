@@ -27,7 +27,6 @@ public class Board {
             new ArrayList<Monster>(),
             new ArrayList<Item>() {{
                 add(new ItemBooster("booster_speed1", -1, -1));
-                add(new ItemWeapon("bow_sprite", -1, -1));
             }},
             new ArrayList<>(),
             "Un message est gravé sur le mur : 'La clé est à l'Est...'"
@@ -61,8 +60,9 @@ public class Board {
                         add(new ItemBooster("booster_speed2", -1, -1));
                     }});
                     add(new ArrayList<Item>() {{
-                        add(new ItemWeapon("sword_sprite", -1, -1));
-                    }});
+
+                        add(new ItemWeapon("bow_sprite", -1, -1));
+                        }});
                 }},
                 null
             ));

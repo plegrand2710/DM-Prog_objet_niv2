@@ -156,6 +156,9 @@ public class PlayerController extends KeyAdapter {
             case KeyEvent.VK_SPACE:
                 spacePressed = false;
                 break;
+            case KeyEvent.VK_S:
+                player.activateSpeed();
+                break;
         }
     }
     
@@ -196,9 +199,7 @@ public class PlayerController extends KeyAdapter {
 
         int[][] directions = {
             {x - 1, y}, {x + 1, y},  
-            {x, y - 1}, {x, y + 1}, 
-            {x - 1, y - 1}, {x + 1, y - 1},  
-            {x - 1, y + 1}, {x + 1, y + 1}  
+            {x, y - 1}, {x, y + 1} 
         };
 
         for (int[] pos : directions) {

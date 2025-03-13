@@ -100,14 +100,11 @@ public class RoomView extends JLayeredPane {
             boolean isSpacePressed = _playerController.isSpaceKeyPressed();
             
             if (isSpacePressed) {
-                System.out.println("🟢 [DEBUG] Espace détecté - Joueur attaque !");
-                combatManager.setPlayerAttacking(true);  // ✅ Active l'attaque
+                combatManager.setPlayerAttacking(true);
                 
-                System.out.println("⚔ [DEBUG] Mise à jour du combat...");
-                combatManager.updateCombat();            // ✅ Engage le combat
+                combatManager.updateCombat();       
                 
-                combatManager.setPlayerAttacking(false); // ✅ Réinitialise après l'attaque
-                System.out.println("🔴 [DEBUG] Joueur attaque terminée, reset playerAttacking !");
+                combatManager.setPlayerAttacking(false); 
             }
         });
 
@@ -190,7 +187,7 @@ public class RoomView extends JLayeredPane {
     }
 
     private boolean hasMonsters(Room room) {
-        return room.getMonsters() != null && !room.getMonsters().isEmpty(); // ✅ Vérifie si la salle contient des monstres
+        return room.getMonsters() != null && !room.getMonsters().isEmpty(); 
     }
 
     

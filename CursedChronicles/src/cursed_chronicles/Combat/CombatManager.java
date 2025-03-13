@@ -6,11 +6,12 @@ import cursed_chronicles.Player.Player;
 import cursed_chronicles.Player.Characteristic;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class CombatManager {
     private Player _player;
-    private ArrayList<Monster> _monsters; 
-    private boolean _playerAttacking; // ✅ Indique si le joueur attaque (espace)
+    private ArrayList<Monster> _monsters;
+    private boolean _playerAttacking; 
     private Room _currentRoom;
 
     public CombatManager(Player player) {
@@ -20,10 +21,23 @@ public class CombatManager {
     }
 
     public void updateCombat() {
-        if (_monsters.isEmpty()) return; // ✅ Évite une boucle inutile
+        if (_monsters.isEmpty()) return; 
 
-        for (Monster monster : new ArrayList<>(_monsters)) { // ✅ Copie pour éviter les modifications en cours d'itération
-            engageCombat(monster);
+        ArrayList<Monster> monstersToRemove = new ArrayList<>();
+
+        System.out.println("🔍 Début du combat contre " + _monsters.size() + " monstre(s)");
+
+        for (Monster monster : _monsters) {
+            boolean isMonsterDead = engageCombat(monster);
+            if (isMonsterDead) {
+                monstersToRemove.add(monster);
+            }
+        }
+
+        for (Monster monster : monstersToRemove) {
+            removeMonsterFromRoom(monster);
+            _monsters.remove(monster);
+            System.out.println("💀 " + monster.getName() + " a été retiré du combat.");
         }
     }
 
@@ -41,7 +55,6 @@ public class CombatManager {
         int mx = monster.getPositionX();
         int my = monster.getPositionY();
 
-        // ✅ Vérifie si le monstre est adjacent au joueur (mais pas sur lui)
         return (Math.abs(px - mx) == 1 && py == my) || (Math.abs(py - my) == 1 && px == mx);
     }
 
@@ -49,8 +62,8 @@ public class CombatManager {
         return player.getPositionX() == monster.getPositionX() && player.getPositionY() == monster.getPositionY();
     }
 
-    private void engageCombat(Monster monster) {
-        if (monster == null) return; 
+    private boolean engageCombat(Monster monster) {
+        if (monster == null) return false;
 
         Characteristic playerLife = _player.getCharacteristic("life");
         Characteristic monsterLife = monster.getCharacteristic("life");
@@ -59,54 +72,51 @@ public class CombatManager {
 
         if (playerLife == null || monsterLife == null || playerAttack == null || monsterAttack == null) {
             System.out.println("⚠ Erreur : Une caractéristique est null !");
-            return; 
+            return false;
         }
 
         int monsterDamage = monsterAttack.getValue();
         int playerDamage = playerAttack.getValue();
 
-        System.out.println("🔍 Combat entre Joueur et " + monster.getName());
+        System.out.println("🔍 Combat : Joueur vs " + monster.getName());
         System.out.println("🛡 Joueur PV avant : " + playerLife.getValue());
-        System.out.println("🛡 Monstre PV avant : " + monsterLife.getValue());
+        System.out.println("🛡 Monstre (" + monster.getName() + ") PV avant : " + monsterLife.getValue());
 
-        // ✅ Le joueur attaque s'il a appuyé sur espace et si le monstre est adjacent
+        boolean monsterDied = false;
+
         if (_playerAttacking && isAdjacent(_player, monster)) {
-            monsterLife.setValue(Math.max(0, monsterLife.getValue() - playerDamage)); 
-            System.out.println("⚔ Le joueur attaque ! Monstre perd " + playerDamage + " PV.");
+            int newMonsterLife = Math.max(0, monsterLife.getValue() - playerDamage);
+            monsterLife.setValue(newMonsterLife);
+
+            if (newMonsterLife <= 0) {
+                monsterDied = true;
+            }
         }
 
-        // ✅ Le monstre attaque SEULEMENT s'il est SUR la position du joueur
         if (isOnSamePosition(_player, monster)) {
             _player.modifyCharacteristic("life", -monsterDamage);
-            System.out.println("⚔ Le monstre attaque ! Joueur perd " + monsterDamage + " PV.");
         }
 
         System.out.println("🛡 Joueur PV après : " + _player.getCharacteristic("life").getValue());
-        System.out.println("🛡 Monstre PV après : " + monsterLife.getValue());
-
-        if (monsterLife.getValue() <= 0) {
-            removeMonsterFromRoom(monster);
-            System.out.println("💀 " + monster.getName() + " a été vaincu !");
-        }
+        System.out.println("🛡 Monstre (" + monster.getName() + ") PV après : " + monsterLife.getValue());
 
         if (_player.getCharacteristic("life").getValue() <= 0) {
             System.out.println("☠ Game Over... Vous avez été vaincu !");
         }
 
-        _playerAttacking = false; // ✅ Réinitialise après combat
+        return monsterDied;
     }
 
     private void removeMonsterFromRoom(Monster monster) {
         if (_currentRoom != null && _currentRoom.getMonsters().contains(monster)) {
             _currentRoom.removeMonster(monster);
-            _monsters.remove(monster);
         }
     }
-    
+
     public void setMonsters(ArrayList<Monster> monsters) {
-        this._monsters = (monsters != null) ? monsters : new ArrayList<>();
+        this._monsters = (monsters != null) ? new ArrayList<>(monsters) : new ArrayList<>();
     }
-    
+
     public void setRoom(Room room) {
         this._currentRoom = room;
     }
