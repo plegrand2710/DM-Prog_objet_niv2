@@ -12,6 +12,7 @@ public class Board {
     private RoomController _roomController;
     private ArrayList<Room> _rooms;
     private final Random _rand = new Random();
+    
 
     public Board(RoomView roomView) {
         _roomController = new RoomController(roomView);

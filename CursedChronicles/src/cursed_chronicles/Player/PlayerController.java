@@ -15,7 +15,8 @@ public class PlayerController extends KeyAdapter {
     private Timer nonSpeedTimer = null;  
     private boolean canMove = true; 
     private RoomController _roomController;
-    
+    private boolean spacePressed = false; 
+
     private int[][] _collisionsLayer;
 
 
@@ -58,7 +59,8 @@ public class PlayerController extends KeyAdapter {
         String dir = player.getDirection();
         
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            System.out.println("espace appuyé ");
+            //System.out.println("espace appuyé ");
+            spacePressed = true;
 
             playerView.updateWeaponSkin();
             return;
@@ -98,7 +100,7 @@ public class PlayerController extends KeyAdapter {
         }
         
 //        displayPlayerCurrentPosition();
-        displayCurrentCollisionId();
+        //displayCurrentCollisionId();
         checkTeleportation();
     }
     
@@ -150,7 +152,15 @@ public class PlayerController extends KeyAdapter {
                     openChest();
                 }
                 break;
+
+            case KeyEvent.VK_SPACE:
+                spacePressed = false;
+                break;
         }
+    }
+    
+    public boolean isSpaceKeyPressed() {
+        return spacePressed;
     }
     
     private int getChestIndexAtPosition(Room room, int x, int y) {
@@ -242,7 +252,7 @@ public class PlayerController extends KeyAdapter {
     public void setPlayerPosition(int px, int py) {
     	playerView.setPosition(px, py);
     	player.setPosition(px, py);
-    	displayPlayerCurrentPosition();
+    	//displayPlayerCurrentPosition();
     	
     	playerView.repaint();
 
@@ -300,19 +310,19 @@ public class PlayerController extends KeyAdapter {
             return;
         }
 
-        System.out.println("📍 Positions des coffres autour du joueur (" + x + "," + y + ") :");
+        //System.out.println("📍 Positions des coffres autour du joueur (" + x + "," + y + ") :");
         
         for (int dy = -1; dy <= 1; dy++) {
             for (int dx = -1; dx <= 1; dx++) {
                 int checkX = x + dx;
                 int checkY = y + dy;
                 if (checkX >= 0 && checkX < chestsLayer[0].length && checkY >= 0 && checkY < chestsLayer.length) {
-                    System.out.print(chestsLayer[checkY][checkX] + "\t");
+                    //System.out.print(chestsLayer[checkY][checkX] + "\t");
                 } else {
-                    System.out.print("X\t"); 
+                    //System.out.print("X\t"); 
                 }
             }
-            System.out.println();
+            //System.out.println();
         }
     }
     

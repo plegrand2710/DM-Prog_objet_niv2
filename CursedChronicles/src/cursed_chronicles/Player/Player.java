@@ -49,6 +49,7 @@ public class Player {
         characteristics.add(new Characteristic("life", 100));
         characteristics.add(new Characteristic("Defense", 0));
         characteristics.add(new Characteristic("speed", 0));
+        characteristics.add(new Characteristic("damage", 10));
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -65,6 +66,15 @@ public class Player {
             }
         }
         return 0;
+    }
+    
+    public Characteristic getCharacteristic(String name) {
+        for (Characteristic c : characteristics) {
+            if (c.getName().equalsIgnoreCase(name)) {
+                return c;
+            }
+        }
+        return null; 
     }
     
     public String getName() { return name; }

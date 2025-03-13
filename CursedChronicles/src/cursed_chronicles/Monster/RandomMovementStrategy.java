@@ -10,7 +10,7 @@ import cursed_chronicles.Constant;
 
 public class RandomMovementStrategy implements MovementStrategy {
     private final Random random = new Random();
-    private final int baseMoveSpeed = 250;  // Temps entre chaque mouvement
+    private final int baseMoveSpeed = 1550;  // Temps entre chaque mouvement
     private final int pauseTime = 500;  // Temps avant de choisir une nouvelle direction
 
     @Override

@@ -3,7 +3,8 @@ package cursed_chronicles.Map;
 import javax.swing.*;
 
 import cursed_chronicles.Constant;
-import cursed_chronicles.Monster.ChasePlayerStrategy;
+import cursed_chronicles.Combat.*;
+import cursed_chronicles.Monster.*;
 import cursed_chronicles.Monster.Monster;
 import cursed_chronicles.Monster.RandomMovementStrategy;
 import cursed_chronicles.Player.ItemBooster;
@@ -31,6 +32,7 @@ public class RoomView extends JLayeredPane {
     private JPanel _monstersLayer;
     private JPanel _weaponsLayer; 
     private Timer monsterMovementTimer; 
+    private Timer spaceKeyCheckTimer; 
 
 //    private JPanel _collisionsLayer;
 
@@ -41,12 +43,16 @@ public class RoomView extends JLayeredPane {
     private final String _tilesetBasePath = "assets/maps/tiles/";
     private final String _monsterSpritePath = "assets/sprites/monster/";
     private PlayerController _playerController;
+    
+    private CombatManager combatManager;
 
     
     public RoomView(PlayerController playerController) {
         this._playerController = playerController;
-
+         this.combatManager = new CombatManager(playerController.getPlayer());
         setPreferredSize(new Dimension(16 * _displayTileSize, 16 * _displayTileSize));
+        startSpaceKeyCheck(); // ✅ Lance la surveillance de la touche espace
+
     }
 
     public void displayRoom(Room room) {
@@ -81,9 +87,31 @@ public class RoomView extends JLayeredPane {
         add(_boostersLayer, Integer.valueOf(10));
         add(_monstersLayer, Integer.valueOf(11));
         add(_weaponsLayer, Integer.valueOf(12));
+        combatManager.setMonsters(room.getMonsters()); // ✅ Mise à jour des monstres avant le combat
+
         repaint();
         startMonsterMovement(room);
+        combatManager.setRoom(room);
 
+    }
+    
+    private void startSpaceKeyCheck() {
+        spaceKeyCheckTimer = new Timer(50, e -> {
+            boolean isSpacePressed = _playerController.isSpaceKeyPressed();
+            
+            if (isSpacePressed) {
+                System.out.println("🟢 [DEBUG] Espace détecté - Joueur attaque !");
+                combatManager.setPlayerAttacking(true);  // ✅ Active l'attaque
+                
+                System.out.println("⚔ [DEBUG] Mise à jour du combat...");
+                combatManager.updateCombat();            // ✅ Engage le combat
+                
+                combatManager.setPlayerAttacking(false); // ✅ Réinitialise après l'attaque
+                System.out.println("🔴 [DEBUG] Joueur attaque terminée, reset playerAttacking !");
+            }
+        });
+
+        spaceKeyCheckTimer.start();
     }
 
     private JPanel createLayerPanel(int[][] layerGrid, String tilesetPath, int zIndex) {
@@ -143,11 +171,6 @@ public class RoomView extends JLayeredPane {
             return null;
         }
     }
-
-    private Image loadMonsterImage(String path) {
-        ImageIcon icon = new ImageIcon(path);
-        return icon.getImage();
-    }
     
     private void startMonsterMovement(Room room) {
         if (monsterMovementTimer != null) {
@@ -156,11 +179,20 @@ public class RoomView extends JLayeredPane {
 
         monsterMovementTimer = new Timer(500, e -> {
             moveMonsters(room);
+            combatManager.setPlayer(_playerController.getPlayer());
+            if (hasMonsters(room)) { 
+                combatManager.updateCombat();
+            }
             repaint();
         });
 
         monsterMovementTimer.start();
     }
+
+    private boolean hasMonsters(Room room) {
+        return room.getMonsters() != null && !room.getMonsters().isEmpty(); // ✅ Vérifie si la salle contient des monstres
+    }
+
     
     private void moveMonsters(Room room) {
         int playerX = _playerController.getPlayer().getPositionX();

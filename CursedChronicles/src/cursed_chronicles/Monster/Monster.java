@@ -30,10 +30,9 @@ public class Monster {
         this.direction = "NONE";
         this.isMoving = false;
 
-        characteristics.add(new Characteristic("life", level == 1 ? 50 : 500)); // Boss a plus de vie
-        characteristics.add(new Characteristic("defense", level == 1 ? 5 : 50)); 
-        characteristics.add(new Characteristic("speed", level == 1 ? 2 : 1)); // Boss est plus lent
-
+        characteristics.add(new Characteristic("life", level == 1 ? 50 : 500)); 
+        characteristics.add(new Characteristic("speed", level == 1 ? 2 : 1)); 
+        characteristics.add(new Characteristic("damage", level == 1 ? 20 : 50)); 
         if (level == 1) {
             this.movementStrategy = new RandomMovementStrategy();
         } else {
@@ -86,6 +85,15 @@ public class Monster {
         this.movementStrategy = strategy;
     }
 
+    public Characteristic getCharacteristic(String name) {
+        for (Characteristic c : characteristics) {
+            if (c.getName().equalsIgnoreCase(name)) {
+                return c;
+            }
+        }
+        return null; // Si la caractéristique demandée n'existe pas
+    }
+    
     public String getName() {
         return name;
     }

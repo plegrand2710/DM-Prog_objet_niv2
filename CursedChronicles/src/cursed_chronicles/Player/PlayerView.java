@@ -217,7 +217,7 @@ public class PlayerView extends JPanel {
                 swingFrames = new String[0];
             }
             
-            Timer timer = new Timer(200, new ActionListener() {
+            Timer timer = new Timer(100, new ActionListener() {
                 int frame = 0;
                 @Override
                 public void actionPerformed(ActionEvent e) {
