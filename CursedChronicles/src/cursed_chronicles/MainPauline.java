@@ -53,10 +53,8 @@ public class MainPauline {
 	            PlayerView playerView = new PlayerView(player);
 	            player.addJournalEntry("📍 Lieu actuel : " + currentRoom.getName());
 
-	            // 📌 Génération de la narration en fonction des éléments de la salle
 	            String narrationText = generateRoomNarration(currentRoom);
 
-	            // 📌 Ajout du panneau de narration
 	            NarrationPanel narrationPanel = new NarrationPanel(
 	                currentRoom.getName(),
 	                narrationText,
@@ -88,18 +86,15 @@ public class MainPauline {
 	            journalPanel.setLocation(gameFrameWidth, 0); 
 	            journalPanel.setVisible(true);
 
-	            // 📌 Initialisation du contrôleur de joueur
 	            PlayerController playerController = new PlayerController(player, playerView);
 	            roomController.setPlayerController(playerController);
 	            playerController.setRoomController(roomController);
 
-	            // 📌 Chargement de la salle depuis Board
 	            roomController.loadRoom();
 	            playerController.setSpawn();
 	            playerController.setPlayerPosition(7, 14);
 	            roomView.add(playerView, Integer.valueOf(2));
 
-	            // 📌 Gestion des entrées clavier pour le jeu
 	            gameFrame.addKeyListener(new KeyAdapter() {
 	                @Override
 	                public void keyPressed(KeyEvent e) {
@@ -128,10 +123,8 @@ public class MainPauline {
 	    private static String generateRoomNarration(Room room) {
 	        StringBuilder narration = new StringBuilder();
 
-	        // 📌 Description de base
 	        narration.append("Une brise glaciale souffle à travers les fissures des murs.\n");
 
-	        // 📌 Ajout des monstres
 	        if (!room.getMonsters().isEmpty()) {
 	            narration.append("Des créatures rôdent dans l'ombre : ");
 	            for (Monster monster : room.getMonsters()) {
@@ -140,7 +133,6 @@ public class MainPauline {
 	            narration.append("\n");
 	        }
 
-	        // 📌 Ajout des boosters
 	        if (!room.getBoosters().isEmpty()) {
 	            narration.append("Vous remarquez des objets brillants au sol : ");
 	            for (ItemBooster booster : room.getBoosters()) {
@@ -149,12 +141,10 @@ public class MainPauline {
 	            narration.append("\n");
 	        }
 
-	        // 📌 Ajout des coffres
 	        if (!room.getChests().isEmpty()) {
 	            narration.append("Quelques coffres anciens sont disposés dans la salle...\n");
 	        }
 
-	        // 📌 Ajout d'un indice si présent
 	        if (room.getHint() != null) {
 	            narration.append("Un indice est gravé sur le mur : ").append(room.getHint()).append("\n");
 	        }

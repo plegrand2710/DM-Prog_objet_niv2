@@ -56,7 +56,7 @@ public class RoomController {
     	
     	Room nextRoom = _rooms.get(nextRoomName);
     	int[] nextRoomCoords = nextRoom.getSpawnPoint(directionDestination);
-    	
+        System.out.println("📍 Nouvelle position du joueur : X=" + nextRoomCoords[0] + ", Y=" + nextRoomCoords[1]);
     	setCurrentRoom(nextRoomName);
     	loadRoom();
     	
@@ -73,11 +73,16 @@ public class RoomController {
     	_playerController.notifyAnimationFinished(); // Permet de redonner le contrôle au joueur
 
 
-//    	_playerController.getPlayerView().stopAnimation();
-//    	_playerController.getPlayerView().repaint(); 
+
+        _playerController.getPlayerView().stopAnimation();
+        _playerController.getPlayerView().repaint();
+        System.out.println("🎥 Animation stoppée et écran rafraîchi.");
+        
+        _playerController.notifyAnimationFinished();
+        System.out.println("✅ Changement de salle terminé.");
 //    	_roomView.add(_playerController.getPlayerView(), Integer.valueOf(2)); 
 
-    	
+        _playerController.getPlayerView().resetMovement();
     }
 
 

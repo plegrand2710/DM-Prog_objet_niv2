@@ -125,7 +125,7 @@ public class PlayerController extends KeyAdapter {
     }
     
     public void displayCurrentCollisionId() {
-    	System.out.println("Current collision id : " + _roomController.getCurrentRoom().getCollisionsLayer()[player.getPositionY()][player.getPositionX()]);
+    	//System.out.println("Current collision id : " + _roomController.getCurrentRoom().getCollisionsLayer()[player.getPositionY()][player.getPositionX()]);
     }
     
     public void notifyAnimationFinished() {

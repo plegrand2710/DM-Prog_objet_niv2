@@ -127,11 +127,9 @@ public class Player {
         if (lastMoveEntryIndex == -1) { 
             addJournalEntry(moveEntry);
             lastMoveEntryIndex = journal.getEntries().size() - 1; 
-            System.out.println("Nouvelle entrée ajoutée au journal à l'index : " + lastMoveEntryIndex);
         } else { 
         	journal.updateEntry(lastMoveEntryIndex, moveEntry);
         	pcs.firePropertyChange("journalUpdate", lastMoveEntryIndex, moveEntry);            
-        	System.out.println("Mise à jour de l'entrée existante à l'index : " + lastMoveEntryIndex);
         }    
    }
 
