@@ -24,7 +24,7 @@ public class PlayerView extends JPanel {
     private Image weaponSkin;
     private Timer movementTimer;
     
-    private Timer animationTimer;  // Ajout d'un timer global pour l'animation
+    private Timer animationTimer; 
 
     private final int baseMoveSpeed = 250;
     private final int speedMoveSpeed = 50; 

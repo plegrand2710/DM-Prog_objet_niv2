@@ -10,6 +10,8 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.*;
 
@@ -43,28 +45,34 @@ public class MainPauline {
 	            gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	            gameFrame.setLayout(new BorderLayout());
 	            gameFrame.setLocation(-5,0);
+	            
+	            StoryManager storyManager = new StoryManager();
+	            storyManager.loadStoriesFromFile("resources/histoire-cursed-chronicles.txt");
+	            Story selectedStory = getRandomStory(storyManager);
+	            System.out.println("story " + selectedStory);
+	            if (selectedStory == null) {
+	                JOptionPane.showMessageDialog(null, "Aucune histoire sélectionnée. Le jeu va se fermer.", "Erreur", JOptionPane.ERROR_MESSAGE);
+	                System.exit(0);
+	            }
+	            
 	            Player player = new Player("Hero");
 	            PlayerView playerView = new PlayerView(player);
 	            
 	            PlayerController playerController = new PlayerController(player, playerView);
 
-	            RoomView roomView = new RoomView(playerController);
+	            RoomView roomView = new RoomView(playerController, selectedStory);
 	            Board board = new Board(roomView);
 	            RoomController roomController = board.getRoomController();
 	            Room currentRoom = roomController.getCurrentRoom();
 
 	            player.addJournalEntry("📍 Lieu actuel : " + currentRoom.getName());
 
-
-	            String narrationText = generateRoomNarration(currentRoom);
-
 	            NarrationPanel narrationPanel = new NarrationPanel(
-	                currentRoom.getName(),
-	                narrationText,
+	                currentRoom,
 	                gameFrame
 	            );
 	            gameFrame.add(narrationPanel, BorderLayout.SOUTH);
-	            
+	            roomView.setNarrationPanel(narrationPanel);
 	            gameFrame.add(roomView, BorderLayout.CENTER);
 	            gameFrame.pack();
 	            int gameFrameWidth = gameFrame.getContentPane().getWidth() + 2;
@@ -85,7 +93,7 @@ public class MainPauline {
 	            inventoryPanel.setLocation(gameFrameWidth, screenHeight - (2 * panelHeight) - taskbarHeight);
 	            inventoryPanel.setVisible(true);
 
-	            journalPanel.setSize(panelWidth, panelHeight-60);
+	            journalPanel.setSize(panelWidth, panelHeight-70);
 	            journalPanel.setLocation(gameFrameWidth, 0); 
 	            journalPanel.setVisible(true);
 
@@ -116,42 +124,20 @@ public class MainPauline {
 	            });
 
 	            gameFrame.addKeyListener(playerController);
+	            
 	            gameFrame.setFocusable(true);
 	            gameFrame.requestFocusInWindow();
 	            gameFrame.setVisible(true);
 	        });
 	    }
-
-	    private static String generateRoomNarration(Room room) {
-	        StringBuilder narration = new StringBuilder();
-
-	        narration.append("Une brise glaciale souffle à travers les fissures des murs.\n");
-
-	        if (!room.getMonsters().isEmpty()) {
-	            narration.append("Des créatures rôdent dans l'ombre : ");
-	            for (Monster monster : room.getMonsters()) {
-	                narration.append(monster.getName()).append(" ");
-	            }
-	            narration.append("\n");
+	 private static Story getRandomStory(StoryManager storyManager) {
+	        ArrayList<Story> stories = storyManager.getStories();
+	        if (stories.isEmpty()) {
+	        	System.out.println("vide");
+	            return null;
 	        }
-
-	        if (!room.getBoosters().isEmpty()) {
-	            narration.append("Vous remarquez des objets brillants au sol : ");
-	            for (ItemBooster booster : room.getBoosters()) {
-	                narration.append(booster.getName()).append(" ");
-	            }
-	            narration.append("\n");
-	        }
-
-	        if (room.getChestCount()>0) {
-	            narration.append("Quelques coffres anciens sont disposés dans la salle...\n");
-	        }
-
-	        if (room.getHint() != null) {
-	            narration.append("Un indice est gravé sur le mur : ").append(room.getHint()).append("\n");
-	        }
-
-	        return narration.toString();
+	        Random random = new Random();
+	        return stories.get(random.nextInt(stories.size()));
 	    }
 }
 

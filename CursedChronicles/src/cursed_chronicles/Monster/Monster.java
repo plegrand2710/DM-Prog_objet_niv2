@@ -50,10 +50,10 @@ public class Monster {
 
     public ArrayList<int[]> getOccupiedTiles() {
         ArrayList<int[]> occupiedTiles = new ArrayList<>();
-        occupiedTiles.add(new int[]{positionX, positionY});       // Haut-Gauche
-        occupiedTiles.add(new int[]{positionX + 1, positionY});   // Haut-Droite
-        occupiedTiles.add(new int[]{positionX, positionY + 1});   // Bas-Gauche
-        occupiedTiles.add(new int[]{positionX + 1, positionY + 1}); // Bas-Droite
+        occupiedTiles.add(new int[]{positionX, positionY});     
+        occupiedTiles.add(new int[]{positionX + 1, positionY});  
+        occupiedTiles.add(new int[]{positionX, positionY + 1});  
+        occupiedTiles.add(new int[]{positionX + 1, positionY + 1}); 
         return occupiedTiles;
     }
 
@@ -91,7 +91,7 @@ public class Monster {
                 return c;
             }
         }
-        return null; // Si la caractéristique demandée n'existe pas
+        return null;
     }
     
     public String getName() {

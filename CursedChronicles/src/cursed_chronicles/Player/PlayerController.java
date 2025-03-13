@@ -59,7 +59,6 @@ public class PlayerController extends KeyAdapter {
         String dir = player.getDirection();
         
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            //System.out.println("espace appuyé ");
             spacePressed = true;
 
             playerView.updateWeaponSkin();

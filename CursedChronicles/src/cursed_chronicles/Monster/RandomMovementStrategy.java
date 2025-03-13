@@ -10,18 +10,17 @@ import cursed_chronicles.Constant;
 
 public class RandomMovementStrategy implements MovementStrategy {
     private final Random random = new Random();
-    private final int baseMoveSpeed = 1550;  // Temps entre chaque mouvement
-    private final int pauseTime = 500;  // Temps avant de choisir une nouvelle direction
+    private final int baseMoveSpeed = 1550; 
+    private final int pauseTime = 500; 
 
     @Override
     public void move(Monster monster, int playerX, int playerY, Room room) {
         if (monster.isMoving()) return;  
-        if (room == null) return; // Vérification de la salle du monstre
+        if (room == null) return; 
 
         int[][] collisions = room.getCollisionsLayer();
-        if (collisions == null) return; // Vérification des collisions
+        if (collisions == null) return; 
 
-        // Choisir une direction aléatoire
         int[] direction = chooseNewDirection(monster, room);
         int dx = direction[0];
         int dy = direction[1];
@@ -29,7 +28,6 @@ public class RandomMovementStrategy implements MovementStrategy {
         int targetX = monster.getPositionX() + dx;
         int targetY = monster.getPositionY() + dy;
 
-        // Vérifier si la case cible est valide
         if (!isValidMove(targetX, targetY, room)) {
             startPauseBeforeNextMove(monster, room);
             return;
@@ -58,10 +56,9 @@ public class RandomMovementStrategy implements MovementStrategy {
         int y = monster.getPositionY();
 
         int[][] possibleDirections = {
-            {-1, 0}, {1, 0}, {0, -1}, {0, 1} // Gauche, Droite, Haut, Bas
+            {-1, 0}, {1, 0}, {0, -1}, {0, 1} 
         };
 
-        // Mélanger les directions pour un comportement plus aléatoire
         for (int i = 0; i < possibleDirections.length; i++) {
             int swapIndex = random.nextInt(possibleDirections.length);
             int[] temp = possibleDirections[i];
@@ -69,7 +66,6 @@ public class RandomMovementStrategy implements MovementStrategy {
             possibleDirections[swapIndex] = temp;
         }
 
-        // Vérifier quelle direction est valide
         for (int[] dir : possibleDirections) {
             int newX = x + dir[0];
             int newY = y + dir[1];
@@ -79,7 +75,7 @@ public class RandomMovementStrategy implements MovementStrategy {
             }
         }
 
-        return new int[]{0, 0}; // Ne bouge pas si aucune direction n'est possible
+        return new int[]{0, 0}; 
     }
 
     private boolean isValidMove(int x, int y, Room room) {
@@ -87,16 +83,16 @@ public class RandomMovementStrategy implements MovementStrategy {
         if (collisions == null) return false;
 
         if (x < 0 || y < 0 || x >= collisions[0].length || y >= collisions.length) {
-            return false; // Empêche de sortir des limites de la map
+            return false; 
         }
 
-        return collisions[y][x] != Constant.WALL_COLLISION_ID; // Vérifie si c'est un mur
+        return collisions[y][x] != Constant.WALL_COLLISION_ID; 
     }
 
     private void startPauseBeforeNextMove(Monster monster, Room room) {
         Timer pauseTimer = new Timer(pauseTime, e -> {
             ((Timer) e.getSource()).stop();
-            move(monster, 0, 0, room); // Relance le mouvement après la pause
+            move(monster, 0, 0, room);
         });
         pauseTimer.setRepeats(false);
         pauseTimer.start();

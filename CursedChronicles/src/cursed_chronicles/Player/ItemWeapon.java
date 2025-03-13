@@ -11,7 +11,6 @@ public class ItemWeapon extends Item {
         setDescription(getName());
     }
 
-    // ✅ Getters
     public int getPositionX() {
         return positionX;
     }
@@ -20,7 +19,6 @@ public class ItemWeapon extends Item {
         return positionY;
     }
 
-    // ✅ Setters
     public void setPosition(int x, int y) {
         this.positionX = x;
         this.positionY = y;

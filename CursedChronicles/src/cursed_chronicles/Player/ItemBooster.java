@@ -9,7 +9,6 @@ public class ItemBooster extends Item {
         this._x = x;
         this._y = y;
 
-        // On utilise le nom pour déterminer la caractéristique et le bonus
         String boosterName = getName();
         String type = ItemCharacteristicsUtil.getCharacteristicType(boosterName);
         int bonus = ItemCharacteristicsUtil.getBonusFromFilename(boosterName);
@@ -22,7 +21,6 @@ public class ItemBooster extends Item {
         }
     }
 
-    // Getters pour récupérer les coordonnées du booster
     public int getX() {
         return _x;
     }
@@ -31,7 +29,6 @@ public class ItemBooster extends Item {
         return _y;
     }
 
-    // Setter si besoin de modifier la position plus tard
     public void setPosition(int x, int y) {
         this._x = x;
         this._y = y;

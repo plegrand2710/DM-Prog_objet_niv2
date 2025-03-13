@@ -3,7 +3,9 @@ package cursed_chronicles.Combat;
 import cursed_chronicles.Map.Room;
 import cursed_chronicles.Monster.Monster;
 import cursed_chronicles.Player.Player;
+import cursed_chronicles.UI.Story;
 import cursed_chronicles.Player.Characteristic;
+import cursed_chronicles.Player.Clue;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,6 +14,7 @@ public class CombatManager {
     private Player _player;
     private ArrayList<Monster> _monsters;
     private boolean _playerAttacking; 
+    private boolean _monsterDefeated = false; 
     private Room _currentRoom;
 
     public CombatManager(Player player) {
@@ -19,6 +22,7 @@ public class CombatManager {
         this._monsters = new ArrayList<>();
         this._playerAttacking = false;
     }
+  
 
     public void updateCombat() {
         if (_monsters.isEmpty()) return; 
@@ -38,7 +42,20 @@ public class CombatManager {
             removeMonsterFromRoom(monster);
             _monsters.remove(monster);
             System.out.println("💀 " + monster.getName() + " a été retiré du combat.");
+            if (monster.getLevel() == 2) {
+                System.out.println("pasage true ");
+            	_monsterDefeated = true;
+            }
         }
+    }
+    
+    public boolean getMonsterDefeated() {
+        System.out.println("recuperation mort ");
+    	return _monsterDefeated;
+    }
+ 
+    public void setMonsterDefeated(boolean monsterDefeated) {
+    	_monsterDefeated = monsterDefeated;
     }
 
     public void setPlayer(Player player) {
@@ -74,9 +91,10 @@ public class CombatManager {
             System.out.println("⚠ Erreur : Une caractéristique est null !");
             return false;
         }
+        int weaponDamage = _player.getWeaponDamage(); 
 
         int monsterDamage = monsterAttack.getValue();
-        int playerDamage = playerAttack.getValue();
+        int playerDamage = playerAttack.getValue() + weaponDamage; 
 
         System.out.println("🔍 Combat : Joueur vs " + monster.getName());
         System.out.println("🛡 Joueur PV avant : " + playerLife.getValue());

@@ -15,8 +15,8 @@ public abstract class Item {
     private int positionY;
     private int quantity;
 
-    private boolean isWeapon;  // Indique si c'est une arme
-    private boolean isBooster; // Indique si c'est un booster
+    private boolean isWeapon; 
+    private boolean isBooster;
 
 
     public Item(String filePath) {

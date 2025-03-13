@@ -29,6 +29,8 @@ public class Player {
 
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
+    private ArrayList<Clue> _cluesJournal = new ArrayList<>();
+    
     
     public Player(String name) {
         this.name = name;
@@ -183,7 +185,9 @@ public class Player {
                     pcs.firePropertyChange("characteristic_life", oldLife, c.getValue());
                     found = true;
                     if (c.getValue() == 0) {
-                        JOptionPane.showMessageDialog(null, "Game Over", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Game Over", "Game Over, il faut recommencer la quête !", JOptionPane.INFORMATION_MESSAGE);
+                        System.exit(0);  
+
                     }
                     break;
                 }
@@ -298,8 +302,44 @@ public class Player {
         return speedActive;
     }
     
+    public int getWeaponDamage() {
+        ItemWeapon weapon = this.getCurrentWeapon();
+        if (weapon == null) {
+            return 0; 
+        }
+
+        switch (weapon.getName().toLowerCase()) {
+            case "bow_sprite":
+                return 10;
+            case "hammer_sprite":
+                return 20;
+            case "rifler_sprite":
+                return 15;
+            case "sword_sprite":
+            default:
+                return 0; 
+        }
+    }
+    
     public void setPosition(int x, int y) {
     	setPositionX(x);
     	setPositionY(y);
+    }
+    
+    public void addClue(Clue clue) {
+        if (clue == null) return;
+        
+        _cluesJournal.add(clue);
+        
+        StringBuilder cluesEntry = new StringBuilder("📜 **Journal des Indices :**\n");
+        for (Clue c : _cluesJournal) {
+            cluesEntry.append("- ").append(c.getText()).append("\n");
+        }
+        
+        addJournalEntry(cluesEntry.toString());
+    }
+
+    public ArrayList<Clue> getCluesJournal() {
+        return _cluesJournal;
     }
 }

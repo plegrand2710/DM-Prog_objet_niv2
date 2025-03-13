@@ -7,9 +7,12 @@ import cursed_chronicles.Combat.*;
 import cursed_chronicles.Monster.*;
 import cursed_chronicles.Monster.Monster;
 import cursed_chronicles.Monster.RandomMovementStrategy;
+import cursed_chronicles.Player.Clue;
 import cursed_chronicles.Player.ItemBooster;
 import cursed_chronicles.Player.ItemWeapon;
 import cursed_chronicles.Player.PlayerController;
+import cursed_chronicles.UI.NarrationPanel;
+import cursed_chronicles.UI.Story;
 
 import java.awt.*;
 import java.io.*;
@@ -34,8 +37,6 @@ public class RoomView extends JLayeredPane {
     private Timer monsterMovementTimer; 
     private Timer spaceKeyCheckTimer; 
 
-//    private JPanel _collisionsLayer;
-
     private final int _tileSize = 16;
     private final int _scaleFactor = 3;
     private final int _displayTileSize = _tileSize * _scaleFactor;
@@ -45,13 +46,17 @@ public class RoomView extends JLayeredPane {
     private PlayerController _playerController;
     
     private CombatManager combatManager;
+    private NarrationPanel _narrationPanel;
 
+    private Story _selectedStory;
     
-    public RoomView(PlayerController playerController) {
+    public RoomView(PlayerController playerController, Story selectedStory) {
         this._playerController = playerController;
+        this._selectedStory = selectedStory;
+
          this.combatManager = new CombatManager(playerController.getPlayer());
         setPreferredSize(new Dimension(16 * _displayTileSize, 16 * _displayTileSize));
-        startSpaceKeyCheck(); // ✅ Lance la surveillance de la touche espace
+        startSpaceKeyCheck(); 
 
     }
 
@@ -67,11 +72,10 @@ public class RoomView extends JLayeredPane {
         _chestsLayer = createLayerPanel(room.getChestsLayer(), _tilesetBasePath + "chests/", 7);
         _pillarLayer = createLayerPanel(room.getPillarLayer(), _tilesetBasePath + "pillars/", 8);
         _decorationsLayer = createLayerPanel(room.getDecorationsLayer(), _tilesetBasePath + "decorations/", 9);
-//        _collisionsLayer = createLayerPanel(room.getCollisionsLayer(), _tilesetBasePath + "collisions/", 10);
         
         _boostersLayer = createBoosterLayer(room);
         _monstersLayer = createMonsterLayer(room);
-        _weaponsLayer = createWeaponLayer(room); // 📌 Ajout du panneau des armes
+        _weaponsLayer = createWeaponLayer(room);
 
         
         add(_floorLayer, Integer.valueOf(0));
@@ -83,16 +87,53 @@ public class RoomView extends JLayeredPane {
         add(_chestsLayer, Integer.valueOf(7));
         add(_pillarLayer, Integer.valueOf(8));
         add(_decorationsLayer, Integer.valueOf(9));
-//        add(_collisionsLayer, Integer.valueOf(10));
-        add(_boostersLayer, Integer.valueOf(10));
-        add(_monstersLayer, Integer.valueOf(11));
+        add(_boostersLayer, Integer.valueOf(2));
+        add(_monstersLayer, Integer.valueOf(2));
         add(_weaponsLayer, Integer.valueOf(12));
-        combatManager.setMonsters(room.getMonsters()); // ✅ Mise à jour des monstres avant le combat
+        combatManager.setMonsters(room.getMonsters()); 
 
         repaint();
+        revalidate();
         startMonsterMovement(room);
         combatManager.setRoom(room);
+        
+        if (_narrationPanel != null && !room.getName().equalsIgnoreCase("donjon1_room1")) {
+            System.out.println("📢 Mise à jour de la narration...");
+            _narrationPanel.updateRoomName(room.getName()); 
+            String narrationText = _narrationPanel.generateRoomNarration(room);
+            _narrationPanel.setNarrationWithEffect(narrationText);
+            _playerController.getPlayer().addJournalEntry("📍 Vous êtes maintenant dans : " + room.getName());
 
+        } else {
+            System.out.println("⚠ Erreur : _narrationPanel est null !");
+        }
+
+    }
+    
+    private void grantClueToPlayer() {
+        if (_selectedStory == null) return;
+
+        String nextClue = _selectedStory.getNextClue();
+        if (nextClue != null) {
+            Clue clue = new Clue(nextClue);
+            _playerController.getPlayer().addClue(clue);
+            System.out.println("📜 **Nouvel indice obtenu :** " + nextClue);
+        }
+    }
+    
+    private void checkForTrapDamage() {
+        Room currentRoom = _playerController.getRoomController().getCurrentRoom();
+        int[][] trapsLayer = currentRoom.getTrapsLayer();
+        
+        int playerX = _playerController.getPlayer().getPositionX();
+        int playerY = _playerController.getPlayer().getPositionY();
+
+        if (trapsLayer != null && trapsLayer[playerY][playerX] != -1) { 
+            System.out.println("⚠ Le joueur est sur une trappe ! Perte de 10 PV !");
+            _playerController.getPlayer().modifyCharacteristic("life", -10);
+            
+            System.out.println("🛡 Joueur PV après piège : " + _playerController.getPlayer().getCharacteristic("life").getValue());
+        }
     }
     
     private void startSpaceKeyCheck() {
@@ -139,7 +180,7 @@ public class RoomView extends JLayeredPane {
     
     private void drawMonsters(Graphics g, Room room) {
         for (Monster monster : room.getMonsters()) {
-            int spriteSize = monster.isLevel2() ? 32 : 16; // 32x32 pour les boss, 16x16 pour les autres
+            int spriteSize = monster.isLevel2() ? 32 : 16; 
             Image monsterSprite = loadMonsterImage(_monsterSpritePath + monster.getName().toLowerCase() + "_down.png", spriteSize);
 
             if (monsterSprite != null) {
@@ -147,7 +188,7 @@ public class RoomView extends JLayeredPane {
                     monsterSprite,
                     monster.getPositionX() * _displayTileSize,
                     monster.getPositionY() * _displayTileSize,
-                    spriteSize * _scaleFactor,  // Multiplie par _scaleFactor pour garder les proportions
+                    spriteSize * _scaleFactor, 
                     spriteSize * _scaleFactor,
                     this
                 );
@@ -179,6 +220,15 @@ public class RoomView extends JLayeredPane {
             combatManager.setPlayer(_playerController.getPlayer());
             if (hasMonsters(room)) { 
                 combatManager.updateCombat();
+            }
+            checkForTrapDamage(); 
+
+            if (combatManager.getMonsterDefeated()) {
+                System.out.println("monstre mort");
+
+                grantClueToPlayer();
+                
+                combatManager.setMonsterDefeated(false);
             }
             repaint();
         });
@@ -327,5 +377,9 @@ public class RoomView extends JLayeredPane {
             System.err.println("Erreur de chargement : " + path);
             return null;
         }
+    }
+    
+    public void setNarrationPanel(NarrationPanel narrationPanel) {
+        this._narrationPanel = narrationPanel;
     }
 }
