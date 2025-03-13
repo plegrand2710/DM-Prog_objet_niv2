@@ -141,7 +141,7 @@ public class MainPauline {
 	            narration.append("\n");
 	        }
 
-	        if (!room.getChests().isEmpty()) {
+	        if (room.getChestCount()>0) {
 	            narration.append("Quelques coffres anciens sont disposés dans la salle...\n");
 	        }
 

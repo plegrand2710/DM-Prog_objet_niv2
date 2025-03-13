@@ -1,9 +1,12 @@
 package cursed_chronicles.Player;
 
 import java.awt.event.*;
+import java.util.ArrayList;
+
 import javax.swing.Timer;
 
 import cursed_chronicles.Constant;
+import cursed_chronicles.Map.Room;
 import cursed_chronicles.Map.RoomController;
 
 public class PlayerController extends KeyAdapter {
@@ -88,7 +91,7 @@ public class PlayerController extends KeyAdapter {
         
         if (!playerView.isAnimating()) {
         	playerView.movePlayer(dx, dy);
-
+        	displaySurroundingChestTiles();
             canMove = false; 
             checkForBoosterPickup();
 
@@ -125,7 +128,8 @@ public class PlayerController extends KeyAdapter {
     }
     
     public void displayCurrentCollisionId() {
-    	//System.out.println("Current collision id : " + _roomController.getCurrentRoom().getCollisionsLayer()[player.getPositionY()][player.getPositionX()]);
+    	System.out.println("Current collision id : " + _roomController.getCurrentRoom().getCollisionsLayer()[player.getPositionY()][player.getPositionX()]);
+
     }
     
     public void notifyAnimationFinished() {
@@ -141,7 +145,81 @@ public class PlayerController extends KeyAdapter {
             case KeyEvent.VK_RIGHT:
                 playerView.stopAnimation();
                 break;
+            case KeyEvent.VK_C: 
+                if (isNextToChest()) {
+                    openChest();
+                }
+                break;
         }
+    }
+    
+    private int getChestIndexAtPosition(Room room, int x, int y) {
+        int[][] chestsLayer = room.getChestsLayer();
+        int chestCount = room.getChestCount();
+
+        int index = 0;
+        for (int row = 0; row < chestsLayer.length; row++) {
+            for (int col = 0; col < chestsLayer[row].length; col++) {
+                if (chestsLayer[row][col] == 851) { 
+                    if (row == y && col == x) {
+                        return index; 
+                    }
+                    index++; 
+                }
+            }
+        }
+        return -1; 
+    }
+    
+    private void openChest() {
+        System.out.println("🔎 Détection coffre autour du joueur via le calque `chestsLayer`");
+
+        int x = player.getPositionX();
+        int y = player.getPositionY();
+        Room currentRoom = _roomController.getCurrentRoom();
+        int[][] chestsLayer = currentRoom.getChestsLayer();
+
+        if (chestsLayer == null) {
+            System.out.println("⚠ Erreur : Le calque `chestsLayer` est introuvable.");
+            return;
+        }
+
+        int[][] directions = {
+            {x - 1, y}, {x + 1, y},  
+            {x, y - 1}, {x, y + 1}, 
+            {x - 1, y - 1}, {x + 1, y - 1},  
+            {x - 1, y + 1}, {x + 1, y + 1}  
+        };
+
+        for (int[] pos : directions) {
+            int chestX = pos[0];
+            int chestY = pos[1];
+
+            if (chestY >= 0 && chestY < chestsLayer.length && chestX >= 0 && chestX < chestsLayer[0].length) {
+                if (chestsLayer[chestY][chestX] == 851) { 
+
+                    int chestIndex = getChestIndexAtPosition(currentRoom, chestX, chestY);
+                    if (chestIndex != -1) {
+                        ArrayList<Item> chestContents = currentRoom.openChest(chestIndex);
+
+                        if (chestContents != null && !chestContents.isEmpty()) {
+                            for (Item item : chestContents) {
+                                player.getInventory().addItem(item);
+                                player.getInventoryPanel().updateInventory(player.getInventory().getItems());
+
+                            }
+                            System.out.println("📦 Coffre ouvert en (" + chestX + ", " + chestY + ") ! Vous obtenez : " + chestContents);
+                            return; 
+                        } else {
+                            System.out.println("📦 Coffre ouvert en (" + chestX + ", " + chestY + ")... mais il est vide !");
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        System.out.println("📦 Aucun coffre détecté à proximité !");
     }
     
     public boolean isAllowedToMove(int newX, int newY) {
@@ -179,6 +257,62 @@ public class PlayerController extends KeyAdapter {
             player.getInventoryPanel().updateInventory(player.getInventory().getItems());
             _roomController.loadRoom();
             System.out.println("🎉 Booster ramassé : " + booster.getName());
+        }
+    }
+    
+    private boolean isNextToChest() {
+        System.out.println("🔎 Vérification des coffres autour du joueur...");
+
+        int[][] chestsLayer = _roomController.getCurrentRoom().getChestsLayer();
+        int x = player.getPositionX();
+        int y = player.getPositionY();
+
+        if (chestsLayer == null) {
+            System.out.println("⚠ Le calque des coffres (_chestsLayer) est introuvable.");
+            return false;
+        }
+
+        for (int dy = -1; dy <= 1; dy++) {
+            for (int dx = -1; dx <= 1; dx++) {
+                int checkX = x + dx;
+                int checkY = y + dy;
+
+                if (checkX >= 0 && checkX < chestsLayer[0].length && checkY >= 0 && checkY < chestsLayer.length) {
+                    if (chestsLayer[checkY][checkX] == 851) {
+                        System.out.println("✅ Coffre détecté à proximité en (" + checkX + "," + checkY + ")");
+                        return true;
+                    }
+                }
+            }
+        }
+
+        System.out.println("❌ Aucun coffre proche.");
+        return false;
+    }
+    
+    private void displaySurroundingChestTiles() {
+        int[][] chestsLayer = _roomController.getCurrentRoom().getChestsLayer();
+        int x = player.getPositionX();
+        int y = player.getPositionY();
+
+        if (chestsLayer == null) {
+            System.out.println("⚠ Le calque des coffres (_chestsLayer) est introuvable.");
+            return;
+        }
+
+        System.out.println("📍 Positions des coffres autour du joueur (" + x + "," + y + ") :");
+        
+        for (int dy = -1; dy <= 1; dy++) {
+            for (int dx = -1; dx <= 1; dx++) {
+                int checkX = x + dx;
+                int checkY = y + dy;
+                if (checkX >= 0 && checkX < chestsLayer[0].length && checkY >= 0 && checkY < chestsLayer.length) {
+                    System.out.print(chestsLayer[checkY][checkX] + "\t");
+                } else {
+                    System.out.print("X\t"); 
+                }
+            }
+            System.out.println();
         }
     }
 }

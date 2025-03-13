@@ -28,10 +28,7 @@ public class Board {
                 add(new ItemBooster("booster_speed1", -1, -1));
                 add(new ItemWeapon("bow_sprite", -1, -1));
             }},
-            new ArrayList<Item>() {{
-                add(new ItemBooster("booster_defense_1", -1, -1));
-                add(new ItemWeapon("bow_sprite", -1, -1));
-            }},
+            new ArrayList<>(),
             "Un message est gravé sur le mur : 'La clé est à l'Est...'"
         ));
 
@@ -47,19 +44,27 @@ public class Board {
         ));
 
         roomData.put("donjon1_room3", new RoomElements(
-            new ArrayList<Monster>() {{
-
-            }},
-            new ArrayList<Item>() {{
-                add(new ItemBooster("booster_damage", -1, -1));
-                add(new ItemBooster("booster_life_1", -1, -1));
-            }},
-            new ArrayList<Item>() {{
-                add(new ItemBooster("booster_defense_1", -1, -1));
-                add(new ItemWeapon("rifler_sprite", -1, -1));
-            }},
-            null
-        ));
+                new ArrayList<>(), 
+                new ArrayList<Item>() {{
+                    add(new ItemBooster("booster_damage", -1, -1));
+                    add(new ItemBooster("booster_life_1", -1, -1));
+                }},
+                new ArrayList<ArrayList<Item>>() {{
+                    add(new ArrayList<Item>() {{
+                        add(new ItemBooster("booster_defense_1", -1, -1));
+                        add(new ItemWeapon("rifler_sprite", -1, -1));
+                    }});
+                    add(new ArrayList<Item>() {{
+                        add(new ItemBooster("booster_damage", -1, -1));
+                        add(new ItemBooster("booster_defense_1", -1, -1));
+                        add(new ItemBooster("booster_speed2", -1, -1));
+                    }});
+                    add(new ArrayList<Item>() {{
+                        add(new ItemWeapon("sword_sprite", -1, -1));
+                    }});
+                }},
+                null
+            ));
 
         roomData.put("donjon1_room4", new RoomElements(
                 new ArrayList<Monster>() {{
@@ -85,7 +90,6 @@ public class Board {
         for (Room room : _rooms) {
             RoomElements elements = roomData.get(room.getName());
             if (elements != null) {
-                // 🔥 Ajout des monstres
                 elements.monsters.forEach(monster -> {
                     int[] position = getRandomFreePosition(room);
                     monster.setPositionX(position[0]);
@@ -106,13 +110,8 @@ public class Board {
                     }
                 });
 
-                if (!elements.chestItems.isEmpty()) {
-                    int[] chestPosition = getRandomFreePosition(room);
-                    ArrayList<Item> chestContents = new ArrayList<>(elements.chestItems);
-                    room.addChest(chestPosition[0], chestPosition[1], chestContents);
-                }
+                addChestsFromLayer(room, elements.chestItems);
 
-                // 🔥 Ajout des indices
                 if (elements.hint != null) {
                     room.setHint(elements.hint);
                 }
@@ -120,10 +119,37 @@ public class Board {
         }
     }
 
+	private void addChestsFromLayer(Room room, ArrayList<ArrayList<Item>> chestContentsList) {
+	    int[][] chestsLayer = room.getChestsLayer();
+	
+	    if (chestsLayer == null) {
+	        System.err.println("⚠ Erreur : Le calque chests.csv est introuvable pour la salle " + room.getName());
+	        return;
+	    }
+	
+	    int chestIndex = 0;
+	
+	    for (int y = 0; y < chestsLayer.length; y++) {
+	        for (int x = 0; x < chestsLayer[y].length; x++) {
+	            if (chestsLayer[y][x] == 851) { 
+	                if (chestIndex < chestContentsList.size()) {
+	                    ArrayList<Item> chestContent = chestContentsList.get(chestIndex);
+	                    room.addChest(chestContent);
+	
+	                    System.out.println("📦 Coffre #" + (chestIndex + 1) + " ajouté en (" + x + ", " + y + ") avec : " + chestContent);
+	                    chestIndex++;
+	                } else {
+	                    System.out.println("⚠ Coffre en (" + x + ", " + y + ") mais pas assez de contenus définis !");
+	                }
+	            }
+	        }
+	    }
+	}
+
     private int[] getRandomFreePosition(Room room) {
         int[][] collisions = room.getCollisionsLayer();
-        int minX = 3, maxX = 12;  // X compris entre 3 et 12
-        int minY = 3, maxY = 14;  // Y compris entre 3 et 14
+        int minX = 3, maxX = 12;  
+        int minY = 3, maxY = 14;  
         int x, y;
 
         do {
@@ -148,11 +174,11 @@ public class Board {
 
     private static class RoomElements {
         ArrayList<Monster> monsters;
-        ArrayList<Item> items; // Contient à la fois des boosters et des armes visibles
-        ArrayList<Item> chestItems; // Contient les objets à placer dans les coffres
+        ArrayList<Item> items; 
+        ArrayList<ArrayList<Item>> chestItems; 
         String hint;
 
-        RoomElements(ArrayList<Monster> monsters, ArrayList<Item> items, ArrayList<Item> chestItems, String hint) {
+        RoomElements(ArrayList<Monster> monsters, ArrayList<Item> items, ArrayList<ArrayList<Item>> chestItems, String hint) {
             this.monsters = monsters;
             this.items = items;
             this.chestItems = chestItems;

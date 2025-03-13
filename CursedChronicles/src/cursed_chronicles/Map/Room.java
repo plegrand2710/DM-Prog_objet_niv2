@@ -28,10 +28,11 @@ public class Room {
     private HashMap<String, String> _doors;
     private HashMap<String, int[]> _spawnPoints;
     
-    private ArrayList<Monster> _monsters; // Monstres dans la salle
-    private ArrayList<ItemBooster> _boosters; // Boosters posés au sol
-    private ArrayList<ItemWeapon> _weapons; // Armes posées au sol
-    private HashMap<int[], ArrayList<Item>> _chests; // Coffres contenant des boosters (coordonnées -> contenu)
+    private ArrayList<Monster> _monsters; 
+    private ArrayList<ItemBooster> _boosters;
+    private ArrayList<ItemWeapon> _weapons; 
+    private ArrayList<Chest> _chests; 
+
     private String _hint; 
 
     public Room(String name) {
@@ -42,7 +43,7 @@ public class Room {
         _boosters = new ArrayList<>();
         _weapons = new ArrayList<>();
 
-        _chests = new HashMap<>();
+        _chests = new ArrayList<>();
         _hint = null; 
         initLayers();
     }
@@ -193,13 +194,40 @@ public class Room {
         _boosters.remove(booster);
     }
 
-    public void addChest(int x, int y, ArrayList<Item> contents) {
-        _chests.put(new int[]{x, y}, contents);
+    public void addChest(ArrayList<Item> contents) {
+        Chest newChest = new Chest(contents); 
+        _chests.add(newChest);
+
+        System.out.println("📦 Nouveau coffre ajouté avec " + contents.size() + " objets");
+        if (contents.isEmpty()) {
+            System.out.println("⚠ Coffre vide.");
+        } else {
+            System.out.print("📍 Contenu : ");
+            for (Item item : contents) {
+                System.out.print(item.getName() + " ");
+            }
+            System.out.println();
+        }
     }
 
-    public ArrayList<Item> openChest(int x, int y) {
-        int[] key = new int[]{x, y};
-        return _chests.remove(key);
+    public ArrayList<Item> openChest(int chestIndex) {
+        if (chestIndex >= 0 && chestIndex < _chests.size()) {
+            Chest chest = _chests.remove(chestIndex); 
+            return chest.getContents(); 
+        }
+        return null; 
+    }
+
+    public int getChestCount() {
+        return _chests.size();
+    }
+
+    public void printChests() {
+        System.out.println("📜 Liste des coffres dans " + _name + " :");
+        for (int i = 0; i < _chests.size(); i++) {
+            System.out.print("📦 Coffre " + (i + 1) + " contient : ");
+            _chests.get(i).printContents();
+        }
     }
 
     public void setHint(String hint) {
@@ -218,9 +246,6 @@ public class Room {
         return new ArrayList<>(_boosters);
     }
 
-    public HashMap<int[], ArrayList<Item>> getChests() {
-        return new HashMap<>(_chests);
-    }
 
     public HashMap<int[], ItemBooster> getBoosterPositions() {
         HashMap<int[], ItemBooster> boosterPositions = new HashMap<>();
@@ -238,11 +263,11 @@ public class Room {
         while (iterator.hasNext()) {
             ItemBooster booster = iterator.next();
             if (booster.getX() == x && booster.getY() == y) {
-                iterator.remove();  // Supprime le booster de la salle
-                return booster;     // Retourne le booster ramassé
+                iterator.remove();  
+                return booster;   
             }
         }
-        return null; // Aucun booster à cette position
+        return null; 
     }
     
     public void addWeapon(ItemWeapon weapon) {
@@ -253,12 +278,10 @@ public class Room {
         _weapons.remove(weapon);
     }
 
-    // 📌 Retourne les armes présentes dans la salle
     public ArrayList<ItemWeapon> getWeapons() {
         return new ArrayList<>(_weapons);
     }
 
-    // 📌 Retourne les positions des armes sous forme de HashMap<int[], ItemWeapon>
     public HashMap<int[], ItemWeapon> getWeaponPositions() {
         HashMap<int[], ItemWeapon> weaponPositions = new HashMap<>();
         for (ItemWeapon weapon : _weapons) {
@@ -268,16 +291,15 @@ public class Room {
         return weaponPositions;
     }
 
-    // 📌 Permet au joueur de ramasser une arme
     public ItemWeapon pickUpWeapon(int x, int y) {
         Iterator<ItemWeapon> iterator = _weapons.iterator();
         while (iterator.hasNext()) {
             ItemWeapon weapon = iterator.next();
             if (weapon.getPositionX() == x && weapon.getPositionY() == y) {
-                iterator.remove();  // Supprime l'arme de la salle
-                return weapon;     // Retourne l'arme ramassée
+                iterator.remove(); 
+                return weapon; 
             }
         }
-        return null; // Aucune arme à cette position
+        return null;
     }
 }

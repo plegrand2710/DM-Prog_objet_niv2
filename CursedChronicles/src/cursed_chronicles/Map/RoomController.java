@@ -65,21 +65,13 @@ public class RoomController {
     	
     	_playerController.setSpawn();
     	_playerController.setPlayerPosition(nextRoomCoords[0], nextRoomCoords[1]);
-    	
-    	_playerController.getPlayerView().stopAnimation(); // Stoppe l’animation actuelle
-    	_playerController.getPlayerView().repaint(); // Force un rafraîchissement visuel
-//    	_roomView.add(_playerController.getPlayerView(), Integer.valueOf(2)); 
-
-    	_playerController.notifyAnimationFinished(); // Permet de redonner le contrôle au joueur
 
 
 
         _playerController.getPlayerView().stopAnimation();
         _playerController.getPlayerView().repaint();
-        System.out.println("🎥 Animation stoppée et écran rafraîchi.");
         
         _playerController.notifyAnimationFinished();
-        System.out.println("✅ Changement de salle terminé.");
 //    	_roomView.add(_playerController.getPlayerView(), Integer.valueOf(2)); 
 
         _playerController.getPlayerView().resetMovement();
@@ -103,8 +95,7 @@ public class RoomController {
 //                    System.out.println("Ajout de la salle: " + roomName);
                     _rooms.put(roomName, room);
 
-                    // AFFICHER LA SALLE
-                    System.out.println(room); // Vérifier que les portes et spawnPoints sont bien définis
+                    System.out.println(room); 
                 }
             }
         } catch (IOException e) {
@@ -125,7 +116,7 @@ public class RoomController {
         for (String doorPair : doorPairs) {
 //            System.out.println("Processing doorPair: " + doorPair); // Debug
             String[] keyValue = doorPair.split(":");
-            if (keyValue.length == 2 && !keyValue[1].trim().isEmpty()) { // Vérifie que la destination n'est pas vide
+            if (keyValue.length == 2 && !keyValue[1].trim().isEmpty()) { 
                 String direction = keyValue[0].trim();
                 String destination = keyValue[1].trim();
                 room.addDoor(direction, destination);
@@ -148,7 +139,7 @@ public class RoomController {
         for (String spawnPair : spawnPairs) {
 //            System.out.println("Processing spawnPair: " + spawnPair); // Debug
             String[] keyValue = spawnPair.split(":");
-            if (keyValue.length == 2 && !keyValue[1].trim().isEmpty()) { // Vérifie que la valeur n'est pas vide
+            if (keyValue.length == 2 && !keyValue[1].trim().isEmpty()) { 
                 String direction = keyValue[0].trim();
                 String[] coords = keyValue[1].split(",");
                 if (coords.length == 2) {
