@@ -11,4 +11,13 @@ public class Constant {
 	public static final int SOUTH_DOORS_ID = 691;
 	public static final int WEST_DOORS_ID = 151;
 	public static final int EAST_DOORS_ID = 251;
+
+	public static final int ENTER_DOORS_DONJON1_ID = 340;
+	public static final int ENTER_DOORS_DONJON2_ID = 339;
+	public static final int ENTER_DOORS_DONJON3_ID = 338;
+	
+	public static final int EXIT_DOORS_DONJON1_ID = 306;
+	public static final int EXIT_DOORS_DONJON2_ID = 307;
+	public static final int EXIT_DOORS_DONJON3_ID = 308;
+
 }

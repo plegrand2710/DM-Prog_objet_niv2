@@ -97,7 +97,7 @@ public class RoomView extends JLayeredPane {
         startMonsterMovement(room);
         combatManager.setRoom(room);
         
-        if (_narrationPanel != null && !room.getName().equalsIgnoreCase("donjon2_room1")) {
+        if (_narrationPanel != null && !room.getName().equalsIgnoreCase("spawn")) {
             System.out.println("📢 Mise à jour de la narration...");
             _narrationPanel.updateRoomName(room.getName()); 
             String narrationText = _narrationPanel.generateRoomNarration(room);

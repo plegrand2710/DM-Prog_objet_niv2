@@ -48,9 +48,29 @@ public class RoomController {
     	case "E":
     		directionDestination = "W";
     		break;
+    	case "ENTERDONJON1":
+    		directionDestination = "SPAWNENTERDONJON1";
+    		break;
+    	case "ENTERDONJON2":
+    		directionDestination = "SPAWNENTERDONJON2";
+    		break;
+    	case "ENTERDONJON3":
+    		directionDestination = "SPAWNENTERDONJON3";
+    		break;
+    		
+    	case "EXITDONJON1":
+    		directionDestination = "SPAWNEXITDONJON1";
+    		break;
+    	case "EXITDONJON2":
+    		directionDestination = "SPAWNEXITDONJON2";
+    		break;
+    	case "EXITDONJON3":
+    		directionDestination = "SPAWNEXITDONJON3";
+    		break;
     	default:
     		directionDestination = "S";
     		break;
+    	
     	}
     	
     	

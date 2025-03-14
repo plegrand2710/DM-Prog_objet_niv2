@@ -120,6 +120,25 @@ public class PlayerController extends KeyAdapter {
     	case Constant.EAST_DOORS_ID:
     		_roomController.changeRoomFrom("E");
     		break;
+    		
+    	case Constant.ENTER_DOORS_DONJON1_ID:
+    		_roomController.changeRoomFrom("ENTERDONJON1");
+    		break;
+    	case Constant.ENTER_DOORS_DONJON2_ID:
+    		_roomController.changeRoomFrom("ENTERDONJON2");
+    		break;
+    	case Constant.ENTER_DOORS_DONJON3_ID:
+    		_roomController.changeRoomFrom("ENTERDONJON3");
+    		break;
+    	case Constant.EXIT_DOORS_DONJON1_ID:
+    		_roomController.changeRoomFrom("EXITDONJON1");
+    		break;
+    	case Constant.EXIT_DOORS_DONJON2_ID:
+    		_roomController.changeRoomFrom("EXITDONJON2");
+    		break;
+    	case Constant.EXIT_DOORS_DONJON3_ID:
+    		_roomController.changeRoomFrom("EXITDONJON3");
+    		break;
     	}
     	
     }
