@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "donjon1_room4.tmx",
+    "activeFile": "",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -162,7 +162,7 @@
         },
         "Tilesets/0x72_DungeonTilesetII_v1.7.tsx": {
             "dynamicWrapping": false,
-            "scaleInDock": 1.1277,
+            "scaleInDock": 1.3766,
             "scaleInEditor": 1
         },
         "Tilesets/0x72_DungeonTilesetII_v1.7_SideDoors.tsx": {
@@ -176,7 +176,7 @@
         },
         "Tilesets/atlas_walls_high-16x32.tsx": {
             "dynamicWrapping": false,
-            "scaleInDock": 1.7741,
+            "scaleInDock": 1.4066,
             "scaleInEditor": 1
         },
         "Tilesets/atlas_walls_low-16x16.tsx": {
@@ -332,16 +332,16 @@
             "scale": 2.5123046875,
             "selectedLayer": 8,
             "viewCenter": {
-                "x": 129.96035139547539,
-                "y": 125.7809220244111
+                "x": 127.97014693306382,
+                "y": 128.16916737930495
             }
         },
         "donjon3_room5.tmx": {
             "scale": 1.8379,
             "selectedLayer": 7,
             "viewCenter": {
-                "x": 105.82730290004896,
-                "y": 144.73039882474563
+                "x": 128.13537189183307,
+                "y": 127.86332226998204
             }
         },
         "dunjeon1_room1.tmx": {
@@ -405,7 +405,7 @@
             }
         }
     },
-    "last.exportedFilePath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/maps/donjon3_room4",
+    "last.exportedFilePath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/maps/donjon1_room1",
     "last.externalTilesetPath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/maps/Tilesets",
     "last.imagePath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/sprites/player2/tilesets",
     "map.height": 16,
@@ -417,29 +417,27 @@
     "openFiles": [
         "Tilesets/atlas_floor-16x16.tsx",
         "Tilesets/atlas_walls_low-16x16.tsx",
-        "donjon1_room5.tmx",
-        "donjon1_room2.tmx",
-        "donjon1_room3.tmx",
-        "donjon1_room4.tmx",
-        "donjon1_room1.tmx",
-        "donjon2_room2.tmx",
-        "donjon2_room3.tmx",
-        "donjon2_room4.tmx"
+        "donjon3_room1.tmx",
+        "donjon3_room2.tmx",
+        "donjon3_room3.tmx",
+        "donjon3_room4.tmx",
+        "donjon3_room5.tmx",
+        "spawn.tmx"
     ],
     "project": "tiled-project.tiled-project",
     "recentFiles": [
+        "Tilesets/atlas_floor-16x16.tsx",
+        "Tilesets/atlas_walls_low-16x16.tsx",
+        "spawn.tmx",
+        "donjon3_room5.tmx",
+        "donjon3_room4.tmx",
+        "donjon3_room3.tmx",
+        "donjon3_room2.tmx",
+        "donjon3_room1.tmx",
         "donjon1_room1.tmx",
         "donjon1_room2.tmx",
         "donjon1_room5.tmx",
-        "donjon1_room4.tmx",
-        "donjon2_room1.tmx",
-        "spawn.tmx",
-        "donjon2_room6.tmx",
-        "donjon2_room2.tmx",
-        "donjon2_room5.tmx",
-        "donjon2_room4.tmx",
-        "donjon2_room3.tmx",
-        "donjon1_room3.tmx"
+        "donjon1_room4.tmx"
     ],
     "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
     "tileset.lastUsedFormat": "tsx",
