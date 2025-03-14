@@ -23,13 +23,13 @@ public class Board {
     private void addGameElementsToRooms() {
         HashMap<String, RoomElements> roomData = new HashMap<>();
 
+        // ============== Donjon 1 ==============
         roomData.put("donjon1_room1", new RoomElements(
             new ArrayList<Monster>(),
             new ArrayList<Item>() {{
                 add(new ItemBooster("booster_speed1", -1, -1));
             }},
-            new ArrayList<>(),
-            "Un message est gravé sur le mur : 'La clé est à l'Est...'"
+            new ArrayList<>()
         ));
 
         roomData.put("donjon1_room2", new RoomElements(
@@ -39,8 +39,7 @@ public class Board {
                 add(new Monster("skull", 12, 8, 1, null));
             }},
             new ArrayList<>(),
-            new ArrayList<>(),
-            "Les ombres murmurent : 'Seule la lumière révélera le passage.'"
+            new ArrayList<>()
         ));
 
         roomData.put("donjon1_room3", new RoomElements(
@@ -63,8 +62,7 @@ public class Board {
 
                         add(new ItemWeapon("bow_sprite", -1, -1));
                         }});
-                }},
-                null
+                }}
             ));
 
         roomData.put("donjon1_room4", new RoomElements(
@@ -75,8 +73,7 @@ public class Board {
                     add(new Monster("vampire", 20, 10, 1, null));
                 }},
                 new ArrayList<>(),
-                new ArrayList<>(),
-                "Les ombres murmurent : 'Seule la lumière révélera le passage.'"
+                new ArrayList<>()
             ));
         
         roomData.put("donjon1_room5", new RoomElements(
@@ -85,9 +82,106 @@ public class Board {
 
                 }},
                 new ArrayList<>(),
-                new ArrayList<>(),
-                "Les ombres murmurent : 'Seule la lumière révélera le passage.'"
+                new ArrayList<>() 
             ));
+        
+        // ============== Donjon 2 ==============
+        roomData.put("donjon2_room1", new RoomElements(
+                new ArrayList<Monster>(),
+                new ArrayList<Item>() {{
+                    add(new ItemBooster("booster_defense_2", -1, -1));
+                    add(new ItemBooster("booster_life_2", -1, -1));
+                }},
+                new ArrayList<>()
+            ));
+        roomData.put("donjon2_room2", new RoomElements(
+                new ArrayList<Monster>() {{
+                    add(new Monster("bat", 20, 10, 1, null));
+                    add(new Monster("bat", 20, 10, 1, null));
+                    add(new Monster("bat", 20, 10, 1, null));
+                }},
+                new ArrayList<Item>(),
+                new ArrayList<>()
+            ));
+        roomData.put("donjon2_room3", new RoomElements(
+                new ArrayList<Monster>() {{
+                    add(new Monster("wolf", 0, 0, 1, null));
+                    add(new Monster("wolf", 0, 0, 1, null));
+                    add(new Monster("wolf", 0, 0, 1, null));
+                    add(new Monster("wolf", 0, 0, 1, null));
+                }},
+                new ArrayList<Item>(),
+                new ArrayList<>()
+            ));
+        roomData.put("donjon2_room4", new RoomElements(
+                new ArrayList<Monster>() {{
+                    add(new Monster("werewolf", 0, 0, 1, null));
+                    add(new Monster("werewolf", 0, 0, 1, null));
+                    add(new Monster("werewolf", 0, 0, 1, null));
+                    add(new Monster("werewolf", 0, 0, 1, null));
+                }},
+                new ArrayList<Item>(),
+                new ArrayList<>()
+            ));
+        roomData.put("donjon2_room5", new RoomElements(
+                new ArrayList<Monster>(),
+                new ArrayList<Item>() {{
+                    add(new ItemBooster("booster_defense_3", -1, -1));
+                    add(new ItemBooster("booster_life_3", -1, -1));
+                    add(new ItemBooster("booster_speed1", -1, -1));
+                }},
+                new ArrayList<>()
+            ));
+        roomData.put("donjon2_room6", new RoomElements(
+                new ArrayList<Monster>() {{        
+                	add(new Monster("red_dragon", 0, 0, 2, null));
+
+                }},
+                new ArrayList<Item>(),
+                new ArrayList<>()
+            ));
+        
+        
+        
+        // ============== Donjon 3 ==============
+        
+        roomData.put("donjon3_room1", new RoomElements(
+                new ArrayList<Monster>(),
+                new ArrayList<Item>(),
+                new ArrayList<>()
+            ));
+        roomData.put("donjon3_room2", new RoomElements(
+                new ArrayList<Monster>() {{
+                    add(new Monster("goblin", 0, 0, 1, null));
+                }},
+                new ArrayList<Item>(),
+                new ArrayList<>()
+            ));
+        roomData.put("donjon3_room3", new RoomElements(
+                new ArrayList<Monster>(),
+                new ArrayList<Item>() {{
+                    add(new ItemBooster("booster_defense_1", -1, -1));
+                    add(new ItemBooster("booster_speed1", -1, -1));
+                }},
+                new ArrayList<>()
+            ));
+        roomData.put("donjon3_room4", new RoomElements(
+                new ArrayList<Monster>() {{
+                    add(new Monster("orc", 0, 0, 1, null));
+                }},
+                new ArrayList<Item>(),
+                new ArrayList<>()
+            ));
+        roomData.put("donjon3_room5", new RoomElements(
+                new ArrayList<Monster>() {{        
+                	add(new Monster("golem", 0, 0, 2, null));
+
+                }},
+                new ArrayList<Item>(),
+                new ArrayList<>()
+            ));
+        
+        
         for (Room room : _rooms) {
             RoomElements elements = roomData.get(room.getName());
             if (elements != null) {
@@ -189,11 +283,10 @@ public class Board {
         ArrayList<ArrayList<Item>> chestItems; 
         String hint;
 
-        RoomElements(ArrayList<Monster> monsters, ArrayList<Item> items, ArrayList<ArrayList<Item>> chestItems, String hint) {
+        RoomElements(ArrayList<Monster> monsters, ArrayList<Item> items, ArrayList<ArrayList<Item>> chestItems) {
             this.monsters = monsters;
             this.items = items;
             this.chestItems = chestItems;
-            this.hint = hint;
         }
     }
 }

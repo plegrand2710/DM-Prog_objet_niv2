@@ -218,7 +218,7 @@
         },
         "donjon1_room1.tmx": {
             "scale": 2.16,
-            "selectedLayer": 9,
+            "selectedLayer": 6,
             "viewCenter": {
                 "x": 112.73148148148147,
                 "y": 144.90740740740736
@@ -228,8 +228,8 @@
             "scale": 2.3681,
             "selectedLayer": 9,
             "viewCenter": {
-                "x": 115.0711540897766,
-                "y": 178.62421350449728
+                "x": 120.56078712892192,
+                "y": 158.77707867066425
             }
         },
         "donjon1_room3.tmx": {
@@ -332,16 +332,16 @@
             "scale": 2.5123046875,
             "selectedLayer": 8,
             "viewCenter": {
-                "x": 127.97014693306382,
-                "y": 128.16916737930495
+                "x": 123.59169711575836,
+                "y": 149.66337557334992
             }
         },
         "donjon3_room5.tmx": {
-            "scale": 1.8379,
-            "selectedLayer": 7,
+            "scale": 1.9908,
+            "selectedLayer": 8,
             "viewCenter": {
-                "x": 128.13537189183307,
-                "y": 127.86332226998204
+                "x": 121.81032750653006,
+                "y": 192.88728149487645
             }
         },
         "dunjeon1_room1.tmx": {
@@ -426,15 +426,15 @@
     ],
     "project": "tiled-project.tiled-project",
     "recentFiles": [
-        "Tilesets/atlas_floor-16x16.tsx",
-        "Tilesets/atlas_walls_low-16x16.tsx",
         "spawn.tmx",
+        "donjon1_room1.tmx",
         "donjon3_room5.tmx",
         "donjon3_room4.tmx",
         "donjon3_room3.tmx",
+        "Tilesets/atlas_floor-16x16.tsx",
+        "Tilesets/atlas_walls_low-16x16.tsx",
         "donjon3_room2.tmx",
         "donjon3_room1.tmx",
-        "donjon1_room1.tmx",
         "donjon1_room2.tmx",
         "donjon1_room5.tmx",
         "donjon1_room4.tmx"

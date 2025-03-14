@@ -83,15 +83,18 @@ public class NarrationPanel extends JPanel {
     private static String generateRoomNarrationInitial(Room room) {
 	    StringBuilder narration = new StringBuilder();
 
-	    narration.append("🏰 **Bienvenue dans *Cursed Chronicles* !** ⚔️\n")
-	            .append("Tu es un aventurier piégé dans un donjon maudit... Trouve des indices, combat les créatures et essaye de survivre !\n\n")
-	            .append("💡 **Raccourcis clavier :**\n")
-	            .append("- 🏹 **Se déplacer** : Flèches directionnelles ⬆️⬇️⬅️➡️\n")
-	            .append("- ⚔️ **Attaquer** : Espace\n")
-	            .append("- 🎁 **Ouvrir un coffre** : C\n")
-	            .append("- ⏭️ **Passer cette affichage** : Entrée\n")
-	            .append("- 🏃 **Activer sprint** : S (augmente la vitesse de déplacement)\n\n")
-	            .append("Une brise glaciale souffle à travers les fissures des murs...\n");
+	    narration
+	    	.append("🏰 **Bienvenue dans *Cursed Chronicles* !** ⚔️\n")
+	        .append("Tu es un aventurier piégé dans un donjon maudit... Trouve des indices, combat les créatures et essaye de survivre !\n\n")
+	        .append("💡 **Raccourcis clavier :**\n")
+	        .append("- 🏹 **Se déplacer** : Flèches directionnelles ⬆️⬇️⬅️➡️\n")
+	        .append("- ⚔️ **Attaquer** : Espace\n")
+	        .append("- 🎁 **Ouvrir un coffre** : C\n")
+	        .append("- 📖 **Ouvrir le journal** : J\n")
+	        .append("- ⏭️ **Passer cette affichage** : Entrée\n")
+	        .append("- 🏃 **Activer sprint** : S (augmente la vitesse de déplacement)\n\n")
+	        .append("Une brise glaciale souffle à travers les fissures des murs...\n");
+
 
 	    if (!room.getMonsters().isEmpty()) {
 	        narration.append("👹 **Des créatures rôdent dans l'ombre :** ");
