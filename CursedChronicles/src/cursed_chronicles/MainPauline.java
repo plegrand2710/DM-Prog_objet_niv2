@@ -93,8 +93,8 @@ public class MainPauline {
 	            inventoryPanel.setLocation(gameFrameWidth, screenHeight - (2 * panelHeight) - taskbarHeight);
 	            inventoryPanel.setVisible(true);
 
-	            journalPanel.setSize(panelWidth, panelHeight-70);
-	            journalPanel.setLocation(gameFrameWidth, 0); 
+	            journalPanel.setSize(panelWidth + 12, panelHeight + 10);
+	            journalPanel.setLocation(gameFrameWidth -8, 0); 
 	            journalPanel.setVisible(true);
 
 	            roomController.setPlayerController(playerController);
