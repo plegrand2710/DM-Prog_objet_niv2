@@ -50,7 +50,6 @@ public class CombatManager {
     }
     
     public boolean getMonsterDefeated() {
-        System.out.println("recuperation mort ");
     	return _monsterDefeated;
     }
  

@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "donjon3_room5.tmx",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -419,23 +419,23 @@
         "Tilesets/atlas_walls_low-16x16.tsx",
         "donjon3_room1.tmx",
         "donjon3_room2.tmx",
-        "donjon3_room3.tmx",
-        "donjon3_room4.tmx",
+        "spawn.tmx",
         "donjon3_room5.tmx",
-        "spawn.tmx"
+        "donjon3_room4.tmx",
+        "donjon1_room2.tmx"
     ],
     "project": "tiled-project.tiled-project",
     "recentFiles": [
-        "spawn.tmx",
-        "donjon1_room1.tmx",
-        "donjon3_room5.tmx",
-        "donjon3_room4.tmx",
-        "donjon3_room3.tmx",
         "Tilesets/atlas_floor-16x16.tsx",
         "Tilesets/atlas_walls_low-16x16.tsx",
-        "donjon3_room2.tmx",
         "donjon3_room1.tmx",
+        "donjon3_room2.tmx",
+        "spawn.tmx",
         "donjon1_room2.tmx",
+        "donjon3_room4.tmx",
+        "donjon3_room5.tmx",
+        "donjon1_room1.tmx",
+        "donjon3_room3.tmx",
         "donjon1_room5.tmx",
         "donjon1_room4.tmx"
     ],
