@@ -113,8 +113,18 @@ public class Monster {
     public Room getRoom() {
         return room;
     }
-
+    
+    public String getDirection() {
+    	return this.direction;
+    }
+    
+    
+    
     public boolean isMoving() {
         return isMoving;
     }
+
+	public ArrayList<Characteristic> getCharacteristics() {
+		return this.characteristics;
+	}
 }
