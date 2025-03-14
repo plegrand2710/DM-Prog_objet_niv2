@@ -67,7 +67,9 @@ Dans chaque donjon, le joueur doit **explorer, combattre et récupérer des indi
 ### ⚡ **Prérequis :**
 - **Java 11+** installé  
 - **Eclipse / IntelliJ** (ou tout autre IDE supportant Java)  
-- **Git** pour cloner le projet  
+- **Git** pour cloner le projet
+- **Lancement** le jeu peut etre un peu lourd (plusieurs timer en même temps), si le déplacement du joueur est sacadé, appuyer sur entrer pour passer l'affichage de la narration et mettre sur secteur
+- **Utilisation** attention lors d'une partie à bien toujours remettre le focus sur la map sinon le joueur ne répondra plus. Ne pas cliquer dans la zone de narration
 
 ### 📥 **Installation :**
 1. **Cloner le dépôt** :
