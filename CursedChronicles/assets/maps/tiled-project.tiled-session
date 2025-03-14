@@ -1,0 +1,448 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "donjon3_room5.tmx",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/DM-Prog_objet_niv2/CursedChronicles/assets/maps/Tilesets/atlas_walls_high-16x32.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/DM-Prog_objet_niv2/CursedChronicles/assets/maps/Tilesets/atlas_walls_low-16x16.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/0x72_DungeonTilesetII_v1.7.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/atlas_walls_high-16x32.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/atlas_walls_low-16x16.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/oldmaps/dunjeon1_room1.tmx": {
+            "scale": 1.3383,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 147.57528207427333,
+                "y": 129.64208323993125
+            }
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/oldmaps/dunjeon1_room2.tmx": {
+            "scale": 1.5846,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 124.00605831124574,
+                "y": 121.48176195885398
+            }
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/oldmaps/dunjeon1_room3.tmx": {
+            "scale": 1.3732,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 134.35770463151763,
+                "y": 161.30206816195746
+            }
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/oldmaps/dunjeon1_room4.tmx": {
+            "scale": 1.222,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 137.07037643207858,
+                "y": 198.4451718494272
+            }
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/oldmaps/dunjeon1_room5.tmx": {
+            "scale": 1.6409,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 117.92309098665366,
+                "y": 64.90340666707296
+            }
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/sprites/player2/tilesets/CharAni-Sheet4.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 2.7
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/Map/0x72_DungeonTilesetII_v1.7.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/Map/Dunjeons/dunjeon1_room1.tmx": {
+            "scale": 1.4992187499999998,
+            "selectedLayer": 5,
+            "viewCenter": {
+                "x": 71.7040125065138,
+                "y": 138.40541948931735
+            }
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/Map/Dunjeons/dunjeon1_room2.tmx": {
+            "scale": 1.9862,
+            "selectedLayer": 5,
+            "viewCenter": {
+                "x": 90.12184070083575,
+                "y": 146.51092538515758
+            }
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/Map/Dunjeons/dunjeon1_room3.tmx": {
+            "scale": 1.4992187499999998,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 123.39760291818655,
+                "y": 142.07399687337158
+            }
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/Map/Dunjeons/dunjeon1_room4.tmx": {
+            "scale": 1.6861,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 107.34831860506495,
+                "y": 166.6567819227804
+            }
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/Map/Dunjeons/dunjeon1_room5.tmx": {
+            "scale": 1.4992187499999998,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 122.73058884835851,
+                "y": 133.4028139656071
+            }
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/Map/atlas_walls_high-16x32.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/Map/atlas_walls_low-16x16.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "/Users/manuarii/Documents/DM-POON2-ASSETS/assets/maps/Tilesets/0x72_DungeonTilesetII_v1.7.tsx": {
+            "scaleInDock": 1
+        },
+        "/Users/manuarii/Documents/DM-POON2-ASSETS/assets/maps/Tilesets/atlas_walls_high-16x32.tsx": {
+            "scaleInDock": 1
+        },
+        "/Users/manuarii/Documents/DM-POON2-ASSETS/assets/maps/donjon1_room3.tmx": {
+            "scale": 1.2153,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 122.19205134534681,
+                "y": 153.04862996790914
+            }
+        },
+        "/Users/manuarii/Documents/DM-POON2-ASSETS/assets/maps/donjon2_room5.tmx": {
+            "scale": 1.5428,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 97.54990925589836,
+                "y": 182.13637542131193
+            }
+        },
+        "0x72_DungeonTilesetII_v1.7.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TESTID.tmx": {
+            "scale": 1.7126,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 54.01144458717741,
+                "y": 114.44587177391102
+            }
+        },
+        "Tilesets/0x72_DungeonTilesetII_v1.7.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1.3766,
+            "scaleInEditor": 1
+        },
+        "Tilesets/0x72_DungeonTilesetII_v1.7_SideDoors.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Tilesets/atlas_floor-16x16.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 2.1357,
+            "scaleInEditor": 2.7
+        },
+        "Tilesets/atlas_walls_high-16x32.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1.4066,
+            "scaleInEditor": 1
+        },
+        "Tilesets/atlas_walls_low-16x16.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1.8414,
+            "scaleInEditor": 2.7
+        },
+        "Tilesets/dunjeon1_room2.tmx": {
+            "scale": 1.5015,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 95.9040959040959,
+                "y": 106.56010656010656
+            }
+        },
+        "Tilesets/dunjeon2_room2.tmx": {
+            "scale": 2.1078125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 128.09488510007415,
+                "y": 152.29058561897705
+            }
+        },
+        "Tilesets/pasMFace.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 2.7
+        },
+        "atlas_walls_high-16x32.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "default_donjon.tmx": {
+            "scale": 1.7033203124999998,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 128.27886710239653,
+                "y": 127.9853227840844
+            }
+        },
+        "donjon1_room1.tmx": {
+            "scale": 2.16,
+            "selectedLayer": 6,
+            "viewCenter": {
+                "x": 112.73148148148147,
+                "y": 144.90740740740736
+            }
+        },
+        "donjon1_room2.tmx": {
+            "scale": 2.3681,
+            "selectedLayer": 9,
+            "viewCenter": {
+                "x": 120.56078712892192,
+                "y": 158.77707867066425
+            }
+        },
+        "donjon1_room3.tmx": {
+            "scale": 2.0023,
+            "selectedLayer": 9,
+            "viewCenter": {
+                "x": 128.10268191579686,
+                "y": 127.8529690855516
+            }
+        },
+        "donjon1_room4.tmx": {
+            "scale": 1.8224,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 124.83538191395961,
+                "y": 145.96136962247584
+            }
+        },
+        "donjon1_room5.tmx": {
+            "scale": 2.3295,
+            "selectedLayer": 8,
+            "viewCenter": {
+                "x": 135.86606567933035,
+                "y": 127.49517063747585
+            }
+        },
+        "donjon2_room1.tmx": {
+            "scale": 1.6365,
+            "selectedLayer": 8,
+            "viewCenter": {
+                "x": 104.79682248701498,
+                "y": 196.15032080659944
+            }
+        },
+        "donjon2_room2.tmx": {
+            "scale": 2.01,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 107.21393034825873,
+                "y": 164.67661691542293
+            }
+        },
+        "donjon2_room3.tmx": {
+            "scale": 1.7427,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 112.18224594020774,
+                "y": 105.0094680667929
+            }
+        },
+        "donjon2_room4.tmx": {
+            "scale": 2.0102,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 142.523132026664,
+                "y": 120.8834941796836
+            }
+        },
+        "donjon2_room5.tmx": {
+            "scale": 2.3473,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 116.94287053210073,
+                "y": 147.40339965066246
+            }
+        },
+        "donjon2_room6.tmx": {
+            "scale": 1.9374,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 114.8446371425622,
+                "y": 135.23278620832045
+            }
+        },
+        "donjon3_room1.tmx": {
+            "scale": 2.5123046875,
+            "selectedLayer": 8,
+            "viewCenter": {
+                "x": 123.9897380082407,
+                "y": 150.45945735831455
+            }
+        },
+        "donjon3_room2.tmx": {
+            "scale": 2.5123046875,
+            "selectedLayer": 8,
+            "viewCenter": {
+                "x": 127.97014693306382,
+                "y": 128.16916737930495
+            }
+        },
+        "donjon3_room3.tmx": {
+            "scale": 2.5123046875,
+            "selectedLayer": 8,
+            "viewCenter": {
+                "x": 127.97014693306382,
+                "y": 128.16916737930495
+            }
+        },
+        "donjon3_room4.tmx": {
+            "scale": 2.5123046875,
+            "selectedLayer": 8,
+            "viewCenter": {
+                "x": 123.59169711575836,
+                "y": 149.66337557334992
+            }
+        },
+        "donjon3_room5.tmx": {
+            "scale": 1.9908,
+            "selectedLayer": 8,
+            "viewCenter": {
+                "x": 121.81032750653006,
+                "y": 192.88728149487645
+            }
+        },
+        "dunjeon1_room1.tmx": {
+            "scale": 1.216,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 101.5625,
+                "y": 120.88815789473685
+            }
+        },
+        "dunjeon1_room2.tmx": {
+            "scale": 1.56,
+            "selectedLayer": 6,
+            "viewCenter": {
+                "x": 127.88461538461539,
+                "y": 128.2051282051282
+            }
+        },
+        "dunjeon1_room3.tmx": {
+            "expandedObjectLayers": [
+                9,
+                8
+            ],
+            "scale": 1.3901,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 127.68865549241063,
+                "y": 128.0483418459104
+            }
+        },
+        "dunjeon1_room4.tmx": {
+            "scale": 1.3473,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 128.0338454687152,
+                "y": 127.66273287315373
+            }
+        },
+        "dunjeon1_room5.tmx": {
+            "scale": 1.2232,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 127.94310006540223,
+                "y": 128.35186396337474
+            }
+        },
+        "dunjeon2_room1.tmx": {
+            "scale": 1.3541,
+            "selectedLayer": 7,
+            "viewCenter": {
+                "x": 127.76013588361272,
+                "y": 127.76013588361272
+            }
+        },
+        "spawn.tmx": {
+            "scale": 2.3573,
+            "selectedLayer": 9,
+            "viewCenter": {
+                "x": 110.9319984728291,
+                "y": 139.56645314554788
+            }
+        }
+    },
+    "last.exportedFilePath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/maps/donjon1_room1",
+    "last.externalTilesetPath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/maps/Tilesets",
+    "last.imagePath": "/Users/manuarii/Documents/Cours/L3/semestre_6/Programmation_orientee_objet_N2/DM-Prog_objet_niv2/CursedChronicles/assets/sprites/player2/tilesets",
+    "map.height": 16,
+    "map.lastUsedExportFilter": "CSV files (*.csv)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 16,
+    "openFiles": [
+        "Tilesets/atlas_floor-16x16.tsx",
+        "Tilesets/atlas_walls_low-16x16.tsx",
+        "donjon3_room1.tmx",
+        "donjon3_room2.tmx",
+        "spawn.tmx",
+        "donjon3_room5.tmx",
+        "donjon3_room4.tmx",
+        "donjon1_room2.tmx"
+    ],
+    "project": "tiled-project.tiled-project",
+    "recentFiles": [
+        "Tilesets/atlas_floor-16x16.tsx",
+        "Tilesets/atlas_walls_low-16x16.tsx",
+        "donjon3_room1.tmx",
+        "donjon3_room2.tmx",
+        "spawn.tmx",
+        "donjon1_room2.tmx",
+        "donjon3_room4.tmx",
+        "donjon3_room5.tmx",
+        "donjon1_room1.tmx",
+        "donjon3_room3.tmx",
+        "donjon1_room5.tmx",
+        "donjon1_room4.tmx"
+    ],
+    "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 32,
+        "width": 32
+    }
+}
